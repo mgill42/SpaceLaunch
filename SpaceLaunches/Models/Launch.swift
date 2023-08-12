@@ -29,11 +29,8 @@ struct Launch: Codable, Identifiable {
     let probability: Int?
     let weatherConcerns: String?
     let launchServiceProvider: LaunchServiceProvider
-    let mission: Mission
+    let mission: Mission?
     let pad: Pad
-    
-    var agencyMain: Agency?
-
   
 }
 
@@ -91,7 +88,7 @@ struct LaunchServiceProvider: Codable, Identifiable {
     let id: Int
     let url: String
     let name: String
-    let type: String
+    let type: String?
 }
 
 struct Rocket: Codable, Identifiable {
