@@ -109,7 +109,6 @@ struct LaunchView: View {
         return outputFormatter.string(from: date)
     }
     
-    
     func getLaunches() async throws {
         guard !isLoading else {
             print("Already Loading")
