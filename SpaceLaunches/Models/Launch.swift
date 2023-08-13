@@ -24,6 +24,7 @@ struct Launch: Codable, Identifiable {
     let status: Status
     let lastUpdated: String
     let net: String
+    let netPrecision: NetPrecision
     let windowEnd: String
     let windowStart: String
     let probability: Int?
@@ -32,6 +33,11 @@ struct Launch: Codable, Identifiable {
     let mission: Mission?
     let pad: Pad
   
+}
+
+struct NetPrecision: Codable, Identifiable {
+    let id: Int
+    let abbrev: String
 }
 
 struct Pad: Codable, Identifiable {

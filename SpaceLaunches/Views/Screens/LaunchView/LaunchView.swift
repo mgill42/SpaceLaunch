@@ -10,19 +10,12 @@ import Kingfisher
 
 struct LaunchView: View {
     
-    @State private var events: Events?
-    @State private var launches: [Launch] = []
-    @State private var offset = 0
-    @State private var isLoading = false
-    @State private var limitReached = false
-    
-    let maxLimit = 100
-    let limit = 20
-
+    @StateObject private var viewModel = LaunchViewModel()
+        
     var body: some View {
         VStack {
             List {
-                ForEach (launches) { launch in
+                ForEach (viewModel.launches) { launch in
                     HStack {
                         VStack(alignment: .leading, spacing: 5) {
                             Text(launch.name)
@@ -33,9 +26,15 @@ struct LaunchView: View {
                                 .padding(.bottom, 8)
                                 .foregroundColor(.secondary)
                             VStack(alignment: .leading, spacing: 5) {
-                                Label(convertDateToString(launch.windowStart), systemImage: "calendar")
+                                Label(launch.status.name.uppercased(), systemImage: launch.status.id == 3 || launch.status.id == 1 ? "checkmark.circle" : "exclamationmark.triangle")
+                                Label(viewModel.convertDateToString(launch.net).uppercased(), systemImage: "calendar")
+                                HStack(spacing: 5) {
+                                    Label(viewModel.extractTimeFromDate(launch.net), systemImage: "clock")
+                                    Text(viewModel.getUserTimeZone())
+                                        .foregroundColor(.secondary)
+                                }
                                 Label(launch.pad.location.countryCode, systemImage: "location")
-                                Label(launch.launchServiceProvider.type ?? "", systemImage: "list.bullet.rectangle.portrait")
+                                Label(launch.launchServiceProvider.type?.uppercased() ?? "", systemImage: "list.bullet.rectangle.portrait")
 
                             }
                             .font(.caption)
@@ -68,12 +67,12 @@ struct LaunchView: View {
                     }
                 }
                 
-                if isLoading {
+                if viewModel.isLoading {
                     ProgressView()
                         .id(UUID())
                         .progressViewStyle(.circular)
                         .frame(maxWidth: .infinity)
-                } else if limitReached {
+                } else if viewModel.limitReached {
                     EmptyView()
                 } else {
                     Color.clear
@@ -81,12 +80,12 @@ struct LaunchView: View {
                         .onAppear {
                             Task {
                                 do {
-                                    try await getLaunches()
-                                } catch SLError.invalidURL {
+                                    try await viewModel.getLaunches()
+                                } catch LaunchView.LaunchViewModel.SLError.invalidURL {
                                     print("Invalid URL")
-                                } catch SLError.invalidResponse {
+                                } catch LaunchView.LaunchViewModel.SLError.invalidResponse {
                                     print("Invalid Response")
-                                } catch SLError.invalidData {
+                                } catch LaunchView.LaunchViewModel.SLError.invalidData {
                                     print("Invalid Data")
                                 } catch {
                                     print("Unexpected Error")
@@ -98,67 +97,7 @@ struct LaunchView: View {
         }
     }
     
-    func convertDateToString( _ dateString: String) -> String {
-        let inputFormatter = DateFormatter()
-        inputFormatter.dateFormat = "yyy-MM-dd'T'HH:mm:ssZ"
-        guard let date = inputFormatter.date(from: dateString) else { return "Error" }
-        
-        let outputFormatter = DateFormatter()
-        outputFormatter.dateFormat = "MMMM d yyyy"
-        
-        return outputFormatter.string(from: date)
-    }
     
-    func getLaunches() async throws {
-        guard !isLoading else {
-            print("Already Loading")
-            return
-        }
-        
-        guard offset <= maxLimit else {
-            print("Limit Reached")
-            limitReached = true
-            return
-        }
-        
-        let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=\(limit)?&offset=\(offset)"
-        print(endpoint)
-        
-        guard let url = URL(string: endpoint) else {
-            throw SLError.invalidURL
-        }
-        
-        isLoading = true
-        print("Loading = True")
-              
-        let (data, response) = try await URLSession.shared.data(from: url)
-        
-        guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
-            throw SLError.invalidResponse
-        }
-        
-        do {
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            
-            let Launches = try decoder.decode(Launches.self, from: data)
-            self.launches.append(contentsOf: Launches.results)
-        } catch {
-            throw SLError.invalidData
-        }
-        
-        offset += limit
-        isLoading = false
-        print("Loading = False")
-
-    }
-    
-    enum SLError: Error {
-        case invalidURL
-        case invalidResponse
-        case invalidData
-
-    }
 }
 struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {

@@ -15,6 +15,7 @@
 		6EE6994D2A869211008CAAAE /* Launch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE6994C2A869211008CAAAE /* Launch.swift */; };
 		6EE699502A86EB25008CAAAE /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6EE6994F2A86EB25008CAAAE /* Kingfisher */; };
 		6EF1EDB82A8839D8007A5C68 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1EDB72A8839D8007A5C68 /* AppTabView.swift */; };
+		6EF1EDBA2A8913E4007A5C68 /* LaunchViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1EDB92A8913E4007A5C68 /* LaunchViewModel.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -26,6 +27,7 @@
 		6EE6994A2A85620A008CAAAE /* Event.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Event.swift; sourceTree = "<group>"; };
 		6EE6994C2A869211008CAAAE /* Launch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Launch.swift; sourceTree = "<group>"; };
 		6EF1EDB72A8839D8007A5C68 /* AppTabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppTabView.swift; sourceTree = "<group>"; };
+		6EF1EDB92A8913E4007A5C68 /* LaunchViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchViewModel.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -59,8 +61,8 @@
 		6EE6993A2A853AFA008CAAAE /* SpaceLaunches */ = {
 			isa = PBXGroup;
 			children = (
-				6EF1EDB42A8838A1007A5C68 /* Views */,
 				6EE699492A8561EA008CAAAE /* Models */,
+				6EF1EDB42A8838A1007A5C68 /* Views */,
 				6EE6993B2A853AFA008CAAAE /* SpaceLaunchesApp.swift */,
 				6EE6993F2A853AFA008CAAAE /* Assets.xcassets */,
 				6EE699412A853AFA008CAAAE /* Preview Content */,
@@ -106,6 +108,7 @@
 			isa = PBXGroup;
 			children = (
 				6EE6993D2A853AFA008CAAAE /* LaunchView.swift */,
+				6EF1EDB92A8913E4007A5C68 /* LaunchViewModel.swift */,
 			);
 			path = LaunchView;
 			sourceTree = "<group>";
@@ -199,6 +202,7 @@
 				6EE6994D2A869211008CAAAE /* Launch.swift in Sources */,
 				6EE6993C2A853AFA008CAAAE /* SpaceLaunchesApp.swift in Sources */,
 				6EF1EDB82A8839D8007A5C68 /* AppTabView.swift in Sources */,
+				6EF1EDBA2A8913E4007A5C68 /* LaunchViewModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
