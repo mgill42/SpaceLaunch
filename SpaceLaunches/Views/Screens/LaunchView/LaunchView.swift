@@ -11,11 +11,11 @@ import Kingfisher
 struct LaunchView: View {
     
     @StateObject private var viewModel = LaunchViewModel()
-        
+    
     var body: some View {
-        VStack {
+        NavigationStack {
             List {
-                ForEach (viewModel.launches) { launch in
+                ForEach (viewModel.searchResults) { launch in
                     HStack {
                         VStack(alignment: .leading, spacing: 5) {
                             Text(launch.name)
@@ -35,7 +35,7 @@ struct LaunchView: View {
                                 }
                                 Label(launch.pad.location.countryCode, systemImage: "location")
                                 Label(launch.launchServiceProvider.type?.uppercased() ?? "", systemImage: "list.bullet.rectangle.portrait")
-
+                                
                             }
                             .font(.caption)
                             .foregroundColor(.primary)
@@ -95,6 +95,9 @@ struct LaunchView: View {
                 }
             }
         }
+        .searchable(text: $viewModel.searchText)
+
+        
     }
     
     

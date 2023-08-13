@@ -11,6 +11,8 @@ extension LaunchView {
     
     @MainActor final class LaunchViewModel: ObservableObject {
         
+        @Published var searchText  = ""
+        
         @Published var events: Events?
         @Published var launches: [Launch] = []
         @Published var offset = 0
@@ -19,6 +21,14 @@ extension LaunchView {
         
         let maxLimit = 100
         let limit = 20
+        
+        var searchResults: [Launch] {
+            if searchText.isEmpty {
+                return launches
+            } else {
+                return launches.filter { $0.name.contains(searchText) }
+            }
+        }
         
         func convertDateToString( _ dateString: String) -> String {
             let inputFormatter = DateFormatter()
