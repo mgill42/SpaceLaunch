@@ -27,6 +27,7 @@ struct LaunchView: View {
                                 .foregroundColor(.secondary)
                             VStack(alignment: .leading, spacing: 5) {
                                 Label(launch.status.name.uppercased(), systemImage: launch.status.id == 3 || launch.status.id == 1 ? "checkmark.circle" : "exclamationmark.triangle")
+                                    .foregroundColor(launch.status.id == 3 || launch.status.id == 1 ? .green: .primary)
                                 Label(viewModel.convertDateToString(launch.net).uppercased(), systemImage: "calendar")
                                 HStack(spacing: 5) {
                                     Label(viewModel.extractTimeFromDate(launch.net), systemImage: "clock")
