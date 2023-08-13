@@ -19,8 +19,7 @@ extension LaunchView {
         @Published var isLoading = false
         @Published var limitReached = false
         
-        let maxLimit = 100
-        let limit = 20
+        let limit = 80
         
         var searchResults: [Launch] {
             if searchText.isEmpty {
@@ -68,14 +67,9 @@ extension LaunchView {
                 print("Already Loading")
                 return
             }
+      
             
-            guard offset <= maxLimit else {
-                print("Limit Reached")
-                limitReached = true
-                return
-            }
-            
-            let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=\(limit)?&offset=\(offset)"
+            let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=\(limit)"
             print(endpoint)
             
             guard let url = URL(string: endpoint) else {

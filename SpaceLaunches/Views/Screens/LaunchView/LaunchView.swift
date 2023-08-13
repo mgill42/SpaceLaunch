@@ -72,34 +72,34 @@ struct LaunchView: View {
                         .id(UUID())
                         .progressViewStyle(.circular)
                         .frame(maxWidth: .infinity)
-                } else if viewModel.limitReached {
-                    EmptyView()
-                } else {
-                    Color.clear
-                        .frame(height: 30)
-                        .onAppear {
-                            Task {
-                                do {
-                                    try await viewModel.getLaunches()
-                                } catch LaunchView.LaunchViewModel.SLError.invalidURL {
-                                    print("Invalid URL")
-                                } catch LaunchView.LaunchViewModel.SLError.invalidResponse {
-                                    print("Invalid Response")
-                                } catch LaunchView.LaunchViewModel.SLError.invalidData {
-                                    print("Invalid Data")
-                                } catch {
-                                    print("Unexpected Error")
-                                }
-                            }
-                        }
                 }
             }
+           
         }
         .searchable(text: $viewModel.searchText)
-
+        .task {
+            do {
+                try await viewModel.getLaunches()
+            } catch SLError.invalidURL {
+                print("Invalid URL")
+            } catch SLError.invalidResponse {
+                print("Invalid Response")
+            } catch SLError.invalidData {
+                print("Invalid Data")
+            } catch {
+                print("Unexpected Error")
+            }
+        }
+       
         
     }
     
+    enum SLError: Error {
+        case invalidURL
+        case invalidResponse
+        case invalidData
+
+    }
     
 }
 struct LaunchView_Previews: PreviewProvider {
