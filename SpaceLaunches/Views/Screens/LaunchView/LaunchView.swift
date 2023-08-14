@@ -15,7 +15,7 @@ struct LaunchView: View {
     var body: some View {
         NavigationStack {
             List {
-                ForEach (viewModel.searchResults) { launch in
+                ForEach (viewModel.launches) { launch in
                     HStack {
                         VStack(alignment: .leading, spacing: 5) {
                             Text(launch.name)
@@ -27,6 +27,7 @@ struct LaunchView: View {
                                 .foregroundColor(.secondary)
                             VStack(alignment: .leading, spacing: 5) {
                                 Label(launch.status.name.uppercased(), systemImage: launch.status.id == 3 || launch.status.id == 1 ? "checkmark.circle" : "exclamationmark.triangle")
+                                    .foregroundColor(launch.status.id == 3 || launch.status.id == 1 ? .green : .primary)
                                 Label(viewModel.convertDateToString(launch.net).uppercased(), systemImage: "calendar")
                                 HStack(spacing: 5) {
                                     Label(viewModel.extractTimeFromDate(launch.net), systemImage: "clock")
@@ -34,8 +35,6 @@ struct LaunchView: View {
                                         .foregroundColor(.secondary)
                                 }
                                 Label(launch.pad.location.countryCode, systemImage: "location")
-                                Label(launch.launchServiceProvider.type?.uppercased() ?? "", systemImage: "list.bullet.rectangle.portrait")
-                                
                             }
                             .font(.caption)
                             .foregroundColor(.primary)
@@ -43,8 +42,8 @@ struct LaunchView: View {
                         
                         Spacer()
                         
-                        if let image = UIImage(named: launch.launchServiceProvider.name) {
-                            Image(uiImage: image)
+                        if let imageUrl = launch.launchServiceProvider.logoUrl {
+                            KFImage(URL(string: imageUrl))
                                 .resizable()
                                 .scaledToFit()
                                 .frame(width: 80, height: 80)
@@ -64,6 +63,28 @@ struct LaunchView: View {
                                         .foregroundColor(.white)
                                 }
                         }
+          
+//                        if let image = UIImage(named: launch.launchServiceProvider.name) {
+//                            Image(uiImage: image)
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: 80, height: 80)
+//                                .padding(5)
+//                                .background {
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .foregroundColor(.white)
+//                                }
+//                        } else {
+//                            Image("Placeholder")
+//                                .resizable()
+//                                .scaledToFit()
+//                                .frame(width: 80, height: 80)
+//                                .padding(5)
+//                                .background {
+//                                    RoundedRectangle(cornerRadius: 10)
+//                                        .foregroundColor(.white)
+//                                }
+//                        }
                     }
                 }
                 
@@ -74,12 +95,26 @@ struct LaunchView: View {
                         .frame(maxWidth: .infinity)
                 }
             }
-           
+            .navigationTitle("Launches")
+            .toolbar{
+                ToolbarItem(placement: .principal) {
+                    Picker(selection: $viewModel.selectedMenu, label: Text("Select List")) {
+                        ForEach(viewModel.menuItems, id: \.self) {
+                            Text($0)
+                        }
+                    }
+                    .pickerStyle(.segmented)
+                    .padding(.horizontal, 50)
+                }
+            }
         }
         .searchable(text: $viewModel.searchText)
         .task {
             do {
-                try await viewModel.getLaunches()
+                if viewModel.launches.isEmpty {
+                    viewModel.upcomingLaunches = try await viewModel.getLaunches(for: "upcoming")
+                    viewModel.launches = viewModel.upcomingLaunches
+                }
             } catch SLError.invalidURL {
                 print("Invalid URL")
             } catch SLError.invalidResponse {
@@ -90,8 +125,7 @@ struct LaunchView: View {
                 print("Unexpected Error")
             }
         }
-       
-        
+     
     }
     
     enum SLError: Error {

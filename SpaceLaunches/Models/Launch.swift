@@ -95,6 +95,7 @@ struct LaunchServiceProvider: Codable, Identifiable {
     let url: String
     let name: String
     let type: String?
+    let logoUrl: String?
 }
 
 struct Rocket: Codable, Identifiable {

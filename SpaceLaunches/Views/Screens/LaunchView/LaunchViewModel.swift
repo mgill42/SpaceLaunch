@@ -11,9 +11,55 @@ extension LaunchView {
     
     @MainActor final class LaunchViewModel: ObservableObject {
         
-        @Published var searchText  = ""
+        let menuItems = ["Upcoming", "Previous", "All"]
         
+        @Published var selectedMenu = "Upcoming" {
+            didSet {
+                if selectedMenu == "Upcoming" {
+                    if upcomingLaunches.isEmpty {
+                        Task {
+                            do {
+                                upcomingLaunches = try await getLaunches(for: "upcoming")
+                                launches = upcomingLaunches
+                            } catch SLError.invalidURL {
+                                print("Invalid URL")
+                            } catch SLError.invalidResponse {
+                                print("Invalid Response")
+                            } catch SLError.invalidData {
+                                print("Invalid Data")
+                            } catch {
+                                print("Unexpected Error")
+                            }
+                        }
+                    }
+                    launches = upcomingLaunches
+                } else if selectedMenu == "Previous" {
+                    if previousLaunches.isEmpty {
+                        Task {
+                            do {
+                                previousLaunches = try await getLaunches(for: "previous")
+                                launches = previousLaunches
+
+                            } catch SLError.invalidURL {
+                                print("Invalid URL")
+                            } catch SLError.invalidResponse {
+                                print("Invalid Response")
+                            } catch SLError.invalidData {
+                                print("Invalid Data")
+                            } catch {
+                                print("Unexpected Error")
+                            }
+                        }
+                    }
+                    launches = previousLaunches
+                }
+            }
+        }
+        @Published var searchText  = ""
         @Published var events: Events?
+        @Published var upcomingLaunches: [Launch] = []
+        @Published var previousLaunches: [Launch] = []
+        @Published var allLaunches: [Launch] = []
         @Published var launches: [Launch] = []
         @Published var offset = 0
         @Published var isLoading = false
@@ -62,14 +108,12 @@ extension LaunchView {
     
         }
         
-        func getLaunches() async throws {
+        func getLaunches(for launch: String) async throws -> [Launch] {
             guard !isLoading else {
                 print("Already Loading")
-                return
+                return []
             }
-      
-            
-            let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch/upcoming?limit=\(limit)"
+            let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch/\(launch)/?mode=detailed"
             print(endpoint)
             
             guard let url = URL(string: endpoint) else {
@@ -89,16 +133,18 @@ extension LaunchView {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
                 
-                let Launches = try decoder.decode(Launches.self, from: data)
-                launches.append(contentsOf: Launches.results)
+                let launches = try decoder.decode(Launches.self, from: data)
+                
+                isLoading = false
+                print("Loading = False")
+                return launches.results
+                
             } catch {
+                isLoading = false
+                print("Loading = False")
                 throw SLError.invalidData
+             
             }
-            
-            offset += limit
-            isLoading = false
-            print("Loading = False")
-
         }
         
         enum SLError: Error {
