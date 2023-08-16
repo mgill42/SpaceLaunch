@@ -6,55 +6,19 @@
 //
 
 import Foundation
-
-extension LaunchView {
     
     @MainActor final class LaunchViewModel: ObservableObject {
         
-        let menuItems = ["Upcoming", "Previous", "All"]
-        
-        @Published var selectedMenu = "Upcoming" {
-            didSet {
-                if selectedMenu == "Upcoming" {
-                    if upcomingLaunches.isEmpty {
-                        Task {
-                            do {
-                                upcomingLaunches = try await getLaunches(for: "upcoming")
-                                launches = upcomingLaunches
-                            } catch SLError.invalidURL {
-                                print("Invalid URL")
-                            } catch SLError.invalidResponse {
-                                print("Invalid Response")
-                            } catch SLError.invalidData {
-                                print("Invalid Data")
-                            } catch {
-                                print("Unexpected Error")
-                            }
-                        }
-                    }
-                    launches = upcomingLaunches
-                } else if selectedMenu == "Previous" {
-                    if previousLaunches.isEmpty {
-                        Task {
-                            do {
-                                previousLaunches = try await getLaunches(for: "previous")
-                                launches = previousLaunches
-
-                            } catch SLError.invalidURL {
-                                print("Invalid URL")
-                            } catch SLError.invalidResponse {
-                                print("Invalid Response")
-                            } catch SLError.invalidData {
-                                print("Invalid Data")
-                            } catch {
-                                print("Unexpected Error")
-                            }
-                        }
-                    }
-                    launches = previousLaunches
-                }
-            }
+        enum ListType: String {
+            case upcoming = "/upcoming"
+            case previous = "/previous"
+            case all = ""
         }
+   
+        let menuItems = ["Upcoming", "Previous", "All"]
+        var upcomingLimit = 100
+        var previousLimit = 100
+        var allLimit = 100
         @Published var searchText  = ""
         @Published var events: Events?
         @Published var upcomingLaunches: [Launch] = []
@@ -64,9 +28,27 @@ extension LaunchView {
         @Published var offset = 0
         @Published var isLoading = false
         @Published var limitReached = false
-        
-        let limit = 80
-        
+        @Published var selectedMenu = "Upcoming" {
+            didSet {
+                if selectedMenu == menuItems[0] {
+                    if upcomingLaunches.isEmpty {
+                        switchList(to: .upcoming)
+                    }
+                    launches = upcomingLaunches
+                } else if selectedMenu == menuItems[1] {
+                    if previousLaunches.isEmpty {
+                        switchList(to: .previous)
+                    }
+                    launches = previousLaunches
+                } else if selectedMenu == menuItems[2] {
+                    if allLaunches.isEmpty {
+                        switchList(to: .all)
+                    }
+                    launches = allLaunches
+                 }
+            }
+        }
+                
         var searchResults: [Launch] {
             if searchText.isEmpty {
                 return launches
@@ -74,6 +56,7 @@ extension LaunchView {
                 return launches.filter { $0.name.contains(searchText) }
             }
         }
+        
         
         func convertDateToString( _ dateString: String) -> String {
             let inputFormatter = DateFormatter()
@@ -105,15 +88,65 @@ extension LaunchView {
             outputFormatter.dateFormat = "h:mm a"
 
             return outputFormatter.string(from: date)
-    
         }
         
-        func getLaunches(for launch: String) async throws -> [Launch] {
+        func getLaunchesStart() {
+            isLoading = false
+            Task {
+                do {
+                    try Task.checkCancellation()
+
+                    if launches.isEmpty {
+                        upcomingLaunches = try await getLaunches(for: .upcoming, limit: upcomingLimit)
+                        launches = upcomingLaunches
+                    }
+                } catch SLError.invalidURL {
+                    print("Invalid URL")
+                } catch SLError.invalidResponse {
+                    print("Invalid Response")
+                } catch SLError.invalidData {
+                    print("Invalid Data")
+                } catch {
+                    print("Unexpected Error")
+                }
+            }
+        }
+        
+        func switchList(to listType: ListType) {
+                Task {
+                    do {
+                        switch listType {
+                        case .upcoming:
+                            upcomingLaunches = try await getLaunches(for: .upcoming, limit: upcomingLimit)
+                            launches = upcomingLaunches
+                        case .previous:
+                            previousLaunches = try await getLaunches(for: .previous, limit: previousLimit)
+                            launches = previousLaunches
+                        default:
+                            allLaunches = try await getLaunches(for: .all, limit: allLimit)
+                            launches = allLaunches
+                        }
+                    } catch SLError.invalidURL {
+                        print("Invalid URL")
+                    } catch SLError.invalidResponse {
+                        print("Invalid Response")
+                    } catch SLError.invalidData {
+                        print("Invalid Data")
+                    } catch {
+                        print("Unexpected Error")
+                    }
+            }
+        }
+        
+      
+        
+        func getLaunches(for listType: ListType, limit: Int) async throws -> [Launch] {
             guard !isLoading else {
                 print("Already Loading")
                 return []
             }
-            let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch/\(launch)/?mode=detailed"
+            
+            let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch\(listType.rawValue)/?mode=detailed&limit=\(limit)"
             print(endpoint)
             
             guard let url = URL(string: endpoint) else {
@@ -143,7 +176,6 @@ extension LaunchView {
                 isLoading = false
                 print("Loading = False")
                 throw SLError.invalidData
-             
             }
         }
         
@@ -156,4 +188,4 @@ extension LaunchView {
         
     }
     
-}
+

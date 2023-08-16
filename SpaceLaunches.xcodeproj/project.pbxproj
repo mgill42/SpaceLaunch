@@ -61,6 +61,7 @@
 		6EE6993A2A853AFA008CAAAE /* SpaceLaunches */ = {
 			isa = PBXGroup;
 			children = (
+				6EF1EDBB2A8C0C03007A5C68 /* Managers */,
 				6EE699492A8561EA008CAAAE /* Models */,
 				6EF1EDB42A8838A1007A5C68 /* Views */,
 				6EE6993B2A853AFA008CAAAE /* SpaceLaunchesApp.swift */,
@@ -119,6 +120,13 @@
 				6EF1EDB72A8839D8007A5C68 /* AppTabView.swift */,
 			);
 			path = AppTabView;
+			sourceTree = "<group>";
+		};
+		6EF1EDBB2A8C0C03007A5C68 /* Managers */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Managers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
