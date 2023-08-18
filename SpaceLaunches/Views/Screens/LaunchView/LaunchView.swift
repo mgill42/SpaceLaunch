@@ -22,15 +22,49 @@ struct LaunchView: View {
     var body: some View {
         NavigationStack {
             ZStack {
-                if !viewModel.isLoading {
+                if !viewModel.isLoading || viewModel.isAppending  {
                     List {
-                        ForEach (viewModel.launches) { launch in
+                        ForEach (viewModel.getCurrentArrayList()) { launch in
                             LaunchCell(launch: launch, viewModel: viewModel)
                         }
-                        ProgressView()
-                            .id(UUID())
-                            .progressViewStyle(.circular)
-                            .frame(maxWidth: .infinity)
+                        if (viewModel.selectedMenu == .upcoming && viewModel.upcomingFull == false) {
+                            ProgressView()
+                                .id(UUID())
+                                .progressViewStyle(.circular)
+                                .frame(maxWidth: .infinity)
+                                .onAppear {
+                                    if (!viewModel.isLoading) {
+                                        print("appeared")
+                                        viewModel.appendPage(List: viewModel.selectedMenu)
+                                    }
+                             
+                                }
+                        } else if (viewModel.selectedMenu == .previous && viewModel.previousFull == false) {
+                            ProgressView()
+                                .id(UUID())
+                                .progressViewStyle(.circular)
+                                .frame(maxWidth: .infinity)
+                                .onAppear {
+                                    if (!viewModel.isLoading) {
+                                        print("appeared")
+                                        viewModel.appendPage(List: viewModel.selectedMenu)
+                                    }
+                             
+                                }
+                        } else if (viewModel.selectedMenu == .all && viewModel.allFull == false) {
+                            ProgressView()
+                                .id(UUID())
+                                .progressViewStyle(.circular)
+                                .frame(maxWidth: .infinity)
+                                .onAppear {
+                                    if (!viewModel.isLoading) {
+                                        print("appeared")
+                                        viewModel.appendPage(List: viewModel.selectedMenu)
+                                    }
+                             
+                                }
+                        }
+                        
                     }
                 } else {
                     LoadingView()
@@ -75,8 +109,15 @@ struct LaunchPicker: View {
     var body: some View {
         
         Picker(selection: $viewModel.selectedMenu, label: Text("Select List")) {
-            ForEach(viewModel.menuItems, id: \.self) {
-                Text($0)
+            ForEach(viewModel.menuItems, id: \.self) { item in
+                switch item {
+                case .upcoming:
+                    Text("Upcoming")
+                case .previous:
+                    Text("Previous")
+                default:
+                    Text("All")
+                }
             }
         }
         .disabled(viewModel.isLoading ? true : false)
@@ -109,7 +150,9 @@ struct LaunchCell: View {
                         Text(viewModel.getUserTimeZone())
                             .foregroundColor(.secondary)
                     }
-                    Label(launch.pad.location.countryCode, systemImage: "location")
+                    if let pad = launch.pad {
+                        Label(pad.location.countryCode, systemImage: "location")
+                    }
                 }
                 .font(.caption)
                 .foregroundColor(.primary)

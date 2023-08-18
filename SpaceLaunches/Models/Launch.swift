@@ -9,7 +9,7 @@ import Foundation
 
 struct Launches: Codable {
     let count: Int
-    let next: String
+    let next: String?
     let previous: String?
     var results: [Launch]
 }
@@ -31,7 +31,7 @@ struct Launch: Codable, Identifiable {
     let weatherConcerns: String?
     let launchServiceProvider: LaunchServiceProvider
     let mission: Mission?
-    let pad: Pad
+    let pad: Pad?
   
 }
 
@@ -44,8 +44,8 @@ struct Pad: Codable, Identifiable {
     let id: Int
     let url: String
     let name: String
-    let latitude: String
-    let longitude: String
+    let latitude: String?
+    let longitude: String?
     let location: Location
 }
 
@@ -112,7 +112,7 @@ struct Mission: Codable, Identifiable {
     let name: String
     let description: String
     let type: String
-    let orbit: Orbit
+//    let orbit: Orbit
     let agencies: [Agency]
 
 }

@@ -6,19 +6,23 @@
 //
 
 import Foundation
-    
+
+enum ListType: String, CaseIterable {
+    case upcoming = "/upcoming"
+    case previous = "/previous"
+    case all = ""
+}
+
     @MainActor final class LaunchViewModel: ObservableObject {
+               
+        let menuItems = [ListType.upcoming, ListType.previous, ListType.all]
+        var upcomingPage = 0
+        var previousPage = 0
+        var allPage = 0
+        var upcomingFull = false
+        var previousFull = false
+        var allFull = false
         
-        enum ListType: String {
-            case upcoming = "/upcoming"
-            case previous = "/previous"
-            case all = ""
-        }
-   
-        let menuItems = ["Upcoming", "Previous", "All"]
-        var upcomingLimit = 100
-        var previousLimit = 100
-        var allLimit = 100
         @Published var searchText  = ""
         @Published var events: Events?
         @Published var upcomingLaunches: [Launch] = []
@@ -26,26 +30,26 @@ import Foundation
         @Published var allLaunches: [Launch] = []
         @Published var launches: [Launch] = []
         @Published var offset = 0
-        @Published var isLoading = false
+        @Published var isLoading = true
+        @Published var isAppending = false
         @Published var limitReached = false
-        @Published var selectedMenu = "Upcoming" {
+        @Published var selectedMenu: ListType = .upcoming {
             didSet {
-                if selectedMenu == menuItems[0] {
-                    if upcomingLaunches.isEmpty {
-                        switchList(to: .upcoming)
+                Task {
+                    if selectedMenu == .upcoming {
+                        if upcomingLaunches.isEmpty {
+                            upcomingLaunches = try await getLaunches(for: .upcoming, page: upcomingPage)
+                        }
+                    } else if selectedMenu == .previous {
+                        if previousLaunches.isEmpty {
+                            previousLaunches = try await getLaunches(for: .previous, page: previousPage)
+                        }
+                    } else if selectedMenu == .all {
+                        if allLaunches.isEmpty {
+                            allLaunches = try await getLaunches(for: .all, page: allPage)
+                        }
                     }
-                    launches = upcomingLaunches
-                } else if selectedMenu == menuItems[1] {
-                    if previousLaunches.isEmpty {
-                        switchList(to: .previous)
-                    }
-                    launches = previousLaunches
-                } else if selectedMenu == menuItems[2] {
-                    if allLaunches.isEmpty {
-                        switchList(to: .all)
-                    }
-                    launches = allLaunches
-                 }
+                }
             }
         }
                 
@@ -90,6 +94,35 @@ import Foundation
             return outputFormatter.string(from: date)
         }
         
+        func getCurrentArrayList() -> [Launch] {
+            switch selectedMenu {
+            case .upcoming:
+                return upcomingLaunches
+            case .previous:
+                return previousLaunches
+            default:
+                return allLaunches
+            }
+        }
+        
+        func appendPage(List: ListType) {
+            Task {
+                do {
+                    switch List {
+                    case .upcoming:
+                        upcomingPage += 1
+                        upcomingLaunches.append(contentsOf: try await getLaunches(for: .upcoming, page: upcomingPage))
+                    case .previous:
+                        previousPage += 1
+                        previousLaunches.append(contentsOf: try await getLaunches(for: .previous, page: previousPage))
+                    default:
+                        allPage += 1
+                        allLaunches.append(contentsOf: try await getLaunches(for: .all, page: allPage))
+                    }
+                }
+            }
+        }
+        
         func getLaunchesStart() {
             isLoading = false
             Task {
@@ -97,7 +130,7 @@ import Foundation
                     try Task.checkCancellation()
 
                     if launches.isEmpty {
-                        upcomingLaunches = try await getLaunches(for: .upcoming, limit: upcomingLimit)
+                        upcomingLaunches = try await getLaunches(for: .upcoming, page: upcomingPage)
                         launches = upcomingLaunches
                     }
                 } catch SLError.invalidURL {
@@ -112,50 +145,67 @@ import Foundation
             }
         }
         
-        func switchList(to listType: ListType) {
+        func switchList(to listType: ListType) -> [Launch] {
                 Task {
                     do {
                         switch listType {
                         case .upcoming:
-                            upcomingLaunches = try await getLaunches(for: .upcoming, limit: upcomingLimit)
-                            launches = upcomingLaunches
+                            upcomingLaunches = try await getLaunches(for: .upcoming, page: upcomingPage)
+                            return upcomingLaunches
                         case .previous:
-                            previousLaunches = try await getLaunches(for: .previous, limit: previousLimit)
-                            launches = previousLaunches
+                            previousLaunches = try await getLaunches(for: .previous, page: previousPage)
+                            return previousLaunches
                         default:
-                            allLaunches = try await getLaunches(for: .all, limit: allLimit)
-                            launches = allLaunches
+                            allLaunches = try await getLaunches(for: .all, page: allPage)
+                            return allLaunches
                         }
                     } catch SLError.invalidURL {
                         print("Invalid URL")
+                        return upcomingLaunches
                     } catch SLError.invalidResponse {
                         print("Invalid Response")
+                        return upcomingLaunches
                     } catch SLError.invalidData {
                         print("Invalid Data")
+                        return upcomingLaunches
                     } catch {
                         print("Unexpected Error")
+                        return upcomingLaunches
+
                     }
+
             }
+            return upcomingLaunches
         }
         
-      
-        
-        func getLaunches(for listType: ListType, limit: Int) async throws -> [Launch] {
+        func getLaunches(for listType: ListType, page: Int) async throws -> [Launch] {
             guard !isLoading else {
                 print("Already Loading")
                 return []
             }
+            guard !isAppending else {
+                print("Already Appending")
+                return []
+            }
             
-            let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch\(listType.rawValue)/?mode=detailed&limit=\(limit)"
+            let endpoint = "https://lldev.thespacedevs.com/2.2.0/launch\(listType.rawValue)/?mode=detailed&limit=\(100)&offset=\(100 * page)"
             print(endpoint)
             
             guard let url = URL(string: endpoint) else {
                 throw SLError.invalidURL
             }
             
-            isLoading = true
-            print("Loading = True")
-                  
+            if page > 0 {
+                isAppending = true
+                print("isAppending = true")
+            }
+            
+            if !isAppending {
+                isLoading = true
+                print("Loading = True")
+            }
+            
+          
             let (data, response) = try await URLSession.shared.data(from: url)
             
             guard let response = response as? HTTPURLResponse, response.statusCode == 200 else {
@@ -168,15 +218,43 @@ import Foundation
                 
                 let launches = try decoder.decode(Launches.self, from: data)
                 
-                isLoading = false
-                print("Loading = False")
+                if isAppending {
+                    isAppending = false
+                    print("isAppending = \(isAppending)")
+                }
+                
+                if isLoading {
+                    isLoading = false
+                    print("isLoading = \(isLoading)")
+                }
+                
+                if launches.next == nil {
+                    switch selectedMenu {
+                    case .upcoming:
+                        upcomingFull = true
+                    case .previous:
+                        previousFull = true
+                    default:
+                        allFull = true
+                    }
+                }
+                
                 return launches.results
                 
             } catch {
-                isLoading = false
-                print("Loading = False")
+                if isAppending {
+                    isAppending = false
+                    print("isAppending = \(isAppending)")
+                }
+                
+                if isLoading {
+                    isLoading = false
+                    print("isLoading = \(isLoading)")
+                }
+                
                 throw SLError.invalidData
             }
+
         }
         
         enum SLError: Error {
@@ -185,7 +263,4 @@ import Foundation
             case invalidData
 
         }
-        
     }
-    
-
