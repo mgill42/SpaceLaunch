@@ -7,6 +7,7 @@
 
 import Foundation
 
+
 struct Launches: Codable {
     let count: Int
     let next: String?
@@ -15,7 +16,6 @@ struct Launches: Codable {
 }
 
 struct Launch: Codable, Identifiable {
-    
     
     let id: String
     let url: String
