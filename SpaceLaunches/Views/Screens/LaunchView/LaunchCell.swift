@@ -18,16 +18,22 @@ struct LaunchCell: View {
                 Text(launch.name)
                     .bold()
                     .font(.subheadline)
+                
                 Text(launch.launchServiceProvider.name)
                     .font(.caption)
                     .padding(.bottom, 8)
                     .foregroundColor(.secondary)
+
                 VStack(alignment: .leading, spacing: 5) {
                     Label(launch.status.name.uppercased(), systemImage: launch.status.id == 3 || launch.status.id == 1 ? "checkmark.circle" : "exclamationmark.triangle")
-                        .foregroundColor(launch.status.id == 3 || launch.status.id == 1 ? .green : .primary)
+                        .foregroundColor(launch.status.id == 3 || launch.status.id == 1 ? .accentColor : .primary)
                     if let pad = launch.pad {
-                        Label(pad.location.countryCode, systemImage: "location")
+                        if pad.location.countryCode != "" {
+                            Label(pad.location.countryCode, systemImage: "location")
+                        }
                     }
+                    Label(launch.net.formattedDate(dateStyle: .medium, timeStyle: .short), systemImage: "calendar")
+                    
                 }
                 .font(.caption)
                 .foregroundColor(.primary)
@@ -57,12 +63,20 @@ struct LaunchCell: View {
                     }
             }
         }
+        .padding()
+        .background {
+            RoundedRectangle(cornerRadius: 15)
+                .foregroundColor(Color(uiColor: .secondarySystemBackground))
+        }
+        .listRowSeparator(.hidden)
     }
+    
+    
 }
 
 
-//struct LaunchCell_Previews: PreviewProvider {
-//    static var previews: some View {
-//        LaunchCell()
-//    }
-//}
+struct LaunchCell_Previews: PreviewProvider {
+    static var previews: some View {
+        LaunchCell(launch: Launch.example())
+    }
+}

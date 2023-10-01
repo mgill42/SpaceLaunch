@@ -32,6 +32,27 @@ struct Launch: Codable, Identifiable {
     let launchServiceProvider: LaunchServiceProvider
     let mission: Mission?
     let pad: Pad?
+    let image: String?
+    
+    static func example() -> Launch {
+        
+    Launch(id: "558c199e-4cfb-4914-b5d3-452b63d492bf",
+           url: "https://lldev.thespacedevs.com/2.2.0/launch/558c199e-4cfb-4914-b5d3-452b63d492bf/",
+           slug: "delta-iv-heavy-nrol-91",
+           name: "Delta IV Heavy | NROL-91",
+           status: Status(id: 3, name: "Launch Successful", abbrev: "Success", description: "The launch vehicle successfully inserted its payload(s) into the target orbit(s)."),
+           lastUpdated: "2023-06-14T17:25:51Z",
+           net: "2022-09-24T22:25:30Z",
+           netPrecision: nil,
+           windowEnd: "2022-09-24T23:12:00Z",
+           windowStart: "2022-09-24T20:50:00Z",
+           probability: 70,
+           weatherConcerns: nil,
+           launchServiceProvider: LaunchServiceProvider(id: 124, url: "https://lldev.thespacedevs.com/2.2.0/agencies/124/", name: "United Launch Alliance", type: "Commercial", logoUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/logo/united2520launch2520alliance_logo_20210412195953.png"),
+           mission: Mission(id: 6090, name: "NROL-91", description: "Classified payload for the US National Reconnaissance Office (NRO).", type: "Government/Top Secret", agencies: []),
+           pad: Pad(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/pad/11/", name: "Space Launch Complex 6", latitude: "34.5815", longitude: "-120.6262", location: Location(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/location/11/", name: "Vandenberg SFB, CA, USA", countryCode: "USA", mapImage: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launch_images/location_11_20200803142416.jpg", timezoneName: "America/Los_Angeles")),
+           image: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/delta_iv_heavy_image_20210426103838.jpg")
+    }
   
 }
 
@@ -122,4 +143,5 @@ struct Orbit: Codable, Identifiable {
     let name: String
     let abbrev: String
 }
+
 

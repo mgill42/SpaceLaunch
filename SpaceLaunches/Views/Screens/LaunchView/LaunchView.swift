@@ -16,8 +16,6 @@ struct LaunchView: View {
     @StateObject private var upcomingLaunchesViewModel = UpcomingLaunchesViewModel()
     @StateObject private var previousLaunchesViewModel = PreviousLaunchesViewModel()
     @StateObject private var allLaunchesViewModel = AllLaunchesViewModel()
-
-
     
     var body: some View {
         NavigationView {
@@ -54,6 +52,7 @@ struct LaunchView: View {
             }
             .searchable(text: $searchTerm)
             .navigationTitle("Launches")
+            .navigationBarTitleDisplayMode(.inline  )
         }
         }
     }

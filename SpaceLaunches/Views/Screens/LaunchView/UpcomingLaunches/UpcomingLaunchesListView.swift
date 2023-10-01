@@ -35,8 +35,6 @@ struct UpcomingLaunchesListView: View {
                 Text(message)
                     .foregroundColor(.pink)
             }
-         
-                
         }
         .listStyle(.plain)
     }

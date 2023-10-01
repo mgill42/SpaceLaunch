@@ -13,7 +13,12 @@ class APIService {
         let url = createURL(for: searchTerm, type: type, page: page, limit: limit)
         fetch(type: Launches.self, url: url,completion: completion)
     }
-        
+    
+//    func fetchLatestLaunch(completion: @escaping(Result<Launches,APIError>) -> Void) {
+//        let url = createURL(for: nil, type: .upcoming, page: 1, limit: 1)
+//        fetch(type: Launches.self, url: url, completion: completion)
+//    }
+
     func fetch<T: Decodable>(type: T.Type, url: URL?, completion: @escaping(Result<T,APIError>) -> Void) {
         
         guard let url = url else {
