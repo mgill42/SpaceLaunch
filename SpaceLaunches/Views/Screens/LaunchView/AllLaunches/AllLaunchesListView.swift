@@ -13,7 +13,9 @@ struct AllLaunchesListView: View {
     var body: some View {
         List {
             ForEach(viewModel.allLaunches) { launch in
-                LaunchCell(launch: launch)
+                NavigationLink(destination: LaunchDetailView(launch: launch)) {
+                    LaunchCell(launch: launch)
+                }
             }
             
             switch viewModel.state {

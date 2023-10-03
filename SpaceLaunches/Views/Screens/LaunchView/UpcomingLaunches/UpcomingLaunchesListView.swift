@@ -14,8 +14,9 @@ struct UpcomingLaunchesListView: View {
     var body: some View {
         List {
             ForEach(viewModel.upcomingLaunches) { launch in
-                LaunchCell(launch: launch)
-            }
+                NavigationLink(destination: LaunchDetailView(launch: launch)) {
+                    LaunchCell(launch: launch)
+                }            }
             
             switch viewModel.state {    
             case .good:

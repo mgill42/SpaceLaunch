@@ -48,8 +48,8 @@ struct Launch: Codable, Identifiable {
            windowStart: "2022-09-24T20:50:00Z",
            probability: 70,
            weatherConcerns: nil,
-           launchServiceProvider: LaunchServiceProvider(id: 124, url: "https://lldev.thespacedevs.com/2.2.0/agencies/124/", name: "United Launch Alliance", type: "Commercial", logoUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/logo/united2520launch2520alliance_logo_20210412195953.png"),
-           mission: Mission(id: 6090, name: "NROL-91", description: "Classified payload for the US National Reconnaissance Office (NRO).", type: "Government/Top Secret", agencies: []),
+           launchServiceProvider: LaunchServiceProvider(id: 124, url: "https://lldev.thespacedevs.com/2.2.0/agencies/124/", name: "United Launch Alliance", type: "Commercial", logoUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/logo/united2520launch2520alliance_logo_20210412195953.png", description: "United Launch Alliance (ULA) is a joint venture of Lockheed Martin Space Systems and Boeing Defense, Space & Security. ULA was formed in December 2006 by combining the teams at these companies which provide spacecraft launch services to the government of the United States. ULA launches from both coasts of the US. They launch their Atlas V vehicle from LC-41 in Cape Canaveral and LC-3E at Vandeberg. Their Delta IV launches from LC-37 at Cape Canaveral and LC-6 at Vandenberg."),
+           mission: Mission(id: 6090, name: "NROL-91", description: "Classified payload for the US National Reconnaissance Office (NRO).", type: "Government/Top Secret", orbit: Orbit(id: 1, name: "Low Earth Orbit", abbrev: "LEO"), agencies: []),
            pad: Pad(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/pad/11/", name: "Space Launch Complex 6", latitude: "34.5815", longitude: "-120.6262", location: Location(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/location/11/", name: "Vandenberg SFB, CA, USA", countryCode: "USA", mapImage: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launch_images/location_11_20200803142416.jpg", timezoneName: "America/Los_Angeles")),
            image: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/delta_iv_heavy_image_20210426103838.jpg")
     }
@@ -117,6 +117,7 @@ struct LaunchServiceProvider: Codable, Identifiable {
     let name: String
     let type: String?
     let logoUrl: String?
+    let description: String
 }
 
 struct Rocket: Codable, Identifiable {
@@ -133,7 +134,7 @@ struct Mission: Codable, Identifiable {
     let name: String
     let description: String
     let type: String
-//    let orbit: Orbit
+    let orbit: Orbit
     let agencies: [Agency]
 
 }
