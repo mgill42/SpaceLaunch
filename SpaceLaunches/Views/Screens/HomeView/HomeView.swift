@@ -33,7 +33,6 @@ struct HomeView: View {
                 }
             }
             .navigationTitle("Upcoming Launch")
-
         }
     }
 }

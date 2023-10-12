@@ -49,7 +49,8 @@ struct CountdownTimerView: View {
             Rectangle()
                 .frame(width: 1, height: 30)
                 .opacity(0.3)
-        }
+        
+    }
         .font(.title)
         .monospaced()
         .bold()
@@ -68,7 +69,8 @@ struct CountdownTimerView: View {
 
         // Create a date formatter for the given format
         let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
         // Parse the target time string
         if let targetTime = dateFormatter.date(from: launchTime) {

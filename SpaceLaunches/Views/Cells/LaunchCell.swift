@@ -27,13 +27,12 @@ struct LaunchCell: View {
                 VStack(alignment: .leading, spacing: 5) {
                     Label(launch.status.name.uppercased(), systemImage: launch.status.id == 3 || launch.status.id == 1 ? "checkmark.circle" : "exclamationmark.triangle")
                         .foregroundColor(launch.status.id == 3 || launch.status.id == 1 ? .accentColor : .primary)
+                    Label(launch.net.formattedDate(dateStyle: .medium, timeStyle: .short), systemImage: "clock")
                     if let pad = launch.pad {
                         if pad.location.countryCode != "" {
                             Label(pad.location.countryCode, systemImage: "location")
                         }
                     }
-                    Label(launch.net.formattedDate(dateStyle: .medium, timeStyle: .short), systemImage: "calendar")
-                    
                 }
                 .font(.caption)
                 .foregroundColor(.primary)
@@ -70,8 +69,6 @@ struct LaunchCell: View {
         }
         .listRowSeparator(.hidden)
     }
-    
-    
 }
 
 

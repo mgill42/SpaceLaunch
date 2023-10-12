@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import CoreLocation
 
 
 struct Launches: Codable {
@@ -28,6 +29,7 @@ struct Launch: Codable, Identifiable {
     let windowEnd: String
     let windowStart: String
     let probability: Int?
+    let rocket: Rocket
     let weatherConcerns: String?
     let launchServiceProvider: LaunchServiceProvider
     let mission: Mission?
@@ -46,7 +48,7 @@ struct Launch: Codable, Identifiable {
            netPrecision: nil,
            windowEnd: "2022-09-24T23:12:00Z",
            windowStart: "2022-09-24T20:50:00Z",
-           probability: 70,
+           probability: 70, rocket: Rocket(id: 2737, configuration: Rocket.Configuration(id: 2737, url: "https://lldev.thespacedevs.com/2.2.0/config/launcher/8/", name: "Atlas V 531", active: true, reusable: false, description: "Atlas V with 5m Fairing, 3 SRB, 1 Centaur upper stage engine.", family: "Atlas", fullName: "Atlas V 531", length: 60.0, diameter: 3.8, maidenFlight: "2010-08-14", launchCost: "140000000", launchMass: 479, leoCapacity: 15530, gtoCapacity: 7450, imageUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/atlas2520v2520531_image_20190222030726.jpeg", totalLaunchCount: 5, consecutiveSuccessfulLaunches: 5, successfulLaunches: 5, failedLaunches: 0, pendingLaunches: 0, attemptedLandings: 0, successfulLandings: 0, failedLandings: 0, consecutiveSuccessfulLandings: 0)),
            weatherConcerns: nil,
            launchServiceProvider: LaunchServiceProvider(id: 124, url: "https://lldev.thespacedevs.com/2.2.0/agencies/124/", name: "United Launch Alliance", type: "Commercial", logoUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/logo/united2520launch2520alliance_logo_20210412195953.png", description: "United Launch Alliance (ULA) is a joint venture of Lockheed Martin Space Systems and Boeing Defense, Space & Security. ULA was formed in December 2006 by combining the teams at these companies which provide spacecraft launch services to the government of the United States. ULA launches from both coasts of the US. They launch their Atlas V vehicle from LC-41 in Cape Canaveral and LC-3E at Vandeberg. Their Delta IV launches from LC-37 at Cape Canaveral and LC-6 at Vandenberg."),
            mission: Mission(id: 6090, name: "NROL-91", description: "Classified payload for the US National Reconnaissance Office (NRO).", type: "Government/Top Secret", orbit: Orbit(id: 1, name: "Low Earth Orbit", abbrev: "LEO"), agencies: []),
@@ -68,6 +70,27 @@ struct Pad: Codable, Identifiable {
     let latitude: String?
     let longitude: String?
     let location: Location
+    
+    var latitudeDeg: Double {
+        if let latitude = latitude {
+            return Double(latitude) ?? 0.0
+        } else {
+            return 0.0
+        }
+    }
+    
+    var longitudeDeg: Double {
+        if let longitude = longitude {
+            return Double(longitude) ?? 0.0
+        } else {
+            return 0.0
+        }
+    }
+    
+    var launchLocation: LaunchLocation {
+        LaunchLocation(coordinate: CLLocationCoordinate2D(latitude: Double(latitude ?? "0.0") ?? 0.0,
+                                                          longitude: Double(longitude ?? "0.0") ?? 0.0))
+    }
 }
 
 struct Location: Codable, Identifiable {
@@ -84,19 +107,6 @@ struct Agency: Codable, Identifiable {
     let id: Int
     let url: String
     let name: String
-//    let featured: Bool
-//    let type: String
-//    let countryCode: String
-//    let abbrev: String
-//    let description: String?
-//    let spacecraft: String
-//    let totalLaunchCount: Int?
-//    let consecutiveSuccessfulLaunches: Int?
-//    let successfulLaunches: Int?
-//    let failedLaunches: Int?
-//    let pendingLaunches: Int?
-//    let failedLandings: Int?
-//    let attemptedLandings: Int?
     let infoUrl: String?
     let wikiUrl: String?
     let logoUrl: String?
@@ -122,11 +132,37 @@ struct LaunchServiceProvider: Codable, Identifiable {
 
 struct Rocket: Codable, Identifiable {
     let id: Int
-    let url: String
-    let name: String
-    let family: String
-    let fullName: String
-    let variant: String
+    let configuration: Configuration
+    
+    struct Configuration: Codable, Identifiable {
+        let id: Int
+        let url: String
+        let name: String
+        let active: Bool
+        let reusable: Bool
+        let description: String
+        let family: String
+        let fullName: String
+        let length: Double?
+        let diameter: Double?
+        let maidenFlight: String?
+        let launchCost: String?
+        let launchMass: Double?
+        let leoCapacity: Int?
+        let gtoCapacity: Int?
+        let imageUrl: String?
+        let totalLaunchCount: Int
+        let consecutiveSuccessfulLaunches: Int
+        let successfulLaunches: Int
+        let failedLaunches: Int
+        let pendingLaunches: Int
+        let attemptedLandings: Int
+        let successfulLandings: Int
+        let failedLandings: Int
+        let consecutiveSuccessfulLandings: Int
+        
+        
+    }
 }
 
 struct Mission: Codable, Identifiable {

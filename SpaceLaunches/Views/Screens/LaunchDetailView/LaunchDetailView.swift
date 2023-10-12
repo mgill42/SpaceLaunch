@@ -11,8 +11,10 @@ import MapKit
 
 struct LaunchDetailView: View {
     
+    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
+    
     let launch: Launch
-    @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 51.5, longitude: -0.1275), span: MKCoordinateSpan(latitudeDelta: 0.1, longitudeDelta: 0.1))
+    
     
     var body: some View {
         GeometryReader { geo in
@@ -70,7 +72,7 @@ struct LaunchDetailView: View {
                         }
                         .frame(width: 90)
                     }
-                    .foregroundColor(.gray)
+                    .foregroundColor(.secondary)
                     
                     Divider()
                         .padding()
@@ -84,7 +86,7 @@ struct LaunchDetailView: View {
                                 .bold()
                   
                             Text(mission.description)
-                                .foregroundColor(.gray)
+                                .foregroundColor(.secondary)
                         }
                     }
                     
@@ -98,7 +100,21 @@ struct LaunchDetailView: View {
                         Text(launch.launchServiceProvider.name)
                             .bold()
                         Text(launch.launchServiceProvider.description)
-                            .foregroundColor(.gray)
+                            .foregroundColor(.secondary)
+                    }
+                    
+                    Divider()
+                        .padding()
+                    
+                    VStack(alignment: .leading, spacing: 10) {
+                        Text("Rocket")
+                            .font(.title2)
+                            .bold()
+                        Text(launch.rocket.configuration.name)
+                            .bold()
+                        Text(launch.rocket.configuration.description)
+                            .foregroundColor(.secondary)
+                        
                     }
                     
                     Divider()
@@ -109,23 +125,26 @@ struct LaunchDetailView: View {
                             .font(.title2)
                             .bold()
                         if let pad = launch.pad {
-                            if let latitude = launch.pad?.latitude, let longitude = launch.pad?.longitude {
-                                Map(coordinateRegion: $region)
+                                Map(coordinateRegion: $region, annotationItems: [pad.launchLocation]) { location in
+                                    MapMarker(coordinate: location.coordinate)
+                                }
                                     .frame(maxWidth: geo.size.width)
                                     .frame(height: 300)
                                     .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                                    .padding(.top)
                                     .onAppear {
-                                        region.center.latitude = Double(latitude) ?? 0.0
-                                        region.center.longitude = Double(longitude) ?? 0.0
-                                        
+                                        region.center.latitude = pad.latitudeDeg
+                                        region.center.longitude = pad.longitudeDeg
                                     }
                                 Text(pad.location.name)
                                     .font(.footnote)
                                     .foregroundColor(.gray)
                                     .frame(maxWidth: .infinity)
-                            }
+                            
                         }
                     }
+                
+                
                 }
                 .padding()
             }
@@ -133,6 +152,11 @@ struct LaunchDetailView: View {
 
         }
     }
+}
+
+struct LaunchLocation: Identifiable {
+    let id = UUID()
+    var coordinate: CLLocationCoordinate2D
 }
 
 struct LaunchDetailView_Previews: PreviewProvider {

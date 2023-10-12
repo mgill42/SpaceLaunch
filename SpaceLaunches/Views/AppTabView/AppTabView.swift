@@ -17,7 +17,7 @@ struct AppTabView: View {
             LaunchView()
                 .tabItem { Label("Launches", systemImage: "flame") }
             
-            Text("Events")
+            EventsView()
                 .tabItem { Label("Events", systemImage: "calendar") }
             
             Text("Settings")

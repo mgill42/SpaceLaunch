@@ -9,10 +9,11 @@ import Foundation
 extension String {
     func formattedDate(dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style) -> String {
         let dateFormatterGetter = DateFormatter()
-        dateFormatterGetter.dateFormat = "yyyy-MM-dd'T'HH:mm:ss'Z'"
+        dateFormatterGetter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatterGetter.locale = Locale(identifier: "en_US_POSIX")
         
         guard let date = dateFormatterGetter.date(from: self) else {
-            return ""
+            return "Date Error"
         }
         
         let dateFormatter = DateFormatter()

@@ -11,7 +11,7 @@ import Kingfisher
 struct LaunchView: View {
     
     @State var searchTerm  = ""
-    @State var selectedEntityType = LaunchType.all
+    @State var selectedEntityType = LaunchType.upcoming
 
     @StateObject private var upcomingLaunchesViewModel = UpcomingLaunchesViewModel()
     @StateObject private var previousLaunchesViewModel = PreviousLaunchesViewModel()
@@ -46,17 +46,25 @@ struct LaunchView: View {
                             upcomingLaunchesViewModel.searchTerm = searchTerm
                         }
                 }
-                    
-                
                 Spacer()
             }
             .searchable(text: $searchTerm)
             .navigationTitle("Launches")
             .navigationBarTitleDisplayMode(.inline  )
         }
+        .onChange(of: searchTerm) { newValue in
+            switch selectedEntityType {
+            case .all:
+                allLaunchesViewModel.searchTerm = newValue
+            case .upcoming:
+                upcomingLaunchesViewModel.searchTerm = newValue
+            case .previous:
+                previousLaunchesViewModel.searchTerm = newValue
+            }
         }
     }
-    
+}
+
 
 
 struct LaunchView_Previews: PreviewProvider {

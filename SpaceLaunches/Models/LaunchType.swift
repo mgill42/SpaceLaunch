@@ -8,22 +8,23 @@
 import Foundation
 
 enum LaunchType: String, Identifiable, CaseIterable {
-    case all
-    case previous
     case upcoming
-    
+    case previous
+    case all
+
     var id: String {
         self.rawValue
     }
     
     func name() -> String {
         switch self {
-        case .all:
-            return "All"
-        case .previous:
-            return "Previous"
         case .upcoming:
             return "Upcoming"
+        case .previous:
+            return "Previous"
+        case .all:
+            return "All"
+
         }
     }
 }
