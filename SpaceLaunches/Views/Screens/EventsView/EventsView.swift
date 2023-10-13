@@ -17,24 +17,56 @@ struct EventsView: View {
 
 
     var body: some View {
-        List {
-            ForEach(events) { event in
-                EventCell(event: event)
-            }
-        }
-        .navigationTitle("Events")
-        .listStyle(.plain)
-        .task {
-            service.fetchEvents { result in
-                switch result {
-                case .success(let results):
-                    for event in results.results {
-                        events.append(event)
+        NavigationView {
+            List {
+                ForEach(events) { event in
+                    if let newsURL = URL(string: event.newsUrl ?? "") {
+                        Link(destination: newsURL, label: {
+                            EventCell(event: event)
+                        })
+                    } else if let videoURL = URL(string: event.videoUrl ?? "") {
+                        Link(destination: videoURL, label: {
+                            EventCell(event: event)
+                        })
+                    } else {
+                        EventCell(event: event)
                     }
-                case .failure(let error):
-                    state = .error("Could not load: \(error)")
+                }
+                
+                
+                
+                switch state {
+                case .good:
+                    Color.clear
+                        .onAppear {
+                            state = .isLoading
+                            service.fetchEvents { result in
+                                switch result {
+                                case .success(let results):
+                                    for event in results.results {
+                                        events.append(event)
+                                    }
+                                    state = .loadedAll
+                                case .failure(let error):
+                                    state = .error("Could not load: \(error)")
+                                }
+                            }
+                        }
+                case .isLoading:
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .frame(maxWidth: .infinity)
+                        .id(UUID())
+                case .loadedAll:
+                    Color.gray
+                    
+                case .error(let message):
+                    Text(message)
+                        .foregroundColor(.pink)
                 }
             }
+            .navigationTitle("Events")
+            .listStyle(.plain)
         }
     }
 }

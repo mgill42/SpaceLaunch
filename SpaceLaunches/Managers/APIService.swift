@@ -15,7 +15,7 @@ class APIService {
     }
     
     func fetchEvents(completion: @escaping(Result<Events, APIError>) -> Void) {
-        let url = URL(string: "https://lldev.thespacedevs.com/2.2.0/event/upcoming/?ordering=-date")
+        let url = URL(string: "https://lldev.thespacedevs.com/2.2.0/event/upcoming/?ordering=+date")
         fetch(type: Events.self, url: url, completion: completion)
     }
     

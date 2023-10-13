@@ -13,6 +13,8 @@ struct EventCell: View {
     let event: Event
     
     var body: some View {
+        
+      
         VStack(alignment: .leading, spacing: 10) {
             if let imageUrl = event.featureImage {
                 KFImage(URL(string: imageUrl))
@@ -20,8 +22,6 @@ struct EventCell: View {
                     .scaledToFill()
                     .frame(height: 150)
                     .clipped()
-
-
             }
             Text(event.name)
                 .font(.headline)
@@ -33,15 +33,14 @@ struct EventCell: View {
                 Text(description)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                    .minimumScaleFactor(0.9)
-                    .lineLimit(3)
+                    .minimumScaleFactor(0.7)
                     .padding(.horizontal, 7)
             }
               
             
             Spacer()
             Divider()
-            Text(event.date?.formattedDate(dateStyle: .short, timeStyle: .none) ?? "")
+            Text(event.date?.timeAgoDisplay() ?? "")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
                 .padding(.bottom, 8)

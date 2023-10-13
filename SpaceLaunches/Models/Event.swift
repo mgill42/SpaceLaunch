@@ -32,7 +32,7 @@ struct Event: Codable, Identifiable {
     let datePrecision: DatePrecision?
     
     static func example() -> Event {
-        Event(id: 403, url: "https://ll.thespacedevs.com/2.2.0/event/403/", slug: "lucy-trojan-asteroids-617-patroclus-menoetius-flyb", name: "Lucy Trojan Asteroids (617) Patroclus & Menoetius Flyby", updates: [], type: EventType(id: 23, name: "Flyby"), description: "Flyby of the Trojan binary asteroid pair (617) Patroclus and Menoetius by NASA's Lucy mission.", webcastLive: false, location: "(617) Patroclus & Menoetius", newsUrl: "http://lucy.swri.edu/timeline.html", videoUrl: nil, featureImage: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/event_images/lucy_trojan_ast_image_20210930113156.jpg", date: "2033-03-03T00:00:00Z", datePrecision: nil)
+        Event(id: 403, url: "https://ll.thespacedevs.com/2.2.0/event/403/", slug: "lucy-trojan-asteroids-617-patroclus-menoetius-flyb", name: "Lucy Trojan Asteroids (617) Patroclus & Menoetius Flyby", updates: [], type: EventType(id: 23, name: "Flyby"), description: "Flyby of the Trojan binary asteroid pair (617) Patroclus and Menoetius by NASA's Lucy mission.", webcastLive: false, location: "(617) Patroclus & Menoetius", newsUrl: "http://lucy.swri.edu/timeline.html", videoUrl: nil, featureImage: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/event_images/lucy_trojan_ast_image_20210930113156.jpg", date: "2023-10-13T18:00:00Z", datePrecision: nil)
     }
     
 }
