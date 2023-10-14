@@ -26,12 +26,17 @@ struct HomeView: View {
                 case .loadedAll:
                     if let highlightedLaunch = viewModel.highLightedLaunch {
                         HighlightLaunchView(launch: highlightedLaunch)
+                            .padding(.top, 30)
                     }
                 case .error(let message):
                     Text(message)
                         .foregroundColor(.pink)
+                case .empty:
+                    HighlightLaunchLoadingView()
+                        .padding(.top, 170)
                 }
             }
+            .scrollIndicators(.hidden)
             .navigationTitle("Upcoming Launch")
         }
     }

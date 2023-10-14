@@ -13,48 +13,33 @@ struct HighlightLaunchView: View {
     let launch: Launch
         
     var body: some View {
-        VStack {
-            CountdownTimerView(launchTime: launch.net)
-                .padding()
-            
+        NavigationLink(destination: LaunchDetailView(launch: launch)) {
             if let imageURL = launch.image {
-                NavigationLink(destination: LaunchDetailView(launch: launch)) {
-                    KFImage(URL(string: imageURL))
-                        .resizable()
-                        .scaledToFill()
-                        .frame(width: 330, height: 500)
-                        .overlay(alignment: .top) {
-                            ZStack(alignment: .topLeading) {
-                                LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
-                                    .opacity(0.8)
-                                VStack(alignment: .leading, spacing: 7) {
-                                    Text(launch.name)
-                                        .font(.title2)
-                                        .bold()
-                                    Text(launch.launchServiceProvider.name)
-                                    
-                                    Group {
-                                        Text(launch.net.formattedDate(dateStyle: .medium, timeStyle: .none))
-                                        Text(launch.net.formattedDate(dateStyle: .none, timeStyle: .short))
-                                    }
-                                    .font(.footnote)
-                                    
-                                }
-                                .foregroundColor(.white)
-                                .padding()
-                            }
-                            .frame(height: 200)
-                        }
-                        .clipShape(RoundedRectangle(cornerRadius: 30))
-                }
                 
-            }  else {
-                Image("placeholder")
+                KFImage(URL(string: imageURL))
+                    .placeholder {
+                        ProgressView()
+                    }
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 330, height: 500)
+                    .overlay(alignment: .top) {
+                        CardOverlay(launch: launch)
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
+            } else {
+                Image("rocketPlaceholder")
+                    .resizable()
+                    .scaledToFill()
+                    .frame(width: 330, height: 500)
+                    .overlay(alignment: .top) {
+                        CardOverlay(launch: launch)
+                    }
+                    .clipShape(RoundedRectangle(cornerRadius: 30))
             }
         }
     }
 }
-
 
 struct HighlightLaunchView_Previews: PreviewProvider {
     static var previews: some View {
@@ -62,3 +47,35 @@ struct HighlightLaunchView_Previews: PreviewProvider {
     }
 }
 
+
+struct CardOverlay: View {
+    
+    let launch: Launch
+    
+    var body: some View {
+        VStack {
+            ZStack(alignment: .topLeading) {
+                LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
+                    .opacity(0.8)
+                VStack(alignment: .leading, spacing: 7) {
+                    Text(launch.name)
+                        .font(.title2)
+                        .bold()
+                    Text(launch.launchServiceProvider.name)
+                    
+                    Group {
+                        Text(launch.net.formattedDate(dateStyle: .medium, timeStyle: .none))
+                        Text(launch.net.formattedDate(dateStyle: .none, timeStyle: .short))
+                    }
+                    .font(.footnote)
+                    
+                }
+                .foregroundColor(.white)
+                .padding()
+            }
+            .frame(height: 200)
+            Spacer()
+            CountdownTimerView(launchTime: launch.net)
+        }
+    }
+}

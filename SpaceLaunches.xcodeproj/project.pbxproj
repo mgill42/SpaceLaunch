@@ -14,6 +14,7 @@
 		6E44BBFC2AD5F4A500B2965F /* EventsView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E44BBFB2AD5F4A500B2965F /* EventsView.swift */; };
 		6E44BBFF2AD86D3500B2965F /* EventCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E44BBFE2AD86D3500B2965F /* EventCell.swift */; };
 		6E44BC012AD8777400B2965F /* View+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E44BC002AD8777400B2965F /* View+Ext.swift */; };
+		6E44BC052ADAFC0A00B2965F /* LaunchLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E44BC042ADAFC0A00B2965F /* LaunchLoadingView.swift */; };
 		6E8349572AC0DCF100A32285 /* UpcomingLaunchesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8349562AC0DCF100A32285 /* UpcomingLaunchesListView.swift */; };
 		6E8349592AC0DD5E00A32285 /* PreviousLaunchesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8349582AC0DD5E00A32285 /* PreviousLaunchesViewModel.swift */; };
 		6E83495B2AC207A500A32285 /* PreviousLaunchesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E83495A2AC207A500A32285 /* PreviousLaunchesListView.swift */; };
@@ -25,6 +26,7 @@
 		6E83496C2AC3744600A32285 /* String+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E83496B2AC3744600A32285 /* String+Ext.swift */; };
 		6E8349702AC9A80200A32285 /* LaunchDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E83496F2AC9A80200A32285 /* LaunchDetailView.swift */; };
 		6E8349732AC9BA5600A32285 /* CountdownTimerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8349722AC9BA5600A32285 /* CountdownTimerView.swift */; };
+		6ECEF1082ADB231B00356381 /* HighlightLaunchLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1072ADB231B00356381 /* HighlightLaunchLoadingView.swift */; };
 		6EDCB38C2ABF69CE004FBB8C /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDCB38B2ABF69CE004FBB8C /* LaunchCell.swift */; };
 		6EE6993C2A853AFA008CAAAE /* SpaceLaunchesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE6993B2A853AFA008CAAAE /* SpaceLaunchesApp.swift */; };
 		6EE6993E2A853AFA008CAAAE /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE6993D2A853AFA008CAAAE /* LaunchView.swift */; };
@@ -45,6 +47,7 @@
 		6E44BBFB2AD5F4A500B2965F /* EventsView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsView.swift; sourceTree = "<group>"; };
 		6E44BBFE2AD86D3500B2965F /* EventCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventCell.swift; sourceTree = "<group>"; };
 		6E44BC002AD8777400B2965F /* View+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+Ext.swift"; sourceTree = "<group>"; };
+		6E44BC042ADAFC0A00B2965F /* LaunchLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchLoadingView.swift; sourceTree = "<group>"; };
 		6E8349562AC0DCF100A32285 /* UpcomingLaunchesListView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpcomingLaunchesListView.swift; sourceTree = "<group>"; };
 		6E8349582AC0DD5E00A32285 /* PreviousLaunchesViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousLaunchesViewModel.swift; sourceTree = "<group>"; };
 		6E83495A2AC207A500A32285 /* PreviousLaunchesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousLaunchesListView.swift; sourceTree = "<group>"; };
@@ -56,6 +59,7 @@
 		6E83496B2AC3744600A32285 /* String+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "String+Ext.swift"; sourceTree = "<group>"; };
 		6E83496F2AC9A80200A32285 /* LaunchDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchDetailView.swift; sourceTree = "<group>"; };
 		6E8349722AC9BA5600A32285 /* CountdownTimerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CountdownTimerView.swift; sourceTree = "<group>"; };
+		6ECEF1072ADB231B00356381 /* HighlightLaunchLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightLaunchLoadingView.swift; sourceTree = "<group>"; };
 		6EDCB38B2ABF69CE004FBB8C /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
 		6EE699382A853AFA008CAAAE /* SpaceLaunches.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceLaunches.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE6993B2A853AFA008CAAAE /* SpaceLaunchesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceLaunchesApp.swift; sourceTree = "<group>"; };
@@ -88,13 +92,13 @@
 			path = EventsView;
 			sourceTree = "<group>";
 		};
-		6E44BBFD2AD86CB900B2965F /* Cells */ = {
+		6E44BBFD2AD86CB900B2965F /* CellView */ = {
 			isa = PBXGroup;
 			children = (
 				6EDCB38B2ABF69CE004FBB8C /* LaunchCell.swift */,
 				6E44BBFE2AD86D3500B2965F /* EventCell.swift */,
 			);
-			path = Cells;
+			path = CellView;
 			sourceTree = "<group>";
 		};
 		6E8349602AC20ECB00A32285 /* AllLaunches */ = {
@@ -149,6 +153,23 @@
 				6E83496F2AC9A80200A32285 /* LaunchDetailView.swift */,
 			);
 			path = LaunchDetailView;
+			sourceTree = "<group>";
+		};
+		6ECEF1052ADB221600356381 /* LoadingView */ = {
+			isa = PBXGroup;
+			children = (
+				6E44BC042ADAFC0A00B2965F /* LaunchLoadingView.swift */,
+				6ECEF1072ADB231B00356381 /* HighlightLaunchLoadingView.swift */,
+			);
+			path = LoadingView;
+			sourceTree = "<group>";
+		};
+		6ECEF1062ADB227000356381 /* CountDownView */ = {
+			isa = PBXGroup;
+			children = (
+				6E8349722AC9BA5600A32285 /* CountdownTimerView.swift */,
+			);
+			path = CountDownView;
 			sourceTree = "<group>";
 		};
 		6EE6992F2A853AF9008CAAAE = {
@@ -215,10 +236,11 @@
 		6EF1EDB42A8838A1007A5C68 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				6E44BBFD2AD86CB900B2965F /* Cells */,
+				6ECEF1062ADB227000356381 /* CountDownView */,
+				6ECEF1052ADB221600356381 /* LoadingView */,
+				6E44BBFD2AD86CB900B2965F /* CellView */,
 				6EF1EDB62A88393E007A5C68 /* AppTabView */,
 				6EF1EDB32A88385D007A5C68 /* Screens */,
-				6E8349722AC9BA5600A32285 /* CountdownTimerView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -281,7 +303,7 @@
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
 				LastSwiftUpdateCheck = 1430;
-				LastUpgradeCheck = 1430;
+				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					6EE699372A853AF9008CAAAE = {
 						CreatedOnToolsVersion = 14.3.1;
@@ -334,6 +356,7 @@
 				6EDCB38C2ABF69CE004FBB8C /* LaunchCell.swift in Sources */,
 				6E83495B2AC207A500A32285 /* PreviousLaunchesListView.swift in Sources */,
 				6E44BC012AD8777400B2965F /* View+Ext.swift in Sources */,
+				6E44BC052ADAFC0A00B2965F /* LaunchLoadingView.swift in Sources */,
 				6E8349692AC3661C00A32285 /* HomeViewModel.swift in Sources */,
 				6E8349652AC22C5D00A32285 /* HomeView.swift in Sources */,
 				6EE6994B2A85620A008CAAAE /* Event.swift in Sources */,
@@ -348,6 +371,7 @@
 				6E83495D2AC20D7E00A32285 /* AllLaunchesViewModel.swift in Sources */,
 				6EF1EDBA2A8913E4007A5C68 /* UpcomingLaunchesViewModel.swift in Sources */,
 				6E2A9A482ABB83B30072B8BE /* FetchState.swift in Sources */,
+				6ECEF1082ADB231B00356381 /* HighlightLaunchLoadingView.swift in Sources */,
 				6E2A9A4A2ABB85B50072B8BE /* APIService.swift in Sources */,
 				6E83496C2AC3744600A32285 /* String+Ext.swift in Sources */,
 				6E2A9A4E2ABB88090072B8BE /* APIError.swift in Sources */,
@@ -393,6 +417,7 @@
 				DEBUG_INFORMATION_FORMAT = dwarf;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
 				ENABLE_TESTABILITY = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_DYNAMIC_NO_PIC = NO;
 				GCC_NO_COMMON_BLOCKS = YES;
@@ -453,6 +478,7 @@
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				ENABLE_NS_ASSERTIONS = NO;
 				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_USER_SCRIPT_SANDBOXING = YES;
 				GCC_C_LANGUAGE_STANDARD = gnu11;
 				GCC_NO_COMMON_BLOCKS = YES;
 				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;

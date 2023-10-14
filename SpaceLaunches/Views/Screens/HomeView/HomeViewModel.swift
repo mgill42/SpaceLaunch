@@ -23,7 +23,7 @@ import Foundation
             return
         }
         
-        state = .isLoading
+        state = highLightedLaunch == nil ? .empty : .isLoading
         
         service.fetchLaunches(searchTerm: nil, page: 0, limit: 5, type: .upcoming) {result in
             self.dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"

@@ -14,10 +14,12 @@ struct EventCell: View {
     
     var body: some View {
         
-      
         VStack(alignment: .leading, spacing: 10) {
             if let imageUrl = event.featureImage {
                 KFImage(URL(string: imageUrl))
+                    .placeholder {
+                        ProgressView()
+                    }
                     .resizable()
                     .scaledToFill()
                     .frame(height: 150)
@@ -33,13 +35,11 @@ struct EventCell: View {
                 Text(description)
                     .font(.subheadline)
                     .foregroundStyle(.secondary)
-                    .minimumScaleFactor(0.7)
                     .padding(.horizontal, 7)
             }
               
-            
-            Spacer()
             Divider()
+            
             Text(event.date?.timeAgoDisplay() ?? "")
                 .font(.footnote)
                 .foregroundStyle(.secondary)
@@ -50,9 +50,7 @@ struct EventCell: View {
         .background {
             Color(uiColor: .secondarySystemFill)
         }
-        .frame(height: 310)
         .clipShape(RoundedRectangle(cornerRadius: 10))
-        
     }
 }
 

@@ -17,6 +17,7 @@ struct PreviousLaunchesListView: View {
                 NavigationLink(destination: LaunchDetailView(launch: launch)) {
                     LaunchCell(launch: launch)
                 }
+                .listRowSeparator(.hidden)
             }
             
             switch viewModel.state {
@@ -31,11 +32,15 @@ struct PreviousLaunchesListView: View {
                     .frame(maxWidth: .infinity)
                     .id(UUID())
             case .loadedAll:
-                Color.gray
-                
+                EmptyView()
             case .error(let message):
                 Text(message)
                     .foregroundColor(.pink)
+            case .empty:
+                LaunchLoadingView()
+                    .listRowSeparator(.hidden)
+                    .padding(.top, 150)
+                  
             }
         }
         .listStyle(.plain)

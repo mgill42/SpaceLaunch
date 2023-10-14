@@ -14,30 +14,35 @@ struct LaunchDetailView: View {
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
     
     let launch: Launch
-    
-    
+
     var body: some View {
         GeometryReader { geo in
         
             ScrollView {
-                
-                KFImage(URL(string: launch.image ?? ""))
-                    .resizable()
-                    .scaledToFill()
-                    .frame(height: 500)
-                    .frame(maxWidth: geo.size.width)
-                    .overlay(alignment: .bottom) {
-                        
-                        CountdownTimerView(launchTime: launch.net)
-                            .frame(alignment: .center)
-                            .padding()
-                            .background {
-                                RoundedRectangle(cornerRadius: 10)
-                                    .fill(.ultraThinMaterial)
-                                
-                            }
-                            .padding()
-                    }
+                if let imageURL = launch.image {
+                    KFImage(URL(string: imageURL))
+                        .placeholder {
+                            ProgressView()
+                        }
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 500)
+                        .frame(maxWidth: geo.size.width)
+                        .overlay(alignment: .bottom) {
+                            CountdownTimerView(launchTime: launch.net)
+                        }
+                } else {
+                    Image("rocketPlaceholder")
+                        .resizable()
+                        .scaledToFill()
+                        .frame(height: 500)
+                        .frame(maxWidth: geo.size.width)
+                        .overlay(alignment: .bottom) {
+        
+                            CountdownTimerView(launchTime: launch.net)
+                         
+                        }
+                }
                     
                 VStack(alignment: .leading) {
 

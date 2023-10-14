@@ -48,8 +48,8 @@ import Combine
                 return
             }
             
-            state = .isLoading
-            
+            state = allLaunches.isEmpty ? .empty : .isLoading
+
             service.fetchLaunches(searchTerm: searchTerm, page: page, limit: limit, type: .all) { [weak self] result in
                 DispatchQueue.main.async {
                     switch result {

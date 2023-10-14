@@ -61,7 +61,16 @@ struct CountdownTimerView: View {
             }
             RunLoop.current.add(timer, forMode: .common)
         }
+        .frame(alignment: .center)
+        .padding()
+        .background {
+            RoundedRectangle(cornerRadius: 10)
+                .fill(.ultraThinMaterial)
+            
+        }
+        .padding()
     }
+    
     
     func getCountdown(launchTime: String) -> [String] {
         // Current time

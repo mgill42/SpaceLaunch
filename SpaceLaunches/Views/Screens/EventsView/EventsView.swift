@@ -20,17 +20,23 @@ struct EventsView: View {
         NavigationView {
             List {
                 ForEach(events) { event in
-                    if let newsURL = URL(string: event.newsUrl ?? "") {
-                        Link(destination: newsURL, label: {
+                    Group {
+                        if let newsURL = URL(string: event.newsUrl ?? "") {
+                            Link(destination: newsURL, label: {
+                                EventCell(event: event)
+                            })
+                            .listRowSeparator(.hidden)
+                        } else if let videoURL = URL(string: event.videoUrl ?? "") {
+                            Link(destination: videoURL, label: {
+                                EventCell(event: event)
+                            })
+                            .listRowSeparator(.hidden)
+                        } else {
                             EventCell(event: event)
-                        })
-                    } else if let videoURL = URL(string: event.videoUrl ?? "") {
-                        Link(destination: videoURL, label: {
-                            EventCell(event: event)
-                        })
-                    } else {
-                        EventCell(event: event)
+                                .listRowSeparator(.hidden)
+                        }
                     }
+                    .padding(.vertical, 20)
                 }
                 
                 
@@ -63,6 +69,8 @@ struct EventsView: View {
                 case .error(let message):
                     Text(message)
                         .foregroundColor(.pink)
+                case .empty:
+                    Text("Empty")
                 }
             }
             .navigationTitle("Events")

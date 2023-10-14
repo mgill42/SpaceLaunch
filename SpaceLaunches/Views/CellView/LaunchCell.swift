@@ -42,6 +42,9 @@ struct LaunchCell: View {
             
             if let imageUrl = launch.launchServiceProvider.logoUrl {
                 KFImage(URL(string: imageUrl))
+                    .placeholder {
+                        ProgressView()
+                    }
                     .resizable()
                     .scaledToFit()
                     .frame(width: 80, height: 80)
@@ -67,7 +70,6 @@ struct LaunchCell: View {
             RoundedRectangle(cornerRadius: 15)
                 .foregroundColor(Color(uiColor: .secondarySystemBackground))
         }
-        .listRowSeparator(.hidden)
     }
 }
 
