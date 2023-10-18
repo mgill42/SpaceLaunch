@@ -31,7 +31,7 @@ struct HomeView: View {
                 case .error(let message):
                     Text(message)
                         .foregroundColor(.pink)
-                case .empty:
+                case .isEmpty:
                     HighlightLaunchLoadingView()
                         .padding(.top, 170)
                 }

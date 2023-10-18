@@ -9,7 +9,6 @@ import Foundation
 import Combine
 
     @MainActor final class PreviousLaunchesViewModel: ObservableObject {
-               
         
         @Published var previousLaunches: [Launch] = []
         @Published var searchTerm: String = ""
@@ -48,7 +47,7 @@ import Combine
                 return
             }
             
-            state = previousLaunches.isEmpty ? .empty : .isLoading
+            state = previousLaunches.isEmpty ? .isEmpty : .isLoading
             
             service.fetchLaunches(searchTerm: searchTerm, page: page, limit: limit, type: .previous) { [weak self] result in
                 DispatchQueue.main.async {

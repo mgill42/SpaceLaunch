@@ -9,7 +9,7 @@ import Foundation
 
 enum FetchState: Comparable {
     case good
-    case empty
+    case isEmpty
     case isLoading
     case loadedAll
     case error(String)

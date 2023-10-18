@@ -61,6 +61,7 @@ struct CardOverlay: View {
                     Text(launch.name)
                         .font(.title2)
                         .bold()
+                        .multilineTextAlignment(.leading)
                     Text(launch.launchServiceProvider.name)
                     
                     Group {

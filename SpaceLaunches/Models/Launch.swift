@@ -50,7 +50,7 @@ struct Launch: Codable, Identifiable {
            windowStart: "2022-09-24T20:50:00Z",
            probability: 70, rocket: Rocket(id: 2737, configuration: Rocket.Configuration(id: 2737, url: "https://lldev.thespacedevs.com/2.2.0/config/launcher/8/", name: "Atlas V 531", active: true, reusable: false, description: "Atlas V with 5m Fairing, 3 SRB, 1 Centaur upper stage engine.", family: "Atlas", fullName: "Atlas V 531", length: 60.0, diameter: 3.8, maidenFlight: "2010-08-14", launchCost: "140000000", launchMass: 479, leoCapacity: 15530, gtoCapacity: 7450, imageUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/atlas2520v2520531_image_20190222030726.jpeg", totalLaunchCount: 5, consecutiveSuccessfulLaunches: 5, successfulLaunches: 5, failedLaunches: 0, pendingLaunches: 0, attemptedLandings: 0, successfulLandings: 0, failedLandings: 0, consecutiveSuccessfulLandings: 0)),
            weatherConcerns: nil,
-           launchServiceProvider: LaunchServiceProvider(id: 124, url: "https://lldev.thespacedevs.com/2.2.0/agencies/124/", name: "United Launch Alliance", type: "Commercial", logoUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/logo/united2520launch2520alliance_logo_20210412195953.png", description: "United Launch Alliance (ULA) is a joint venture of Lockheed Martin Space Systems and Boeing Defense, Space & Security. ULA was formed in December 2006 by combining the teams at these companies which provide spacecraft launch services to the government of the United States. ULA launches from both coasts of the US. They launch their Atlas V vehicle from LC-41 in Cape Canaveral and LC-3E at Vandeberg. Their Delta IV launches from LC-37 at Cape Canaveral and LC-6 at Vandenberg."),
+           launchServiceProvider: LaunchServiceProvider.launchServiceProviderExample(),
            mission: Mission(id: 6090, name: "NROL-91", description: "Classified payload for the US National Reconnaissance Office (NRO).", type: "Government/Top Secret", orbit: Orbit(id: 1, name: "Low Earth Orbit", abbrev: "LEO"), agencies: []),
            pad: Pad(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/pad/11/", name: "Space Launch Complex 6", latitude: "34.5815", longitude: "-120.6262", location: Location(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/location/11/", name: "Vandenberg SFB, CA, USA", countryCode: "USA", mapImage: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launch_images/location_11_20200803142416.jpg", timezoneName: "America/Los_Angeles")),
            image: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/delta_iv_heavy_image_20210426103838.jpg")
@@ -107,11 +107,8 @@ struct Agency: Codable, Identifiable {
     let id: Int
     let url: String
     let name: String
-    let infoUrl: String?
-    let wikiUrl: String?
     let logoUrl: String?
     let imageUrl: String?
-    let nationUrl: String?
 }
 
 struct Status: Codable, Identifiable {
@@ -126,8 +123,18 @@ struct LaunchServiceProvider: Codable, Identifiable {
     let url: String
     let name: String
     let type: String?
+    let administrator: String
+    let infoUrl: String?
+    let wikiUrl: String?
     let logoUrl: String?
     let description: String
+    let foundingYear: String
+    let totalLaunchCount: Int
+    let successfulLaunches: Int
+    
+    static func launchServiceProviderExample() -> LaunchServiceProvider {
+        LaunchServiceProvider(id: 121, url: "https://lldev.thespacedevs.com/2.2.0/agencies/121/", name: "SpaceX", type: "Commercial", administrator: "CEO: Elon Musk", infoUrl: "http://www.spacex.com/", wikiUrl: "http://en.wikipedia.org/wiki/SpaceX", logoUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/logo/spacex_logo_20220826094919.png", description: "Space Exploration Technologies Corp., known as SpaceX, is an American aerospace manufacturer and space transport services company headquartered in Hawthorne, California. It was founded in 2002 by entrepreneur Elon Musk with the goal of reducing space transportation costs and enabling the colonization of Mars. SpaceX operates from many pads, on the East Coast of the US they operate from SLC-40 at Cape Canaveral Space Force Station and historic LC-39A at Kennedy Space Center. They also operate from SLC-4E at Vandenberg Space Force Base, California, usually for polar launches. Another launch site is being developed at Boca Chica, Texas.", foundingYear: "2002", totalLaunchCount: 287, successfulLaunches: 277)
+    }
 }
 
 struct Rocket: Codable, Identifiable {

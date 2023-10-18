@@ -9,17 +9,13 @@ import SwiftUI
 import Kingfisher
 
 struct EventsView: View {
-    
-    let service = APIService()
-    @State var events: [Event] = []
-    @State var state: FetchState = .good
 
-
+    @StateObject var viewModel = EventsViewModel()
 
     var body: some View {
         NavigationView {
             List {
-                ForEach(events) { event in
+                ForEach(viewModel.events) { event in
                     Group {
                         if let newsURL = URL(string: event.newsUrl ?? "") {
                             Link(destination: newsURL, label: {
@@ -39,24 +35,11 @@ struct EventsView: View {
                     .padding(.vertical, 20)
                 }
                 
-                
-                
-                switch state {
+                switch viewModel.state {
                 case .good:
                     Color.clear
                         .onAppear {
-                            state = .isLoading
-                            service.fetchEvents { result in
-                                switch result {
-                                case .success(let results):
-                                    for event in results.results {
-                                        events.append(event)
-                                    }
-                                    state = .loadedAll
-                                case .failure(let error):
-                                    state = .error("Could not load: \(error)")
-                                }
-                            }
+                            viewModel.fetchEvents()
                         }
                 case .isLoading:
                     ProgressView()
@@ -64,13 +47,14 @@ struct EventsView: View {
                         .frame(maxWidth: .infinity)
                         .id(UUID())
                 case .loadedAll:
-                    Color.gray
-                    
+                    EmptyView()
                 case .error(let message):
                     Text(message)
                         .foregroundColor(.pink)
-                case .empty:
-                    Text("Empty")
+                case .isEmpty:
+                    EventsLoadingView()
+                        .listRowSeparator(.hidden)
+                        .padding(.top, 150)
                 }
             }
             .navigationTitle("Events")

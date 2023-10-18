@@ -36,7 +36,7 @@ struct UpcomingLaunchesListView: View {
             case .error(let message):
                 Text(message)
                     .foregroundColor(.pink)
-            case .empty:
+            case .isEmpty:
                 LaunchLoadingView()
                     .listRowSeparator(.hidden)
                     .padding(.top, 150)

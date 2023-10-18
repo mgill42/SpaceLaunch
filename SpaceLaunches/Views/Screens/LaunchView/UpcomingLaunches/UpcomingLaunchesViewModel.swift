@@ -48,7 +48,7 @@ import Combine
                 return
             }
             
-            state = upcomingLaunches.isEmpty ? .empty : .isLoading
+            state = upcomingLaunches.isEmpty ? .isEmpty : .isLoading
 
             service.fetchLaunches(searchTerm: searchTerm, page: page, limit: limit, type: .upcoming) { [weak self] result in
                 DispatchQueue.main.async {

@@ -11,7 +11,7 @@ struct CountdownTimerView: View {
     
     @State private var countdown = ["","","",""]
     let launchTime: String
-
+    
     var body: some View {
         HStack {
             VStack {
@@ -49,9 +49,10 @@ struct CountdownTimerView: View {
             Rectangle()
                 .frame(width: 1, height: 30)
                 .opacity(0.3)
-        
-    }
+            
+        }
         .font(.title)
+        .foregroundColor(.white)
         .monospaced()
         .bold()
         .onAppear {
@@ -73,22 +74,16 @@ struct CountdownTimerView: View {
     
     
     func getCountdown(launchTime: String) -> [String] {
-        // Current time
         let currentTime = Date()
 
-        // Create a date formatter for the given format
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
 
-        // Parse the target time string
         if let targetTime = dateFormatter.date(from: launchTime) {
 
-            // Calculate the time difference
             let timeDifference = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentTime, to: targetTime)
             
-            
-            // Access the individual components of the time difference
             let days = String(format: "%02d", max(timeDifference.day ?? 0, 0))
             let hours = String(format: "%02d", max(timeDifference.hour ?? 0, 0))
             let minutes = String(format: "%02d", max(timeDifference.minute ?? 0, 0))
