@@ -88,13 +88,12 @@ struct LaunchDetailView: View {
                         .padding()
                     
                     if let mission = launch.mission {
-                        LaunchDetailSection(name: mission.name, description: mission.description, toggleState: $missionMore, destination: Text("Mission"), title: "Mission Details")
+                        LaunchDetailSection(name: mission.name, description: mission.description, toggleState: $missionMore, destination: MissionDetailView(mission: mission, missionPatch: launch.missionPatches.first), title: "Mission Details")
                     }
                     
                     Divider()
                         .padding()
-                    
-                    
+        
                     
                     LaunchDetailSection(name: launch.launchServiceProvider.name, description: launch.launchServiceProvider.description, toggleState: $agencyMore, destination: AgencyDetailView(agency: launch.launchServiceProvider), title: "Agency")
                    
@@ -102,7 +101,7 @@ struct LaunchDetailView: View {
                     Divider()
                         .padding()
                     
-                    LaunchDetailSection(name: launch.rocket.configuration.name, description: launch.rocket.configuration.description, toggleState: $rocketMore, destination: Text("Rocket Details"), title: "Rocket")
+                    LaunchDetailSection(name: launch.rocket.configuration.name, description: launch.rocket.configuration.description, toggleState: $rocketMore, destination: RocketDetailView(rocket: launch.rocket), title: "Rocket")
                     
                     Divider()
                         .padding()

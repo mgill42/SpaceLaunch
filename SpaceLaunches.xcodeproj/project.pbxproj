@@ -30,6 +30,9 @@
 		6ECEF10A2ADB403B00356381 /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1092ADB403B00356381 /* EventsViewModel.swift */; };
 		6ECEF10C2ADB43C400356381 /* EventsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF10B2ADB43C400356381 /* EventsLoadingView.swift */; };
 		6ECEF1152ADF080400356381 /* AgencyDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1142ADF080400356381 /* AgencyDetailView.swift */; };
+		6ECEF1172AE4542600356381 /* DetailListCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1162AE4542600356381 /* DetailListCell.swift */; };
+		6ECEF1192AE455E600356381 /* RocketDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1182AE455E600356381 /* RocketDetailView.swift */; };
+		6ECEF11C2AE5134E00356381 /* MissionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF11B2AE5134E00356381 /* MissionDetailView.swift */; };
 		6EDCB38C2ABF69CE004FBB8C /* LaunchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EDCB38B2ABF69CE004FBB8C /* LaunchCell.swift */; };
 		6EE6993C2A853AFA008CAAAE /* SpaceLaunchesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE6993B2A853AFA008CAAAE /* SpaceLaunchesApp.swift */; };
 		6EE6993E2A853AFA008CAAAE /* LaunchView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EE6993D2A853AFA008CAAAE /* LaunchView.swift */; };
@@ -66,6 +69,9 @@
 		6ECEF1092ADB403B00356381 /* EventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
 		6ECEF10B2ADB43C400356381 /* EventsLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoadingView.swift; sourceTree = "<group>"; };
 		6ECEF1142ADF080400356381 /* AgencyDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AgencyDetailView.swift; sourceTree = "<group>"; };
+		6ECEF1162AE4542600356381 /* DetailListCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DetailListCell.swift; sourceTree = "<group>"; };
+		6ECEF1182AE455E600356381 /* RocketDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RocketDetailView.swift; sourceTree = "<group>"; };
+		6ECEF11B2AE5134E00356381 /* MissionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MissionDetailView.swift; sourceTree = "<group>"; };
 		6EDCB38B2ABF69CE004FBB8C /* LaunchCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchCell.swift; sourceTree = "<group>"; };
 		6EE699382A853AFA008CAAAE /* SpaceLaunches.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = SpaceLaunches.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		6EE6993B2A853AFA008CAAAE /* SpaceLaunchesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceLaunchesApp.swift; sourceTree = "<group>"; };
@@ -104,6 +110,7 @@
 			children = (
 				6EDCB38B2ABF69CE004FBB8C /* LaunchCell.swift */,
 				6E44BBFE2AD86D3500B2965F /* EventCell.swift */,
+				6ECEF1162AE4542600356381 /* DetailListCell.swift */,
 			);
 			path = CellView;
 			sourceTree = "<group>";
@@ -191,6 +198,7 @@
 		6ECEF1102ADF073D00356381 /* RocketView */ = {
 			isa = PBXGroup;
 			children = (
+				6ECEF1182AE455E600356381 /* RocketDetailView.swift */,
 			);
 			path = RocketView;
 			sourceTree = "<group>";
@@ -198,8 +206,19 @@
 		6ECEF1112ADF075D00356381 /* MissionView */ = {
 			isa = PBXGroup;
 			children = (
+				6ECEF11B2AE5134E00356381 /* MissionDetailView.swift */,
 			);
 			path = MissionView;
+			sourceTree = "<group>";
+		};
+		6ECEF11A2AE455FB00356381 /* DetailViews */ = {
+			isa = PBXGroup;
+			children = (
+				6ECEF1112ADF075D00356381 /* MissionView */,
+				6ECEF1102ADF073D00356381 /* RocketView */,
+				6ECEF10F2ADF073400356381 /* AgencyView */,
+			);
+			path = DetailViews;
 			sourceTree = "<group>";
 		};
 		6EE6992F2A853AF9008CAAAE = {
@@ -255,9 +274,7 @@
 		6EF1EDB32A88385D007A5C68 /* Screens */ = {
 			isa = PBXGroup;
 			children = (
-				6ECEF1112ADF075D00356381 /* MissionView */,
-				6ECEF1102ADF073D00356381 /* RocketView */,
-				6ECEF10F2ADF073400356381 /* AgencyView */,
+				6ECEF11A2AE455FB00356381 /* DetailViews */,
 				6E44BBF82AD5F13D00B2965F /* EventsView */,
 				6E8349712AC9B8A300A32285 /* LaunchDetailView */,
 				6E8349632AC22C4400A32285 /* HomeView */,
@@ -381,12 +398,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				6ECEF1172AE4542600356381 /* DetailListCell.swift in Sources */,
+				6ECEF11C2AE5134E00356381 /* MissionDetailView.swift in Sources */,
 				6E2A9A4C2ABB86230072B8BE /* LaunchType.swift in Sources */,
 				6E8349572AC0DCF100A32285 /* UpcomingLaunchesListView.swift in Sources */,
 				6E44BBFC2AD5F4A500B2965F /* EventsView.swift in Sources */,
 				6EE6993E2A853AFA008CAAAE /* LaunchView.swift in Sources */,
 				6E44BBFF2AD86D3500B2965F /* EventCell.swift in Sources */,
 				6EDCB38C2ABF69CE004FBB8C /* LaunchCell.swift in Sources */,
+				6ECEF1192AE455E600356381 /* RocketDetailView.swift in Sources */,
 				6E83495B2AC207A500A32285 /* PreviousLaunchesListView.swift in Sources */,
 				6E44BC012AD8777400B2965F /* View+Ext.swift in Sources */,
 				6E44BC052ADAFC0A00B2965F /* LaunchLoadingView.swift in Sources */,

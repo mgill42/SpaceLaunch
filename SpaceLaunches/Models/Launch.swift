@@ -35,6 +35,7 @@ struct Launch: Codable, Identifiable {
     let mission: Mission?
     let pad: Pad?
     let image: String?
+    let missionPatches: [MissionPatch]
     
     static func example() -> Launch {
         
@@ -48,12 +49,12 @@ struct Launch: Codable, Identifiable {
            netPrecision: nil,
            windowEnd: "2022-09-24T23:12:00Z",
            windowStart: "2022-09-24T20:50:00Z",
-           probability: 70, rocket: Rocket(id: 2737, configuration: Rocket.Configuration(id: 2737, url: "https://lldev.thespacedevs.com/2.2.0/config/launcher/8/", name: "Atlas V 531", active: true, reusable: false, description: "Atlas V with 5m Fairing, 3 SRB, 1 Centaur upper stage engine.", family: "Atlas", fullName: "Atlas V 531", length: 60.0, diameter: 3.8, maidenFlight: "2010-08-14", launchCost: "140000000", launchMass: 479, leoCapacity: 15530, gtoCapacity: 7450, imageUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/atlas2520v2520531_image_20190222030726.jpeg", totalLaunchCount: 5, consecutiveSuccessfulLaunches: 5, successfulLaunches: 5, failedLaunches: 0, pendingLaunches: 0, attemptedLandings: 0, successfulLandings: 0, failedLandings: 0, consecutiveSuccessfulLandings: 0)),
+           probability: 70, rocket: Rocket(id: 2737, configuration: Rocket.Configuration(id: 2737, url: "https://lldev.thespacedevs.com/2.2.0/config/launcher/8/", name: "Atlas V 531", active: true, reusable: false, description: "Atlas V with 5m Fairing, 3 SRB, 1 Centaur upper stage engine.", family: "Atlas", fullName: "Atlas V 531", length: 60.0, diameter: 3.8, maidenFlight: "2010-08-14", launchCost: "140000000", launchMass: 479, leoCapacity: 15530, gtoCapacity: 7450, toThrust: 7607, imageUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/atlas2520v2520531_image_20190222030726.jpeg", infoUrl: "https://www.spacex.com/vehicles/falcon-9/", totalLaunchCount: 5, consecutiveSuccessfulLaunches: 5, successfulLaunches: 5, failedLaunches: 0, pendingLaunches: 0, attemptedLandings: 0, successfulLandings: 0, failedLandings: 0, consecutiveSuccessfulLandings: 0)),
            weatherConcerns: nil,
            launchServiceProvider: LaunchServiceProvider.launchServiceProviderExample(),
            mission: Mission(id: 6090, name: "NROL-91", description: "Classified payload for the US National Reconnaissance Office (NRO).", type: "Government/Top Secret", orbit: Orbit(id: 1, name: "Low Earth Orbit", abbrev: "LEO"), agencies: []),
            pad: Pad(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/pad/11/", name: "Space Launch Complex 6", latitude: "34.5815", longitude: "-120.6262", location: Location(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/location/11/", name: "Vandenberg SFB, CA, USA", countryCode: "USA", mapImage: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launch_images/location_11_20200803142416.jpg", timezoneName: "America/Los_Angeles")),
-           image: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/delta_iv_heavy_image_20210426103838.jpg")
+           image: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/delta_iv_heavy_image_20210426103838.jpg", missionPatches: [MissionPatch.missionPatchExample()])
     }
   
 }
@@ -123,7 +124,7 @@ struct LaunchServiceProvider: Codable, Identifiable {
     let url: String
     let name: String
     let type: String?
-    let administrator: String
+    let administrator: String?
     let infoUrl: String?
     let wikiUrl: String?
     let logoUrl: String?
@@ -131,9 +132,10 @@ struct LaunchServiceProvider: Codable, Identifiable {
     let foundingYear: String
     let totalLaunchCount: Int
     let successfulLaunches: Int
+    let countryCode: String
     
     static func launchServiceProviderExample() -> LaunchServiceProvider {
-        LaunchServiceProvider(id: 121, url: "https://lldev.thespacedevs.com/2.2.0/agencies/121/", name: "SpaceX", type: "Commercial", administrator: "CEO: Elon Musk", infoUrl: "http://www.spacex.com/", wikiUrl: "http://en.wikipedia.org/wiki/SpaceX", logoUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/logo/spacex_logo_20220826094919.png", description: "Space Exploration Technologies Corp., known as SpaceX, is an American aerospace manufacturer and space transport services company headquartered in Hawthorne, California. It was founded in 2002 by entrepreneur Elon Musk with the goal of reducing space transportation costs and enabling the colonization of Mars. SpaceX operates from many pads, on the East Coast of the US they operate from SLC-40 at Cape Canaveral Space Force Station and historic LC-39A at Kennedy Space Center. They also operate from SLC-4E at Vandenberg Space Force Base, California, usually for polar launches. Another launch site is being developed at Boca Chica, Texas.", foundingYear: "2002", totalLaunchCount: 287, successfulLaunches: 277)
+        LaunchServiceProvider(id: 121, url: "https://lldev.thespacedevs.com/2.2.0/agencies/121/", name: "SpaceX", type: "Commercial", administrator: "CEO: Elon Musk", infoUrl: "http://www.spacex.com/", wikiUrl: "http://en.wikipedia.org/wiki/SpaceX", logoUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/logo/spacex_logo_20220826094919.png", description: "Space Exploration Technologies Corp., known as SpaceX, is an American aerospace manufacturer and space transport services company headquartered in Hawthorne, California. It was founded in 2002 by entrepreneur Elon Musk with the goal of reducing space transportation costs and enabling the colonization of Mars. SpaceX operates from many pads, on the East Coast of the US they operate from SLC-40 at Cape Canaveral Space Force Station and historic LC-39A at Kennedy Space Center. They also operate from SLC-4E at Vandenberg Space Force Base, California, usually for polar launches. Another launch site is being developed at Boca Chica, Texas.", foundingYear: "2002", totalLaunchCount: 287, successfulLaunches: 277, countryCode: "USA")
     }
 }
 
@@ -157,7 +159,9 @@ struct Rocket: Codable, Identifiable {
         let launchMass: Double?
         let leoCapacity: Int?
         let gtoCapacity: Int?
+        let toThrust: Int?
         let imageUrl: String?
+        let infoUrl: String?
         let totalLaunchCount: Int
         let consecutiveSuccessfulLaunches: Int
         let successfulLaunches: Int
@@ -170,6 +174,11 @@ struct Rocket: Codable, Identifiable {
         
         
     }
+        
+    static func rocketExample() -> Rocket {
+        Rocket(id: 7655, configuration: Configuration(id: 60, url: "https://lldev.thespacedevs.com/2.2.0/config/launcher/60/", name: "Soyuz 2-1v", active: true, reusable: false, description: "The Soyuz-2-1v is a Russian expendable carrier rocket. It was derived from the Soyuz-2.1b, and is a member of the R-7 family of rockets.", family: "Soyuz", fullName: "Soyuz 2-1v Volga", length: 44.0, diameter: 3.0, maidenFlight: "2013-12-28", launchCost: nil, launchMass: 158, leoCapacity: 2850, gtoCapacity: nil, toThrust: 7607, imageUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/soyuz25202-1v_image_20191122081651.jpg", infoUrl: "https://www.spacex.com/vehicles/falcon-9/", totalLaunchCount: 8, consecutiveSuccessfulLaunches: 6, successfulLaunches: 7, failedLaunches: 1, pendingLaunches: 0, attemptedLandings: 0, successfulLandings: 0, failedLandings: 0, consecutiveSuccessfulLandings: 0))
+    }
+    
 }
 
 struct Mission: Codable, Identifiable {
@@ -179,6 +188,10 @@ struct Mission: Codable, Identifiable {
     let type: String
     let orbit: Orbit
     let agencies: [Agency]
+    
+    static func missionExample() -> Mission {
+        Mission(id: 6148, name: "Starlink Group 4-31", description: "A batch of 53 satellites for Starlink mega-constellation - SpaceX's project for space-based Internet communication system.", type: "Communications", orbit: Orbit(id: 8, name: "Low Earth Orbit", abbrev: "LEO"), agencies: [])
+    }
 
 }
 
@@ -188,4 +201,12 @@ struct Orbit: Codable, Identifiable {
     let abbrev: String
 }
 
-
+struct MissionPatch: Codable, Identifiable {
+    let id: Int
+    let name: String
+    let imageUrl: String
+    
+    static func missionPatchExample() -> MissionPatch {
+        return MissionPatch(id: 848, name: "USSF-44", imageUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/ussf-44_mission_patch_20230723152741.png")
+    }
+}
