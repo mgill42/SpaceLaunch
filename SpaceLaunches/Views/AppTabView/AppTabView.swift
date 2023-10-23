@@ -20,7 +20,7 @@ struct AppTabView: View {
             EventsView()
                 .tabItem { Label("Events", systemImage: "calendar") }
             
-            Text("Settings")
+            SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape") }
 
         }

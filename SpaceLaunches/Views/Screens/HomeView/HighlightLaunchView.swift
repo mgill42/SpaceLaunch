@@ -63,6 +63,7 @@ struct CardOverlay: View {
                         .bold()
                         .multilineTextAlignment(.leading)
                     Text(launch.launchServiceProvider.name)
+                        .multilineTextAlignment(.leading)
                     
                     Group {
                         Text(launch.net.formattedDate(dateStyle: .medium, timeStyle: .none))

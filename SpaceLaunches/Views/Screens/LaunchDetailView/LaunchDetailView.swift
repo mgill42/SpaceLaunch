@@ -129,6 +129,35 @@ struct LaunchDetailView: View {
                             
                         }
                     }
+                    
+                    Divider()
+                    
+                    if !launch.vidURLs.isEmpty {
+                        VStack(alignment: .leading, spacing: 10) {
+                            Text("Videos")
+                                .font(.title2)
+                                .bold()
+                            
+                            ForEach(launch.vidURLs) { vid in
+                                if let url = URL(string:vid.url) {
+                                    Link(destination: url) {
+                                        if let imageUrl = vid.feature_image {
+                                            KFImage(URL(string: imageUrl))
+                                                .placeholder {
+                                                    ProgressView()
+                                                }
+                                                .resizable()
+                                                .scaledToFit()
+                                                .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                                        } else {
+                                            VideoPlayerView(vidUrl: vid)
+                                        }
+                                    }
+                                    .padding(.vertical)
+                                }
+                            }
+                        }
+                    }
                 }
                 .padding()
             }
@@ -141,13 +170,6 @@ struct LaunchDetailView: View {
 struct LaunchLocation: Identifiable {
     let id = UUID()
     var coordinate: CLLocationCoordinate2D
-}
-
-struct LaunchDetailView_Previews: PreviewProvider {
-    static var previews: some View {
-        LaunchDetailView(launch: Launch.example())
-        
-    }
 }
 
 struct LaunchDetailSection<Content: View>: View {
@@ -167,14 +189,16 @@ struct LaunchDetailSection<Content: View>: View {
                         Text(name)
                             .font(.title2)
                             .bold()
-                            .foregroundColor(.blue)
                             .lineLimit(1)
+                            .foregroundColor(.primary)
                         Text(title)
                             .lineLimit(1)
+                            .foregroundColor(.gray)
 
                     }
                     Spacer()
                     Image(systemName: "chevron.right")
+                        .foregroundColor(.blue)
                 }
                 .padding(.trailing)
             }
@@ -208,3 +232,39 @@ struct LaunchDetailSection<Content: View>: View {
         }
     }
 }
+
+struct VideoPlayerView: View {
+    
+    let vidUrl: VidURL
+    
+    var body: some View {
+        
+        RoundedRectangle(cornerRadius: 25.0)
+            .foregroundColor(Color(uiColor: .secondarySystemBackground))
+            .frame(height: 200)
+            .overlay {
+                Image(systemName: "play.fill")
+                    .font(.system(size: 60))
+                    .foregroundColor(.white)
+                    .offset(y: 10)
+            }
+            .overlay(alignment: .topLeading) {
+                Text(vidUrl.title)
+                    .font(.title2)
+                    .bold()
+                    .padding()
+                    .lineLimit(1)
+            }
+    }
+}
+
+#Preview("LaunchDetailView") {
+    LaunchDetailView(launch: Launch.example())
+}
+
+
+#Preview("VideoPlayerView") {
+    VideoPlayerView(vidUrl: VidURL.vidURLExample())
+    
+}
+

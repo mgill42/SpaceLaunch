@@ -36,6 +36,8 @@ struct Launch: Codable, Identifiable {
     let pad: Pad?
     let image: String?
     let missionPatches: [MissionPatch]
+    let vidURLs: [VidURL]
+
     
     static func example() -> Launch {
         
@@ -54,7 +56,7 @@ struct Launch: Codable, Identifiable {
            launchServiceProvider: LaunchServiceProvider.launchServiceProviderExample(),
            mission: Mission(id: 6090, name: "NROL-91", description: "Classified payload for the US National Reconnaissance Office (NRO).", type: "Government/Top Secret", orbit: Orbit(id: 1, name: "Low Earth Orbit", abbrev: "LEO"), agencies: []),
            pad: Pad(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/pad/11/", name: "Space Launch Complex 6", latitude: "34.5815", longitude: "-120.6262", location: Location(id: 11, url: "https://lldev.thespacedevs.com/2.2.0/location/11/", name: "Vandenberg SFB, CA, USA", countryCode: "USA", mapImage: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launch_images/location_11_20200803142416.jpg", timezoneName: "America/Los_Angeles")),
-           image: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/delta_iv_heavy_image_20210426103838.jpg", missionPatches: [MissionPatch.missionPatchExample()])
+           image: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/launcher_images/delta_iv_heavy_image_20210426103838.jpg", missionPatches: [MissionPatch.missionPatchExample()], vidURLs: [VidURL(id: 8, title: "Трансляция пуска ракеты-носителя «Союз 2.1б» с космодрома Восточный", description: "22 октября с Восточного взлетит «Союз 2.1б» с разгонным блоком «Фрегат». Под обтекателем ракеты целый набор космических аппаратов различного назначения. Три ...", feature_image: "https://i.ytimg.com/vi/NSLqhweE2to/maxresdefault_live.jpg", url: "https://www.youtube.com/watch?v=NSLqhweE2")])
     }
   
 }
@@ -208,5 +210,25 @@ struct MissionPatch: Codable, Identifiable {
     
     static func missionPatchExample() -> MissionPatch {
         return MissionPatch(id: 848, name: "USSF-44", imageUrl: "https://spacelaunchnow-prod-east.nyc3.digitaloceanspaces.com/media/mission_patch_images/ussf-44_mission_patch_20230723152741.png")
+    }
+}
+
+struct VidURL: Codable, Identifiable {
+    let id: Int
+    let title: String
+    let description: String?
+    let feature_image: String?
+    let url: String
+    
+    enum CodingKeys: String, CodingKey {
+        case id = "priority"
+        case title
+        case description
+        case feature_image
+        case url
+    }
+    
+    static func vidURLExample() -> VidURL {
+        VidURL(id: 9, title: "Трансляция запуска грузового корабля «Прогресс МС-21» с космодрома Байконур", description: "26 октября 2022 года в 03:20 мск запланирован пуск ракеты-носителя «Союз-2.1а» с грузовым кораблем «Прогресс МС-21». Грузовику предстоит доставить на МКС 2 5...", feature_image: "https://i.ytimg.com/vi/dFS9kNMK0EI/maxresdefault_live.jpg", url: "https://www.youtube.com/watch?v=dFS9kNMK0EI")
     }
 }
