@@ -7,11 +7,16 @@
 
 import SwiftUI
 import StoreKit
+import EmailComposer
 
 struct SettingsView: View {
     
     @Environment(\.requestReview) private var requestReview
+    @State var showEmailComposer = false
     
+    let featureRequestEmailTemplate = EmailData(subject: "Feature Request", recipients: ["test@test.com"], body: "", isBodyHTML: true)
+    let reportProblemEmailTemplate = EmailData(subject: "Report a Problem", recipients: ["test@test.com"], body: "", isBodyHTML: true)
+
     var body: some View {
         NavigationView {
             List {
@@ -52,22 +57,26 @@ struct SettingsView: View {
                             icon: { Image(systemName: "heart.fill") }
                         )
                     }
+                    
                     Button {
-                        EmailHelper.shared.sendEmail(subject: "Feature Request", body: "", to: "test@test.com")
+                        showEmailComposer = true
                     } label: {
                         Label(
                             title: { Text("Request a Feature").foregroundColor(.white) },
                             icon: { Image(systemName: "bubble.right.fill") }
                         )
                     }
+                    .emailComposer(isPresented: $showEmailComposer, emailData: featureRequestEmailTemplate)
+                    
                     Button {
-                        EmailHelper.shared.sendEmail(subject: "Problem Report", body: "", to: "test@test.com")
+                        showEmailComposer = true
                     } label: {
                         Label(
                             title: { Text("Report a Problem").foregroundColor(.white) },
                             icon: { Image(systemName: "exclamationmark.triangle") }
                         )
                     }
+                    .emailComposer(isPresented: $showEmailComposer, emailData: reportProblemEmailTemplate)
                 }
             }
             .padding(.top)
