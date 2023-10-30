@@ -6,26 +6,68 @@
 //
 
 import SwiftUI
+import StoreKit
 
 struct SettingsView: View {
+    
+    @Environment(\.requestReview) private var requestReview
+    
     var body: some View {
         NavigationView {
             List {
                 Section {
-                    Label("About", systemImage: "info.circle")
-                    Label("What's New", systemImage: "star")
+                    NavigationLink(destination: AboutView()) {
+                        Label("About", systemImage: "info.circle")
+                    }
+                    NavigationLink(destination: UpdatesView()) {
+                        Label("What's New", systemImage: "star")
+                    }
                 }
                 
                 Section {
-                    Label("Notifications", systemImage: "square.stack")
-                    Label("Preferences", systemImage: "list.bullet")
                     
+                    Button {
+                        if let url = URL(string: UIApplication.openNotificationSettingsURLString) {
+                            Task {
+                                await UIApplication.shared.open(url)
+                            }
+                        }
+                    } label: {
+                        Label(
+                            title: { Text("Notifications").foregroundColor(.white) },
+                            icon: { Image(systemName: "square.stack") }
+                        )
+                    }
+                
+
+                    Label("Preferences", systemImage: "list.bullet")
                 }
                 
                 Section {
-                    Label("Leave a Review", systemImage: "heart.fill")
-                    Label("Request a Feature", systemImage: "bubble.right.fill")
-                    Label("Report a Problem", systemImage: "exclamationmark.triangle")
+                    Button {
+                        requestReview()
+                    } label: {
+                        Label(
+                            title: { Text("Leave a Review").foregroundColor(.white) },
+                            icon: { Image(systemName: "heart.fill") }
+                        )
+                    }
+                    Button {
+                        EmailHelper.shared.sendEmail(subject: "Feature Request", body: "", to: "test@test.com")
+                    } label: {
+                        Label(
+                            title: { Text("Request a Feature").foregroundColor(.white) },
+                            icon: { Image(systemName: "bubble.right.fill") }
+                        )
+                    }
+                    Button {
+                        EmailHelper.shared.sendEmail(subject: "Problem Report", body: "", to: "test@test.com")
+                    } label: {
+                        Label(
+                            title: { Text("Report a Problem").foregroundColor(.white) },
+                            icon: { Image(systemName: "exclamationmark.triangle") }
+                        )
+                    }
                 }
             }
             .padding(.top)
