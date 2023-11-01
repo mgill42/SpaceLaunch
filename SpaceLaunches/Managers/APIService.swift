@@ -9,6 +9,34 @@ import Foundation
 
 class APIService {
     
+    func fetchHighlightLaunch(completion: @escaping(Result<Launch, APIError>) -> Void) {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        let url = createLaunchURL(for: nil, type: .upcoming, page: 1, limit: 5)
+        fetch(type: Launches.self, url: url) { result in
+            switch result {
+            case .success(let success):
+                let highLightedLaunch = success.results.first(where: {
+                    
+                    if let date = dateFormatter.date(from: $0.net) {
+                        return date > Date()
+                    } else {
+                        return true
+                    }
+                    
+                })
+                if let highLightedLaunch = highLightedLaunch {
+                    completion(Result.success(highLightedLaunch))
+                }
+
+            case .failure(_):
+                completion(Result.failure(APIError.unknown))
+            }
+        }
+    }
+    
     func fetchLaunches(searchTerm: String?, page: Int, limit: Int, type: LaunchType, completion: @escaping(Result<Launches,APIError>) -> Void) {
         let url = createLaunchURL(for: searchTerm, type: type, page: page, limit: limit)
         fetch(type: Launches.self, url: url,completion: completion)

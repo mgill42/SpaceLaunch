@@ -31,6 +31,13 @@
 		6E8C9C7F2AED120000D5BFC6 /* UpdatesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9C7E2AED120000D5BFC6 /* UpdatesView.swift */; };
 		6E8C9C862AEEF0C000D5BFC6 /* NotificationService.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9C852AEEF0C000D5BFC6 /* NotificationService.swift */; };
 		6E8C9CC72AF061DD00D5BFC6 /* EmailComposer in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8C9CC62AF061DD00D5BFC6 /* EmailComposer */; };
+		6E8C9D092AF2F43500D5BFC6 /* WidgetKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E8C9D082AF2F43500D5BFC6 /* WidgetKit.framework */; };
+		6E8C9D0B2AF2F43500D5BFC6 /* SwiftUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E8C9D0A2AF2F43500D5BFC6 /* SwiftUI.framework */; };
+		6E8C9D0E2AF2F43500D5BFC6 /* SpaceLaunchesWidgetBundle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D0D2AF2F43500D5BFC6 /* SpaceLaunchesWidgetBundle.swift */; };
+		6E8C9D102AF2F43500D5BFC6 /* SpaceLaunchesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D0F2AF2F43500D5BFC6 /* SpaceLaunchesWidget.swift */; };
+		6E8C9D122AF2F43600D5BFC6 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 6E8C9D112AF2F43600D5BFC6 /* Assets.xcassets */; };
+		6E8C9D162AF2F43600D5BFC6 /* SpaceLaunchesWidgetExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6E8C9D062AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		6E8C9D232AF30C4500D5BFC6 /* Kingfisher in Frameworks */ = {isa = PBXBuildFile; productRef = 6E8C9D222AF30C4500D5BFC6 /* Kingfisher */; };
 		6ECEF1082ADB231B00356381 /* HighlightLaunchLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1072ADB231B00356381 /* HighlightLaunchLoadingView.swift */; };
 		6ECEF10A2ADB403B00356381 /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1092ADB403B00356381 /* EventsViewModel.swift */; };
 		6ECEF10C2ADB43C400356381 /* EventsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF10B2ADB43C400356381 /* EventsLoadingView.swift */; };
@@ -49,6 +56,30 @@
 		6EF1EDB82A8839D8007A5C68 /* AppTabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1EDB72A8839D8007A5C68 /* AppTabView.swift */; };
 		6EF1EDBA2A8913E4007A5C68 /* UpcomingLaunchesViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6EF1EDB92A8913E4007A5C68 /* UpcomingLaunchesViewModel.swift */; };
 /* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		6E8C9D142AF2F43600D5BFC6 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 6EE699302A853AF9008CAAAE /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 6E8C9D052AF2F43500D5BFC6;
+			remoteInfo = SpaceLaunchesWidgetExtension;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXCopyFilesBuildPhase section */
+		6E8C9D172AF2F43600D5BFC6 /* Embed Foundation Extensions */ = {
+			isa = PBXCopyFilesBuildPhase;
+			buildActionMask = 2147483647;
+			dstPath = "";
+			dstSubfolderSpec = 13;
+			files = (
+				6E8C9D162AF2F43600D5BFC6 /* SpaceLaunchesWidgetExtension.appex in Embed Foundation Extensions */,
+			);
+			name = "Embed Foundation Extensions";
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
 		6E2A9A472ABB83B30072B8BE /* FetchState.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FetchState.swift; sourceTree = "<group>"; };
@@ -74,6 +105,13 @@
 		6E8C9C7C2AEADA3F00D5BFC6 /* AboutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AboutView.swift; sourceTree = "<group>"; };
 		6E8C9C7E2AED120000D5BFC6 /* UpdatesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UpdatesView.swift; sourceTree = "<group>"; };
 		6E8C9C852AEEF0C000D5BFC6 /* NotificationService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationService.swift; sourceTree = "<group>"; };
+		6E8C9D062AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpaceLaunchesWidgetExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		6E8C9D082AF2F43500D5BFC6 /* WidgetKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = WidgetKit.framework; path = System/Library/Frameworks/WidgetKit.framework; sourceTree = SDKROOT; };
+		6E8C9D0A2AF2F43500D5BFC6 /* SwiftUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftUI.framework; path = System/Library/Frameworks/SwiftUI.framework; sourceTree = SDKROOT; };
+		6E8C9D0D2AF2F43500D5BFC6 /* SpaceLaunchesWidgetBundle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceLaunchesWidgetBundle.swift; sourceTree = "<group>"; };
+		6E8C9D0F2AF2F43500D5BFC6 /* SpaceLaunchesWidget.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SpaceLaunchesWidget.swift; sourceTree = "<group>"; };
+		6E8C9D112AF2F43600D5BFC6 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		6E8C9D132AF2F43600D5BFC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		6ECEF1072ADB231B00356381 /* HighlightLaunchLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightLaunchLoadingView.swift; sourceTree = "<group>"; };
 		6ECEF1092ADB403B00356381 /* EventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
 		6ECEF10B2ADB43C400356381 /* EventsLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoadingView.swift; sourceTree = "<group>"; };
@@ -94,6 +132,16 @@
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
+		6E8C9D032AF2F43500D5BFC6 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E8C9D232AF30C4500D5BFC6 /* Kingfisher in Frameworks */,
+				6E8C9D0B2AF2F43500D5BFC6 /* SwiftUI.framework in Frameworks */,
+				6E8C9D092AF2F43500D5BFC6 /* WidgetKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6EE699352A853AF9008CAAAE /* Frameworks */ = {
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
@@ -196,6 +244,26 @@
 			path = LaunchDetailView;
 			sourceTree = "<group>";
 		};
+		6E8C9D072AF2F43500D5BFC6 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+				6E8C9D082AF2F43500D5BFC6 /* WidgetKit.framework */,
+				6E8C9D0A2AF2F43500D5BFC6 /* SwiftUI.framework */,
+			);
+			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		6E8C9D0C2AF2F43500D5BFC6 /* SpaceLaunchesWidget */ = {
+			isa = PBXGroup;
+			children = (
+				6E8C9D0D2AF2F43500D5BFC6 /* SpaceLaunchesWidgetBundle.swift */,
+				6E8C9D0F2AF2F43500D5BFC6 /* SpaceLaunchesWidget.swift */,
+				6E8C9D112AF2F43600D5BFC6 /* Assets.xcassets */,
+				6E8C9D132AF2F43600D5BFC6 /* Info.plist */,
+			);
+			path = SpaceLaunchesWidget;
+			sourceTree = "<group>";
+		};
 		6ECEF1052ADB221600356381 /* LoadingView */ = {
 			isa = PBXGroup;
 			children = (
@@ -253,6 +321,8 @@
 			isa = PBXGroup;
 			children = (
 				6EE6993A2A853AFA008CAAAE /* SpaceLaunches */,
+				6E8C9D0C2AF2F43500D5BFC6 /* SpaceLaunchesWidget */,
+				6E8C9D072AF2F43500D5BFC6 /* Frameworks */,
 				6EE699392A853AFA008CAAAE /* Products */,
 			);
 			sourceTree = "<group>";
@@ -261,6 +331,7 @@
 			isa = PBXGroup;
 			children = (
 				6EE699382A853AFA008CAAAE /* SpaceLaunches.app */,
+				6E8C9D062AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -355,6 +426,26 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
+		6E8C9D052AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 6E8C9D1A2AF2F43600D5BFC6 /* Build configuration list for PBXNativeTarget "SpaceLaunchesWidgetExtension" */;
+			buildPhases = (
+				6E8C9D022AF2F43500D5BFC6 /* Sources */,
+				6E8C9D032AF2F43500D5BFC6 /* Frameworks */,
+				6E8C9D042AF2F43500D5BFC6 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = SpaceLaunchesWidgetExtension;
+			packageProductDependencies = (
+				6E8C9D222AF30C4500D5BFC6 /* Kingfisher */,
+			);
+			productName = SpaceLaunchesWidgetExtension;
+			productReference = 6E8C9D062AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension.appex */;
+			productType = "com.apple.product-type.app-extension";
+		};
 		6EE699372A853AF9008CAAAE /* SpaceLaunches */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EE699462A853AFA008CAAAE /* Build configuration list for PBXNativeTarget "SpaceLaunches" */;
@@ -362,10 +453,12 @@
 				6EE699342A853AF9008CAAAE /* Sources */,
 				6EE699352A853AF9008CAAAE /* Frameworks */,
 				6EE699362A853AF9008CAAAE /* Resources */,
+				6E8C9D172AF2F43600D5BFC6 /* Embed Foundation Extensions */,
 			);
 			buildRules = (
 			);
 			dependencies = (
+				6E8C9D152AF2F43600D5BFC6 /* PBXTargetDependency */,
 			);
 			name = SpaceLaunches;
 			packageProductDependencies = (
@@ -383,9 +476,12 @@
 			isa = PBXProject;
 			attributes = {
 				BuildIndependentTargetsInParallel = 1;
-				LastSwiftUpdateCheck = 1430;
+				LastSwiftUpdateCheck = 1500;
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
+					6E8C9D052AF2F43500D5BFC6 = {
+						CreatedOnToolsVersion = 15.0.1;
+					};
 					6EE699372A853AF9008CAAAE = {
 						CreatedOnToolsVersion = 14.3.1;
 					};
@@ -409,11 +505,20 @@
 			projectRoot = "";
 			targets = (
 				6EE699372A853AF9008CAAAE /* SpaceLaunches */,
+				6E8C9D052AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension */,
 			);
 		};
 /* End PBXProject section */
 
 /* Begin PBXResourcesBuildPhase section */
+		6E8C9D042AF2F43500D5BFC6 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E8C9D122AF2F43600D5BFC6 /* Assets.xcassets in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6EE699362A853AF9008CAAAE /* Resources */ = {
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -426,6 +531,15 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXSourcesBuildPhase section */
+		6E8C9D022AF2F43500D5BFC6 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				6E8C9D0E2AF2F43500D5BFC6 /* SpaceLaunchesWidgetBundle.swift in Sources */,
+				6E8C9D102AF2F43500D5BFC6 /* SpaceLaunchesWidget.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
 		6EE699342A853AF9008CAAAE /* Sources */ = {
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
@@ -472,7 +586,78 @@
 		};
 /* End PBXSourcesBuildPhase section */
 
+/* Begin PBXTargetDependency section */
+		6E8C9D152AF2F43600D5BFC6 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 6E8C9D052AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension */;
+			targetProxy = 6E8C9D142AF2F43600D5BFC6 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
 /* Begin XCBuildConfiguration section */
+		6E8C9D182AF2F43600D5BFC6 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 98F3VL89VL;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpaceLaunchesWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpaceLaunchesWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.gill.mahaveer.SpaceLaunches.SpaceLaunchesWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		6E8C9D192AF2F43600D5BFC6 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_GENERATE_SWIFT_ASSET_SYMBOL_EXTENSIONS = YES;
+				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
+				ASSETCATALOG_COMPILER_WIDGET_BACKGROUND_COLOR_NAME = WidgetBackground;
+				CODE_SIGN_STYLE = Automatic;
+				CURRENT_PROJECT_VERSION = 1;
+				DEVELOPMENT_TEAM = 98F3VL89VL;
+				GCC_C_LANGUAGE_STANDARD = gnu17;
+				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_FILE = SpaceLaunchesWidget/Info.plist;
+				INFOPLIST_KEY_CFBundleDisplayName = SpaceLaunchesWidget;
+				INFOPLIST_KEY_NSHumanReadableCopyright = "";
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
+				LD_RUNPATH_SEARCH_PATHS = (
+					"$(inherited)",
+					"@executable_path/Frameworks",
+					"@executable_path/../../Frameworks",
+				);
+				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
+				MARKETING_VERSION = 1.0;
+				PRODUCT_BUNDLE_IDENTIFIER = me.gill.mahaveer.SpaceLaunches.SpaceLaunchesWidget;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				SKIP_INSTALL = YES;
+				SWIFT_EMIT_LOC_STRINGS = YES;
+				SWIFT_VERSION = 5.0;
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Release;
+		};
 		6EE699442A853AFA008CAAAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -592,6 +777,7 @@
 		6EE699472A853AFA008CAAAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -621,6 +807,7 @@
 		6EE699482A853AFA008CAAAE /* Release */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
+				ALWAYS_EMBED_SWIFT_STANDARD_LIBRARIES = YES;
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_STYLE = Automatic;
@@ -650,6 +837,15 @@
 /* End XCBuildConfiguration section */
 
 /* Begin XCConfigurationList section */
+		6E8C9D1A2AF2F43600D5BFC6 /* Build configuration list for PBXNativeTarget "SpaceLaunchesWidgetExtension" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				6E8C9D182AF2F43600D5BFC6 /* Debug */,
+				6E8C9D192AF2F43600D5BFC6 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
 		6EE699332A853AF9008CAAAE /* Build configuration list for PBXProject "SpaceLaunches" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
@@ -694,6 +890,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 6E8C9CC52AF061DD00D5BFC6 /* XCRemoteSwiftPackageReference "EmailComposer" */;
 			productName = EmailComposer;
+		};
+		6E8C9D222AF30C4500D5BFC6 /* Kingfisher */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 6EE6994E2A86EB25008CAAAE /* XCRemoteSwiftPackageReference "Kingfisher" */;
+			productName = Kingfisher;
 		};
 		6EE6994F2A86EB25008CAAAE /* Kingfisher */ = {
 			isa = XCSwiftPackageProductDependency;

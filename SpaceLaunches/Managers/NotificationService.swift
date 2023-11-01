@@ -54,6 +54,7 @@ class NotificationService {
         }
     }
     
+    
     func getAuthorizarionStatus() -> Bool {
         var status = false
         UNUserNotificationCenter.current().getNotificationSettings { settings in

@@ -6,8 +6,8 @@
 //
 
 import SwiftUI
-import Kingfisher
 import MapKit
+import Kingfisher
 
 struct LaunchDetailView: View {
     
