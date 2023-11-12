@@ -9,13 +9,11 @@ import SwiftUI
 
 struct EventsLoadingView: View {
     var body: some View {
-        VStack(spacing: 10) {
-            ProgressView()
-                .progressViewStyle(.circular)
-                .frame(maxWidth: .infinity)
-                .id(UUID())
-            Text("Fetching Upcoming Events...")
-        }
+        ProgressView()
+            .progressViewStyle(.circular)
+            .frame(maxWidth: .infinity)
+            .id(UUID())
+        
     }
 }
 

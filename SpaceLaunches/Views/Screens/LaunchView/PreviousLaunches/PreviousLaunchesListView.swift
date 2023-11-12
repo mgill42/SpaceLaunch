@@ -12,38 +12,43 @@ struct PreviousLaunchesListView: View {
     @ObservedObject var viewModel = PreviousLaunchesViewModel()
     
     var body: some View {
-        List {
-            ForEach(viewModel.previousLaunches) { launch in
-                NavigationLink(destination: LaunchDetailView(launch: launch)) {
-                    LaunchCell(launch: launch)
-                }
-                .listRowSeparator(.hidden)
-            }
-            
-            switch viewModel.state {
-            case .good:
-                Color.clear
-                    .onAppear {
-                        viewModel.loadMore()
+        GeometryReader { geo in
+            List {
+                ForEach(viewModel.previousLaunches) { launch in
+                    NavigationLink(destination: LaunchDetailView(launch: launch)) {
+                        LaunchCell(launch: launch)
                     }
-            case .isLoading:
-                ProgressView()
-                    .progressViewStyle(.circular)
-                    .frame(maxWidth: .infinity)
-                    .id(UUID())
-            case .loadedAll:
-                EmptyView()
-            case .error(let message):
-                Text(message)
-                    .foregroundColor(.pink)
-            case .isEmpty:
-                LaunchLoadingView()
                     .listRowSeparator(.hidden)
-                    .padding(.top, 150)
-                  
+                }
+                
+                switch viewModel.state {
+                case .good:
+                    Color.clear
+                        .onAppear {
+                            viewModel.loadMore()
+                        }
+                case .isLoading:
+                    ProgressView()
+                        .progressViewStyle(.circular)
+                        .frame(maxWidth: .infinity)
+                        .id(UUID())
+                case .loadedAll:
+                    EmptyView()
+                case .error(let message):
+                    ErrorPlaceholderView()
+                        .frame(height: geo.size.height / 1.1)
+                        .frame(maxWidth: .infinity)
+                        .listRowSeparator(.hidden)
+                case .isEmpty:
+                    VStack(alignment: .center) {
+                        LaunchLoadingView()
+                            .frame(height: geo.size.height / 1.1)
+                            .listRowSeparator(.hidden)
+                    }
+                }
             }
+            .listStyle(.plain)
         }
-        .listStyle(.plain)
     }
 }
 

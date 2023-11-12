@@ -14,7 +14,7 @@ class APIService {
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
         dateFormatter.locale = Locale(identifier: "en_US_POSIX")
         
-        let url = createLaunchURL(for: nil, type: .upcoming, page: 1, limit: 5)
+        let url = createLaunchURL(for: nil, type: .upcoming, page: 0, limit: 5)
         fetch(type: Launches.self, url: url) { result in
             switch result {
             case .success(let success):
@@ -36,17 +36,8 @@ class APIService {
             }
         }
     }
-    
-    func downloadImageData2(from urlString: String) async -> Data? {
-        guard let url = URL(string: urlString) else { return nil }
-        do {
-            let (data, _) = try await URLSession.shared.data(from: url)
-            return data
-        } catch {
-            return nil
-        }
-    }
-    //------
+
+
     func getDataFromUrl(url: String, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         guard let url = URL(string: url) else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in

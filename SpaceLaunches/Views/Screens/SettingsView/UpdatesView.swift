@@ -49,5 +49,6 @@ struct UpdatesSectionView: View {
                 .bold()
         }
         .listRowSeparator(.hidden)
+        .toolbar(.hidden)
     }
 }

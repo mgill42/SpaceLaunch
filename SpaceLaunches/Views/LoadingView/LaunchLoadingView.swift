@@ -9,13 +9,10 @@ import SwiftUI
 
 struct LaunchLoadingView: View {
     var body: some View {
-        VStack(spacing: 10) {
-            ProgressView()
-                .progressViewStyle(.circular)
-                .frame(maxWidth: .infinity)
-                .id(UUID())
-            Text("Fetching Launches...")
-        }
+        ProgressView()
+            .progressViewStyle(.circular)
+            .frame(maxWidth: .infinity)
+            .id(UUID())
     }
 }
 

@@ -31,7 +31,7 @@ struct Provider: TimelineProvider {
                 service.getDataFromUrl(url: success.image ?? "") { data, response, error in
                     if let data = data {
                         entries.append(LaunchEntry(date: Date(), launch: success, backgroundImageDate: data))
-                        let timeline = Timeline(entries: entries, policy: .atEnd)
+                        let timeline = Timeline(entries: entries, policy: .after(success.net.convertToDate() ?? Date().addingTimeInterval(21600)))
                         completion(timeline)
                     }
                 }
@@ -51,23 +51,19 @@ struct LaunchEntry: TimelineEntry {
 }
 
 struct SpaceLaunchesWidgetEntryView : View {
+    @Environment(\.widgetFamily) var family
     var entry: LaunchEntry
 
     var body: some View {
-        GeometryReader { geo in
-            ZStack(alignment: .topLeading) {
-                Image(uiImage: UIImage(data: entry.backgroundImageDate) ?? UIImage(named: "rocketPlaceholder")!)
-                    .resizable()
-                    .scaledToFill()
-                
-                Text(entry.launch.name)
-                    .foregroundColor(.white)
-                    .bold()
-                    .padding([.top, .leading])
-                    .lineLimit(1)
-                    .minimumScaleFactor(0.8)
-                    .frame(width: geo.size.width * 0.8)
-            }
+        switch family {
+        case .systemSmall:
+            LaunchWidgetSmallView(entry: entry)
+        case .systemMedium:
+            LaunchWidgetMediumView(entry: entry)
+        case .systemLarge:
+            LaunchWidgetLargeView(entry: entry)
+        default:
+            EmptyView()
         }
     }
 }
@@ -86,16 +82,143 @@ struct SpaceLaunchesWidget: Widget {
                     .background()
             }
         }
+        .configurationDisplayName("Space Launch")
+        .description("Keep track of the latest launch")
+        .supportedFamilies([.systemMedium, .systemSmall, .systemLarge])
         .contentMarginsDisabled()
-        .configurationDisplayName("My Widget")
-        .description("This is an example widget.")
-        .supportedFamilies([.systemMedium])
+
 
     }
 }
 
+#Preview(as: .systemLarge) {
+    SpaceLaunchesWidget()
+} timeline: {
+    LaunchEntry(date: .now, launch: Launch.example(), backgroundImageDate: Data())
+}
 #Preview(as: .systemMedium) {
     SpaceLaunchesWidget()
 } timeline: {
     LaunchEntry(date: .now, launch: Launch.example(), backgroundImageDate: Data())
+}
+
+#Preview(as: .systemSmall) {
+    SpaceLaunchesWidget()
+} timeline: {
+    LaunchEntry(date: .now, launch: Launch.example(), backgroundImageDate: Data())
+}
+
+struct LaunchWidgetSmallView: View {
+    let entry: LaunchEntry
+    
+    var body: some View {
+
+        VStack() {
+            VStack(alignment: .leading) {
+                Text(entry.launch.name)
+                    .foregroundColor(.white)
+                    .bold()
+                
+                if let launchDate = entry.launch.net.convertToDate() {
+                    Text(launchDate, style: .timer)
+                        .bold()
+                        .foregroundColor(.white)
+                }
+            }
+            .padding()
+            Spacer()
+        }
+        .background {
+            Image(uiImage: UIImage(data: entry.backgroundImageDate) ?? UIImage(named: "rocketPlaceholder")!)
+                .resizable()
+                .scaledToFill()
+                .overlay {
+                    LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
+                        .opacity(0.6)
+                }
+        }
+    }
+}
+
+struct LaunchWidgetMediumView: View {
+    let entry: LaunchEntry
+    
+    var body: some View {
+
+        VStack() {
+            VStack(alignment: .leading) {
+                Text(entry.launch.name)
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .bold()
+                
+                if let launchDate = entry.launch.net.convertToDate() {
+                    Text(launchDate, style: .timer)
+                        .font(.title3)
+                        .bold()
+                        .foregroundColor(.white)
+                }
+            }
+            .padding()
+            Spacer()
+        }
+        .background {
+            Image(uiImage: UIImage(data: entry.backgroundImageDate) ?? UIImage(named: "rocketPlaceholder")!)
+                .resizable()
+                .scaledToFill()
+                .overlay {
+                    LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
+                        .opacity(0.6)
+                }
+        }
+    }
+}
+
+struct LaunchWidgetLargeView: View {
+    let entry: LaunchEntry
+    
+    var body: some View {
+
+        VStack {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    
+                    Text(entry.launch.name)
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .bold()
+                    
+                    if let launchDate = entry.launch.net.convertToDate() {
+                        Text(launchDate, style: .timer)
+                            .foregroundColor(.white)
+                            .font(.title2)
+                            .bold()
+                    }
+                    
+                    Text(entry.launch.launchServiceProvider.name)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    if let pad = entry.launch.pad {
+                        Text(pad.location.name)
+                            .foregroundColor(.white)
+                    }
+          
+                }
+                Spacer()
+            }
+            Spacer()
+            }
+            .padding()
+            .background {
+                Image(uiImage: UIImage(data: entry.backgroundImageDate) ?? UIImage(named: "rocketPlaceholder")!)
+                    .resizable()
+                    .scaledToFill()
+                    .overlay {
+                        LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
+                            .opacity(0.6)
+                    }
+            }
+        
+       
+    }
 }

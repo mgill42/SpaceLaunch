@@ -13,52 +13,57 @@ struct EventsView: View {
     @StateObject var viewModel = EventsViewModel()
 
     var body: some View {
-        NavigationView {
-            List {
-                ForEach(viewModel.events) { event in
-                    Group {
-                        if let newsURL = URL(string: event.newsUrl ?? "") {
-                            Link(destination: newsURL, label: {
-                                EventCell(event: event)
-                            })
-                            .listRowSeparator(.hidden)
-                        } else if let videoURL = URL(string: event.videoUrl ?? "") {
-                            Link(destination: videoURL, label: {
-                                EventCell(event: event)
-                            })
-                            .listRowSeparator(.hidden)
-                        } else {
-                            EventCell(event: event)
+        GeometryReader { geo in
+            
+            NavigationView {
+                List {
+                    ForEach(viewModel.events) { event in
+                        Group {
+                            if let newsURL = URL(string: event.newsUrl ?? "") {
+                                Link(destination: newsURL, label: {
+                                    EventCell(event: event)
+                                })
                                 .listRowSeparator(.hidden)
+                            } else if let videoURL = URL(string: event.videoUrl ?? "") {
+                                Link(destination: videoURL, label: {
+                                    EventCell(event: event)
+                                })
+                                .listRowSeparator(.hidden)
+                            } else {
+                                EventCell(event: event)
+                                    .listRowSeparator(.hidden)
+                            }
                         }
+                        .padding(.vertical, 20)
                     }
-                    .padding(.vertical, 20)
+                    switch viewModel.state {
+                    case .good:
+                        Color.clear
+                            .onAppear {
+                                viewModel.fetchEvents()
+                            }
+                    case .isLoading:
+                        ProgressView()
+                            .progressViewStyle(.circular)
+                            .frame(maxWidth: .infinity)
+                            .id(UUID())
+                    case .loadedAll:
+                        EmptyView()
+                    case .error(let message):
+                        ErrorPlaceholderView()
+                            .frame(height: geo.size.height / 1.3)
+                            .frame(maxWidth: .infinity)
+                            .listRowSeparator(.hidden)
+                    case .isEmpty:
+                        EventsLoadingView()
+                            .frame(height: geo.size.height / 1.3)
+                            .listRowSeparator(.hidden)
+                    }
+                    
                 }
-                
-                switch viewModel.state {
-                case .good:
-                    Color.clear
-                        .onAppear {
-                            viewModel.fetchEvents()
-                        }
-                case .isLoading:
-                    ProgressView()
-                        .progressViewStyle(.circular)
-                        .frame(maxWidth: .infinity)
-                        .id(UUID())
-                case .loadedAll:
-                    EmptyView()
-                case .error(let message):
-                    Text(message)
-                        .foregroundColor(.pink)
-                case .isEmpty:
-                    EventsLoadingView()
-                        .listRowSeparator(.hidden)
-                        .padding(.top, 150)
-                }
+                .navigationTitle("Upcoming Events")
+                .listStyle(.plain)
             }
-            .navigationTitle("Events")
-            .listStyle(.plain)
         }
     }
 }

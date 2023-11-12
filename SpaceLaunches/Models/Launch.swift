@@ -40,14 +40,20 @@ struct Launch: Codable, Identifiable {
 
     
     static func example() -> Launch {
+        let date = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        let net = dateFormatter.string(from: date.addingTimeInterval(86400))
         
-    Launch(id: "558c199e-4cfb-4914-b5d3-452b63d492bf",
+        
+    return Launch(id: "558c199e-4cfb-4914-b5d3-452b63d492bf",
            url: "https://lldev.thespacedevs.com/2.2.0/launch/558c199e-4cfb-4914-b5d3-452b63d492bf/",
            slug: "delta-iv-heavy-nrol-91",
            name: "Delta IV Heavy | NROL-91",
            status: Status(id: 3, name: "Launch Successful", abbrev: "Success", description: "The launch vehicle successfully inserted its payload(s) into the target orbit(s)."),
            lastUpdated: "2023-06-14T17:25:51Z",
-           net: "2022-09-24T22:25:30Z",
+           net: net,
            netPrecision: nil,
            windowEnd: "2022-09-24T23:12:00Z",
            windowStart: "2022-09-24T20:50:00Z",

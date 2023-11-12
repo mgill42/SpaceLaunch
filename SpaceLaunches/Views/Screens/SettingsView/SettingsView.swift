@@ -43,10 +43,7 @@ struct SettingsView: View {
                             icon: { Image(systemName: "square.stack") }
                         )
                     }
-                
-
-                    Label("Preferences", systemImage: "list.bullet")
-                }
+                                }
                 
                 Section {
                     Button {

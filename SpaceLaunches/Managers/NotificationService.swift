@@ -15,7 +15,7 @@ class NotificationService {
     func fetchNotificationLaunches() {
         let dateFormatter = DateFormatter()
 
-        service.fetchLaunches(searchTerm: nil, page: 0, limit: 10, type: .upcoming) {result in
+        service.fetchLaunches(searchTerm: nil, page: 0, limit: 15, type: .upcoming) {result in
             dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
             dateFormatter.locale = Locale(identifier: "en_US_POSIX")
             
@@ -27,10 +27,11 @@ class NotificationService {
                         let content = UNMutableNotificationContent()
                         content.title = launch.name
                         content.subtitle = launch.launchServiceProvider.name
+                        content.body = "24 hours until the launch of \(launch.rocket.configuration.name)"
                         content.sound = UNNotificationSound.default
                         
                         if let targetTime = dateFormatter.date(from: launch.net) {
-                            guard let subtractedTime = Calendar.current.date(byAdding: .minute, value: -10, to: targetTime) else {
+                            guard let subtractedTime = Calendar.current.date(byAdding: .day, value: -1, to: targetTime) else {
                                 print("Could not subtract time")
                                 return
                             }

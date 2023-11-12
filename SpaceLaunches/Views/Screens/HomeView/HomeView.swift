@@ -13,31 +13,34 @@ struct HomeView: View {
     @StateObject var viewModel = HomeViewModel()
 
     var body: some View {
-        NavigationView {
-            ScrollView {
-                switch viewModel.state {
-                case .isLoading:
-                    ProgressView()
-                case .good:
-                    Color.clear
-                        .onAppear {
-                            viewModel.fetchHighlightLaunch()
+        GeometryReader { geo in
+            NavigationView {
+                ScrollView {
+                    switch viewModel.state {
+                    case .isLoading:
+                        ProgressView()
+                    case .good:
+                        Color.clear
+                            .onAppear {
+                                viewModel.fetchHighlightLaunch()
+                            }
+                    case .loadedAll:
+                        if let highlightedLaunch = viewModel.highLightedLaunch {
+                            HighlightLaunchView(launch: highlightedLaunch)
+                                .padding(.top, 30)
                         }
-                case .loadedAll:
-                    if let highlightedLaunch = viewModel.highLightedLaunch {
-                        HighlightLaunchView(launch: highlightedLaunch)
-                            .padding(.top, 30)
+                    case .error(let message):
+                        ErrorPlaceholderView()
+                            .frame(height: geo.size.height / 1.3)
+                            .frame(maxWidth: .infinity)
+                    case .isEmpty:
+                        HighlightLaunchLoadingView()
+                            .frame(height: geo.size.height / 1.3)
                     }
-                case .error(let message):
-                    Text(message)
-                        .foregroundColor(.pink)
-                case .isEmpty:
-                    HighlightLaunchLoadingView()
-                        .padding(.top, 170)
                 }
+                .scrollIndicators(.hidden)
+                .navigationTitle("Upcoming Launch")
             }
-            .scrollIndicators(.hidden)
-            .navigationTitle("Upcoming Launch")
         }
     }
 }

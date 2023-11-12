@@ -88,7 +88,7 @@ struct LaunchDetailView: View {
                         .padding()
                     
                     if let mission = launch.mission {
-                        LaunchDetailSection(name: mission.name, description: mission.description, toggleState: $missionMore, destination: MissionDetailView(mission: mission, missionPatch: launch.missionPatches.first), title: "Mission Details")
+                        LaunchDetailSection(name: mission.name, description: mission.description, toggleState: $missionMore, destination: MissionDetailView(mission: mission, missionPatch: launch.missionPatches.first), title: "Mission")
                     }
                     
                     Divider()
