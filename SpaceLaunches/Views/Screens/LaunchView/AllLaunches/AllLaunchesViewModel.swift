@@ -59,13 +59,12 @@ import Combine
                         }
                         self?.page += 1
                         self?.state = (results.results.count == self?.limit) ? .good : .loadedAll
-                    case .failure(let error):
-                        self?.state = .error("Could not load: \(error)")
+                    case .failure(_):
+                        self?.state = .error
                         
                     }
                 }
             }
-
         }
     }
 

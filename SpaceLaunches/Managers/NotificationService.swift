@@ -12,17 +12,65 @@ class NotificationService {
     
     let service = APIService()
     
-    func fetchNotificationLaunches() {
+    func fetchNotificationEvents() {
         let dateFormatter = DateFormatter()
-
-        service.fetchLaunches(searchTerm: nil, page: 0, limit: 15, type: .upcoming) {result in
-            dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-            dateFormatter.locale = Locale(identifier: "en_US_POSIX")
-            
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        service.fetchEvents { result in
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-                    print("Notications Fetched")
+                    #if DEBUG
+                    print("Notification Events Fetched")
+                    #endif
+                    for event in results.results {
+                        let content = UNMutableNotificationContent()
+                        content.title = event.name
+                        content.body = "24 hours until the \(event.name) event"
+                        content.sound = UNNotificationSound.default
+                        
+                        if let targetTime = dateFormatter.date(from: event.date ?? "") {
+                            guard let subtractedTime = Calendar.current.date(byAdding: .day, value: -1, to: targetTime) else {
+                                #if DEBUG
+                                print("Could not subtract time")
+                                #endif
+                                return
+                            }
+                            
+                            let dateComponants = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: subtractedTime)
+                            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponants, repeats: false)
+                            let request = UNNotificationRequest(identifier: String(event.id), content: content, trigger: trigger)
+                            
+                            UNUserNotificationCenter.current().add(request) { (error) in
+                                if (error != nil) {
+                                    print(error?.localizedDescription as Any)
+                                }
+                            }
+                        }
+                    }
+                    #if DEBUG
+                    self.getScheduledNotifications()
+                    #endif
+                case .failure(_):
+                    #if DEBUG
+                    print(print("Error fetching notification launches"))
+                    #endif
+                }
+            }
+        }
+    }
+    
+    func fetchNotificationLaunches() {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        
+        service.fetchLaunches(searchTerm: nil, page: 0, limit: 15, type: .upcoming) {result in
+            DispatchQueue.main.async {
+                switch result {
+                case .success(let results):
+                    print("Notication Launches Fetched")
                     for launch in results.results {
                         let content = UNMutableNotificationContent()
                         content.title = launch.name
@@ -32,7 +80,9 @@ class NotificationService {
                         
                         if let targetTime = dateFormatter.date(from: launch.net) {
                             guard let subtractedTime = Calendar.current.date(byAdding: .day, value: -1, to: targetTime) else {
+                                #if DEBUG
                                 print("Could not subtract time")
+                                #endif
                                 return
                             }
                             
@@ -47,9 +97,8 @@ class NotificationService {
                             }
                         }
                     }
-                    self.getScheduledNotifications()
                 case .failure(_):
-                    print(print("Error fetching notification launces"))
+                    print(print("Error fetching notification launches"))
                 }
             }
         }
@@ -71,10 +120,15 @@ class NotificationService {
     func requestPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
+                #if DEBUG
                 print("Notifications Enabled")
+                #endif
                 self.fetchNotificationLaunches()
+                self.fetchNotificationEvents()
             } else if error != nil {
+                #if DEBUG
                 print("Notifications Disabled")
+                #endif
             }
         }
     }
@@ -87,7 +141,9 @@ class NotificationService {
                 let identifier = request.identifier
                 
                 let notificationInfo = "Identifier: \(identifier)\nTitle: \(content.title)\nBody: \(content.body)\nTrigger: \(String(describing: trigger))"
+                #if DEBUG
                 print(notificationInfo)
+                #endif
             }
         }
     }

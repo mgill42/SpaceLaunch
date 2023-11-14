@@ -34,7 +34,7 @@ struct PreviousLaunchesListView: View {
                         .id(UUID())
                 case .loadedAll:
                     EmptyView()
-                case .error(let message):
+                case .error:
                     ErrorPlaceholderView()
                         .frame(height: geo.size.height / 1.1)
                         .frame(maxWidth: .infinity)

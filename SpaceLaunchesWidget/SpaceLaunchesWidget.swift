@@ -23,15 +23,14 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        var entries: [LaunchEntry] = []
-
         service.fetchHighlightLaunch { result in
             switch result {
             case .success(let success):
                 service.getDataFromUrl(url: success.image ?? "") { data, response, error in
                     if let data = data {
-                        entries.append(LaunchEntry(date: Date(), launch: success, backgroundImageDate: data))
-                        let timeline = Timeline(entries: entries, policy: .after(success.net.convertToDate() ?? Date().addingTimeInterval(21600)))
+                        let entry = LaunchEntry(date: Date(), launch: success, backgroundImageDate: data)
+                        let timeline = Timeline(entries: [entry], policy: .after(success.net.convertToDate() ?? Date().addingTimeInterval(21600)))
+                        print(timeline.policy)
                         completion(timeline)
                     }
                 }

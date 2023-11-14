@@ -19,14 +19,12 @@ struct ErrorPlaceholderView: View {
                 Text("Please try again later")
             }
             .foregroundColor(.secondary)
-               
         }
         .padding()
         .background {
             RoundedRectangle(cornerRadius: 25.0)
                 .foregroundColor(Color(uiColor: .secondarySystemBackground))
                 .frame(width: 250, height: 200)
-
         }
     }
 }

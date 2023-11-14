@@ -30,8 +30,8 @@ import Foundation
                         self.events.append(event)
                     }
                     self.state = .loadedAll
-                case .failure(let error):
-                    self.state = .error("Could not load: \(error)")
+                case .failure(_):
+                    self.state = .error
                 }
             }
         }

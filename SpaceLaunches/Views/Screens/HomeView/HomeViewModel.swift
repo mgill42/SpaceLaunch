@@ -32,8 +32,8 @@ import UserNotifications
                 case .success(let success):
                     self.highLightedLaunch = success
                     self.state = .loadedAll
-                case .failure(let failure):
-                    self.state = .error("ERROR: \(failure)")
+                case .failure(_):
+                    self.state = .error
                 }
             }
         }

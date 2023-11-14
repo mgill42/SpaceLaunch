@@ -12,5 +12,5 @@ enum FetchState: Comparable {
     case isEmpty
     case isLoading
     case loadedAll
-    case error(String)
+    case error
 }

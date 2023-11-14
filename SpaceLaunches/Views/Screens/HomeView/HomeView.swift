@@ -29,7 +29,7 @@ struct HomeView: View {
                             HighlightLaunchView(launch: highlightedLaunch)
                                 .padding(.top, 30)
                         }
-                    case .error(let message):
+                    case .error:
                         ErrorPlaceholderView()
                             .frame(height: geo.size.height / 1.3)
                             .frame(maxWidth: .infinity)

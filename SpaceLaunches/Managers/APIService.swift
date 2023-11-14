@@ -114,7 +114,6 @@ class APIService {
         
         var components = URLComponents(string: baseURL)
         components?.queryItems = queryItems
-        print(components?.url as Any)
         return components?.url
     }
 }

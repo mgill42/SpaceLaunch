@@ -13,11 +13,7 @@ struct SpaceLaunchesApp: App {
     let notificationService = NotificationService()
     
     init() {
-        print("Initialized")
         notificationService.requestPermission()
-        if notificationService.getAuthorizarionStatus() == true {
-            notificationService.fetchNotificationLaunches()
-        }
     }
  
     

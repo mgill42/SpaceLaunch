@@ -14,7 +14,6 @@ struct EventsView: View {
 
     var body: some View {
         GeometryReader { geo in
-            
             NavigationView {
                 List {
                     ForEach(viewModel.events) { event in
@@ -49,7 +48,7 @@ struct EventsView: View {
                             .id(UUID())
                     case .loadedAll:
                         EmptyView()
-                    case .error(let message):
+                    case .error:
                         ErrorPlaceholderView()
                             .frame(height: geo.size.height / 1.3)
                             .frame(maxWidth: .infinity)
