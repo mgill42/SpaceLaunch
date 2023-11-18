@@ -45,7 +45,7 @@ import UserNotifications
         
         func fetchLaunches(for searchTerm: String?) {
           
-            guard state == .good else {
+            guard state == .good || state == .error else {
                 return
             }
             

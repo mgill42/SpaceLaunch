@@ -10,7 +10,7 @@ import MapKit
 import Kingfisher
 
 struct LaunchDetailView: View {
-    
+        
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
     
     let launch: Launch
@@ -18,6 +18,7 @@ struct LaunchDetailView: View {
     @State var missionMore = false
     @State var agencyMore = false
     @State var rocketMore = false
+    
 
     var body: some View {
         GeometryReader { geo in
@@ -33,6 +34,10 @@ struct LaunchDetailView: View {
                         .frame(maxWidth: geo.size.width)
                         .overlay(alignment: .bottom) {
                             CountdownTimerView(launchTime: launch.net)
+                        }
+                        .overlay(alignment: .topTrailing) {
+                            FavouriteButton(launch: launch)
+                                .padding()
                         }
                 } else {
                     Image("rocketPlaceholder")
@@ -58,8 +63,7 @@ struct LaunchDetailView: View {
                     }
                     .lineLimit(1)
                     .minimumScaleFactor(0.7)
-                    
-                    
+    
                     Grid {
                         GridRow {
                             Text("Date")
@@ -162,7 +166,6 @@ struct LaunchDetailView: View {
                 .padding()
             }
             .navigationBarTitleDisplayMode(.inline)
-
         }
     }
 }
@@ -265,3 +268,49 @@ struct VideoPlayerView: View {
     
 }
 
+
+struct FavouriteButton: View {
+    
+    @StateObject private var launchStore = LaunchFavouriteStore()
+    @State var favourited = false
+
+    let launch: Launch
+
+    var body: some View {
+        Button {
+            Task {
+                if favourited {
+                    try await launchStore.delete(launch: launch)
+                    favourited = false
+                } else {
+                    try await launchStore.save(launch: launch)
+                    favourited = true
+                }
+            }
+        } label: {
+            ZStack {
+                RoundedRectangle(cornerRadius: 10.0)
+                    .foregroundColor(Color(uiColor: .secondarySystemBackground))
+                    .frame(width: 40, height: 40)
+                    .opacity(0.5)
+                Group {
+                    if favourited {
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.accentColor)
+                    } else {
+                        Image(systemName: "heart")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+                .font(.title2)
+            }
+        }
+        .onAppear {
+            if launchStore.checkIfFavourite(launch: launch) || favourited {
+                favourited = true
+            } else {
+               favourited = false
+            }
+        }
+    }
+}

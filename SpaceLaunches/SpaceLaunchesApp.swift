@@ -9,14 +9,13 @@ import SwiftUI
 
 @main
 struct SpaceLaunchesApp: App {
-    
+        
     let notificationService = NotificationService()
     
     init() {
         notificationService.requestPermission()
     }
- 
-    
+
     var body: some Scene {
         WindowGroup {
             AppTabView()

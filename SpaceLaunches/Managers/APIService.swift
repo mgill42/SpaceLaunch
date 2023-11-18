@@ -19,13 +19,11 @@ class APIService {
             switch result {
             case .success(let success):
                 let highLightedLaunch = success.results.first(where: {
-                    
                     if let date = dateFormatter.date(from: $0.net) {
                         return date > Date()
                     } else {
-                        return true
+                        return false
                     }
-                    
                 })
                 if let highLightedLaunch = highLightedLaunch {
                     completion(Result.success(highLightedLaunch))

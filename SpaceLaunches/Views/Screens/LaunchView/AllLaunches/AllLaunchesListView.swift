@@ -45,6 +45,9 @@ struct AllLaunchesListView: View {
                 }
             }
             .listStyle(.plain)
+            .refreshable {
+                viewModel.loadMore()
+            }
         }
     }
 }

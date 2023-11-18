@@ -62,6 +62,9 @@ struct EventsView: View {
                 }
                 .navigationTitle("Upcoming Events")
                 .listStyle(.plain)
+                .refreshable {
+                    viewModel.fetchEvents()
+                }
             }
         }
     }

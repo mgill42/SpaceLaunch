@@ -50,11 +50,11 @@ class NotificationService {
                         }
                     }
                     #if DEBUG
-                    self.getScheduledNotifications()
+                 //   self.getScheduledNotifications()
                     #endif
-                case .failure(_):
+                case .failure(let error):
                     #if DEBUG
-                    print(print("Error fetching notification launches"))
+                    print(print("❌ \(error)"))
                     #endif
                 }
             }
@@ -97,8 +97,8 @@ class NotificationService {
                             }
                         }
                     }
-                case .failure(_):
-                    print(print("Error fetching notification launches"))
+                case .failure(let error):
+                    print(print("❌ \(error)"))
                 }
             }
         }

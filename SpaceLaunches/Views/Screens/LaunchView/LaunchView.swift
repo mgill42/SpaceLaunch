@@ -51,6 +51,14 @@ struct LaunchView: View {
             .searchable(text: $searchTerm)
             .navigationTitle("Launches")
             .navigationBarTitleDisplayMode(.inline  )
+            .toolbar {
+                ToolbarItem {
+                    NavigationLink(destination: SavedLaunchesView()) {
+                        Image(systemName: "heart")
+                            .foregroundColor(.accentColor)
+                    }
+                }
+            }
         }
         .onChange(of: searchTerm) { newValue in
             switch selectedEntityType {
@@ -69,6 +77,6 @@ struct LaunchView: View {
 
 struct LaunchView_Previews: PreviewProvider {
     static var previews: some View {
-        LaunchView()
+            LaunchView()
     }
 }

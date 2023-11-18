@@ -48,6 +48,9 @@ struct UpcomingLaunchesListView: View {
                 }
             }
             .listStyle(.plain)
+            .refreshable {
+                viewModel.loadMore()
+            }
         }
     }
 }

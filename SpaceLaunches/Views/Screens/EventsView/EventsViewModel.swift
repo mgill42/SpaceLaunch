@@ -16,7 +16,7 @@ import Foundation
     
     func fetchEvents() {
         
-        guard state == .good else {
+        guard state == .good || state == .error else {
             return
         }
         

@@ -48,6 +48,9 @@ struct PreviousLaunchesListView: View {
                 }
             }
             .listStyle(.plain)
+            .refreshable {
+                viewModel.loadMore()
+            }
         }
     }
 }

@@ -40,6 +40,9 @@ struct HomeView: View {
                 }
                 .scrollIndicators(.hidden)
                 .navigationTitle("Upcoming Launch")
+                .refreshable {
+                    viewModel.fetchHighlightLaunch()
+                }
             }
         }
     }

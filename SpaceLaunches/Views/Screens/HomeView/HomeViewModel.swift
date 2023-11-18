@@ -20,7 +20,7 @@ import UserNotifications
     
     func fetchHighlightLaunch() {
         
-        guard state == .good else {
+        guard state == .good || state == .error else {
             return
         }
         
