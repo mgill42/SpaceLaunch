@@ -26,7 +26,6 @@ struct MissionDetailView: View {
                         .scaledToFit()
                         .frame(width: 150, height: 150)
                         .padding()
-                       
                 }
             }
             
@@ -37,7 +36,6 @@ struct MissionDetailView: View {
                 Text(mission.description)
                     .foregroundColor(.gray)
                     .padding(.bottom)
-                
                 
                 DetailListCell(detailTitle: "Type", text: mission.type)
                 DetailListCell(detailTitle: "Orbit", text: mission.orbit.name)

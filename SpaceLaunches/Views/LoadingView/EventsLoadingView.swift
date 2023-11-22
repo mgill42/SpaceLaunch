@@ -13,7 +13,6 @@ struct EventsLoadingView: View {
             .progressViewStyle(.circular)
             .frame(maxWidth: .infinity)
             .id(UUID())
-        
     }
 }
 

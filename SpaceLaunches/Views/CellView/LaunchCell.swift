@@ -73,7 +73,6 @@ struct LaunchCell: View {
     }
 }
 
-
 struct LaunchCell_Previews: PreviewProvider {
     static var previews: some View {
         LaunchCell(launch: Launch.example())

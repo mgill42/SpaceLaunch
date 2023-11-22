@@ -16,9 +16,6 @@ struct UpdatesView: View {
     }
 }
 
-
-
-
 #Preview {
     UpdatesView()
 }

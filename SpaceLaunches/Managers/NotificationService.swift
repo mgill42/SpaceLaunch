@@ -21,9 +21,6 @@ class NotificationService {
             DispatchQueue.main.async {
                 switch result {
                 case .success(let results):
-                    #if DEBUG
-                    print("Notification Events Fetched")
-                    #endif
                     for event in results.results {
                         let content = UNMutableNotificationContent()
                         content.title = event.name
@@ -31,12 +28,7 @@ class NotificationService {
                         content.sound = UNNotificationSound.default
                         
                         if let targetTime = dateFormatter.date(from: event.date ?? "") {
-                            guard let subtractedTime = Calendar.current.date(byAdding: .day, value: -1, to: targetTime) else {
-                                #if DEBUG
-                                print("Could not subtract time")
-                                #endif
-                                return
-                            }
+                            guard let subtractedTime = Calendar.current.date(byAdding: .day, value: -1, to: targetTime) else { return }
                             
                             let dateComponants = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: subtractedTime)
                             let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponants, repeats: false)
@@ -49,13 +41,9 @@ class NotificationService {
                             }
                         }
                     }
-                    #if DEBUG
-                 //   self.getScheduledNotifications()
-                    #endif
-                case .failure(let error):
-                    #if DEBUG
-                    print(print("❌ \(error)"))
-                    #endif
+                    
+                case .failure(_):
+                    break
                 }
             }
         }
@@ -72,38 +60,28 @@ class NotificationService {
                 case .success(let results):
                     print("Notication Launches Fetched")
                     for launch in results.results {
-                        let content = UNMutableNotificationContent()
-                        content.title = launch.name
-                        content.subtitle = launch.launchServiceProvider.name
-                        content.body = "24 hours until the launch of \(launch.rocket.configuration.name)"
-                        content.sound = UNNotificationSound.default
+                        let content         = UNMutableNotificationContent()
+                        content.title       = launch.name
+                        content.subtitle    = launch.launchServiceProvider.name
+                        content.body        = "24 hours until the launch of \(launch.rocket.configuration.name)"
+                        content.sound       = UNNotificationSound.default
                         
                         if let targetTime = dateFormatter.date(from: launch.net) {
-                            guard let subtractedTime = Calendar.current.date(byAdding: .day, value: -1, to: targetTime) else {
-                                #if DEBUG
-                                print("Could not subtract time")
-                                #endif
-                                return
-                            }
+                            guard let subtractedTime = Calendar.current.date(byAdding: .day, value: -1, to: targetTime) else { return }
                             
                             let dateComponants = Calendar.current.dateComponents([.year, .month, .day, .hour, .minute, .second], from: subtractedTime)
-                            let trigger = UNCalendarNotificationTrigger(dateMatching: dateComponants, repeats: false)
-                            let request = UNNotificationRequest(identifier: launch.id, content: content, trigger: trigger)
+                            let trigger        = UNCalendarNotificationTrigger(dateMatching: dateComponants, repeats: false)
+                            let request        = UNNotificationRequest(identifier: launch.id, content: content, trigger: trigger)
                             
-                            UNUserNotificationCenter.current().add(request) { (error) in
-                                if (error != nil) {
-                                    print(error?.localizedDescription as Any)
-                                }
-                            }
+                            UNUserNotificationCenter.current().add(request)
                         }
                     }
-                case .failure(let error):
-                    print(print("❌ \(error)"))
+                case .failure(_):
+                    break
                 }
             }
         }
     }
-    
     
     func getAuthorizarionStatus() -> Bool {
         var status = false
@@ -120,15 +98,8 @@ class NotificationService {
     func requestPermission() {
         UNUserNotificationCenter.current().requestAuthorization(options: [.alert, .badge, .sound]) { success, error in
             if success {
-                #if DEBUG
-                print("Notifications Enabled")
-                #endif
                 self.fetchNotificationLaunches()
                 self.fetchNotificationEvents()
-            } else if error != nil {
-                #if DEBUG
-                print("Notifications Disabled")
-                #endif
             }
         }
     }
@@ -136,14 +107,11 @@ class NotificationService {
     func getScheduledNotifications() {
         UNUserNotificationCenter.current().getPendingNotificationRequests { requests in
             for request in requests {
-                let content = request.content
-                let trigger = request.trigger
-                let identifier = request.identifier
+                let content      = request.content
+                let trigger      = request.trigger
+                let identifier   = request.identifier
                 
                 let notificationInfo = "Identifier: \(identifier)\nTitle: \(content.title)\nBody: \(content.body)\nTrigger: \(String(describing: trigger))"
-                #if DEBUG
-                print(notificationInfo)
-                #endif
             }
         }
     }

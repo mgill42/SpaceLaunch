@@ -63,7 +63,7 @@ class LaunchFavouriteStore: ObservableObject {
     
     func checkIfFavourite(launch: Launch) -> Bool {
         do {
-            let outfile = try Self.fileURL()
+            let outfile         = try Self.fileURL()
             let favouritesArray = try JSONDecoder().decode([Launch].self, from: Data(contentsOf: outfile))
             if favouritesArray.contains(where: { $0.id == launch.id}) {
                 return true

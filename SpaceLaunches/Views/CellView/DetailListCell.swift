@@ -12,7 +12,6 @@ struct DetailListCell: View {
     let detailTitle: String
     let text: String
     
-    
     var body: some View {
         VStack {
             Divider()
@@ -25,7 +24,6 @@ struct DetailListCell: View {
         }
     }
 }
-
 
 #Preview {
     DetailListCell(detailTitle: "CEO", text: "Elon Musk")

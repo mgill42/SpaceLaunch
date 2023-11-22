@@ -10,7 +10,6 @@ import SwiftUI
 struct AppTabView: View {
     var body: some View {
         TabView {
-            
             HomeView()
                 .tabItem { Label("Home", systemImage: "house") }
             
@@ -22,7 +21,6 @@ struct AppTabView: View {
             
             SettingsView()
                 .tabItem { Label("Settings", systemImage: "gearshape") }
-
         }
     }
 }

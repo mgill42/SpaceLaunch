@@ -30,7 +30,6 @@ struct Provider: TimelineProvider {
                     if let data = data {
                         let entry = LaunchEntry(date: Date(), launch: success, backgroundImageDate: data)
                         let timeline = Timeline(entries: [entry], policy: .after(success.net.convertToDate() ?? Date().addingTimeInterval(21600)))
-                        print(timeline.policy)
                         completion(timeline)
                     }
                 }
@@ -39,7 +38,6 @@ struct Provider: TimelineProvider {
                 return
             }
         }
-     
     }
 }
 

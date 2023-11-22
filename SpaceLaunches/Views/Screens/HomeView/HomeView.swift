@@ -9,8 +9,9 @@ import SwiftUI
 import Kingfisher
 
 struct HomeView: View {
-    
+    @Environment(\.scenePhase) var scenePhase
     @StateObject var viewModel = HomeViewModel()
+    
 
     var body: some View {
         GeometryReader { geo in
@@ -18,7 +19,8 @@ struct HomeView: View {
                 ScrollView {
                     switch viewModel.state {
                     case .isLoading:
-                        ProgressView()
+                        HighlightLaunchLoadingView()
+                            .frame(height: geo.size.height / 1.3)
                     case .good:
                         Color.clear
                             .onAppear {
@@ -28,6 +30,11 @@ struct HomeView: View {
                         if let highlightedLaunch = viewModel.highLightedLaunch {
                             HighlightLaunchView(launch: highlightedLaunch)
                                 .padding(.top, 30)
+                                .onChange(of: scenePhase) { newPhase in
+                                    if newPhase == .active {
+                                        viewModel.checkStaleLaunch()
+                                    }
+                                }
                         }
                     case .error:
                         ErrorPlaceholderView()

@@ -84,8 +84,8 @@ struct CountdownTimerView: View {
 
             let timeDifference = Calendar.current.dateComponents([.day, .hour, .minute, .second], from: currentTime, to: targetTime)
             
-            let days = String(format: "%02d", max(timeDifference.day ?? 0, 0))
-            let hours = String(format: "%02d", max(timeDifference.hour ?? 0, 0))
+            let days    = String(format: "%02d", max(timeDifference.day ?? 0, 0))
+            let hours   = String(format: "%02d", max(timeDifference.hour ?? 0, 0))
             let minutes = String(format: "%02d", max(timeDifference.minute ?? 0, 0))
             let seconds = String(format: "%02d", max(timeDifference.second ?? 0, 0))
             

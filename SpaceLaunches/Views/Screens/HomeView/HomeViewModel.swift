@@ -18,11 +18,15 @@ import UserNotifications
     let dateFormatter = DateFormatter()
     let service = APIService()
     
-    func fetchHighlightLaunch() {
-        
-        guard state == .good || state == .error else {
-            return
+    func checkStaleLaunch() {
+        if let highlightedLaunch = highLightedLaunch?.net.convertToDate() {
+            if highlightedLaunch <= Date() {
+                fetchHighlightLaunch()
+            }
         }
+    }
+    
+    func fetchHighlightLaunch() {
         
         state = highLightedLaunch == nil ? .isEmpty : .isLoading
 

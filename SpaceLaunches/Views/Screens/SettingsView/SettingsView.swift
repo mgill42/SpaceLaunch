@@ -43,7 +43,7 @@ struct SettingsView: View {
                             icon: { Image(systemName: "square.stack") }
                         )
                     }
-                                }
+                }
                 
                 Section {
                     Button {

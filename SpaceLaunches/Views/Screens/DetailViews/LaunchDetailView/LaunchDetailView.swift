@@ -239,22 +239,34 @@ struct VideoPlayerView: View {
     
     var body: some View {
         
-        RoundedRectangle(cornerRadius: 25.0)
-            .foregroundColor(Color(uiColor: .secondarySystemBackground))
-            .frame(height: 200)
-            .overlay {
-                Image(systemName: "play.fill")
-                    .font(.system(size: 60))
-                    .foregroundColor(.white)
-                    .offset(y: 10)
+        
+        VStack {
+            if let featureImage = vidUrl.feature_image {
+                if let url = URL(string: featureImage) {
+                    KFImage(url)
+                        .resizable()
+                        .scaledToFit()
+                        .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                }
+            } else {
+                RoundedRectangle(cornerRadius: 25.0)
+                    .foregroundColor(Color(uiColor: .secondarySystemBackground))
+                    .frame(height: 200)
+                    .overlay {
+                        Image(systemName: "play.fill")
+                            .font(.system(size: 60))
+                            .foregroundColor(.white)
+                            .offset(y: 10)
+                    }
+                    .overlay(alignment: .topLeading) {
+                        Text(vidUrl.title)
+                            .font(.title2)
+                            .bold()
+                            .padding()
+                            .lineLimit(1)
+                    }
             }
-            .overlay(alignment: .topLeading) {
-                Text(vidUrl.title)
-                    .font(.title2)
-                    .bold()
-                    .padding()
-                    .lineLimit(1)
-            }
+        }
     }
 }
 

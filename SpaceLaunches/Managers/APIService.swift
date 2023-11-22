@@ -10,9 +10,9 @@ import Foundation
 class APIService {
     
     func fetchHighlightLaunch(completion: @escaping(Result<Launch, APIError>) -> Void) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        let dateFormatter           = DateFormatter()
+        dateFormatter.dateFormat    = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatter.locale        = Locale(identifier: "en_US_POSIX")
         
         let url = createLaunchURL(for: nil, type: .upcoming, page: 0, limit: 5)
         fetch(type: Launches.self, url: url) { result in
@@ -34,15 +34,13 @@ class APIService {
             }
         }
     }
-
-
+    
     func getDataFromUrl(url: String, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
         guard let url = URL(string: url) else { return }
         URLSession.shared.dataTask(with: url) { data, response, error in
             completion(data, response, error)
         }.resume()
     }
-    
     
     func fetchLaunches(searchTerm: String?, page: Int, limit: Int, type: LaunchType, completion: @escaping(Result<Launches,APIError>) -> Void) {
         let url = createLaunchURL(for: searchTerm, type: type, page: page, limit: limit)
@@ -81,9 +79,7 @@ class APIService {
             }
         }.resume()
     }
-    
 
-    
     func createLaunchURL(for searchTerm: String?, type: LaunchType, page: Int?, limit: Int?) -> URL? {
         var baseURL = "https://lldev.thespacedevs.com/2.2.0/launch/"
         
@@ -94,7 +90,6 @@ class APIService {
             baseURL.append("previous")
         case .upcoming:
             baseURL.append("upcoming")
-
         }
         
         var queryItems = [URLQueryItem]()

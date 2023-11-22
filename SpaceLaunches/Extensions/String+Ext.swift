@@ -6,20 +6,22 @@
 //
 
 import Foundation
+
 extension String {
     func formattedDate(dateStyle: DateFormatter.Style, timeStyle: DateFormatter.Style) -> String {
-        let dateFormatterGetter = DateFormatter()
-        dateFormatterGetter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        dateFormatterGetter.locale = Locale(identifier: "en_US_POSIX")
+        let dateFormatterGetter         = DateFormatter()
+        dateFormatterGetter.dateFormat  = "yyyy-MM-dd'T'HH:mm:ssZ"
+        dateFormatterGetter.locale      = Locale(identifier: "en_US_POSIX")
         
         guard let date = dateFormatterGetter.date(from: self) else {
-            return "Could not convert to date"
+            return ""
         }
         
-        let dateFormatter = DateFormatter()
-        dateFormatter.locale = Locale.current
+        let dateFormatter       = DateFormatter()
+        dateFormatter.locale    = Locale.current
         dateFormatter.dateStyle = dateStyle
         dateFormatter.timeStyle = timeStyle
+        
         return dateFormatter.string(from: date)
     }
     
@@ -27,19 +29,19 @@ extension String {
         let dateFormatter = DateFormatter()
         
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
         
         return dateFormatter.date(from: self)
     }
     
     func timeAgoDisplay() -> String {
-        let dateFormatter = DateFormatter()
+        let dateFormatter        = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
-        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.locale     = Locale(identifier: "en_US_POSIX")
 
         if let date = dateFormatter.date(from: self) {
             
-            let relativeDateTimeFormatter = RelativeDateTimeFormatter()
+            let relativeDateTimeFormatter        = RelativeDateTimeFormatter()
             relativeDateTimeFormatter.unitsStyle = .full
             
             return relativeDateTimeFormatter.localizedString(for: date, relativeTo: Date())
