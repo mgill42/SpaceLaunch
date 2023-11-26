@@ -12,5 +12,6 @@ import SwiftUI
 struct SpaceLaunchesWidgetBundle: WidgetBundle {
     var body: some Widget {
         SpaceLaunchesWidget()
+        FavouritesWidget()
     }
 }

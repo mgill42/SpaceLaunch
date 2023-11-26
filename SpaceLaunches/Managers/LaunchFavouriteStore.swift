@@ -1,4 +1,3 @@
-//Publishing changes from background threads is not allowed; make sure to publish values from the main thread (via operators like receive(on:)) on model updates.
 //  LaunchStore.swift
 //  SpaceLaunches
 //
@@ -7,70 +6,53 @@
 
 import Foundation
 
-class LaunchFavouriteStore: ObservableObject {
-    @Published var favouriteLaunches: [Launch] = []
+class LaunchFavouriteStore {
     
-    private static func fileURL() throws -> URL {
-        try FileManager.default.url(for: .documentDirectory,
-                                        in: .userDomainMask,
-                                        appropriateFor: nil,
-                                        create: false)
-        .appendingPathComponent("launchFavourites.data")
+    static let shared = LaunchFavouriteStore()
+    
+    var favouriteLaunches: [Launch] = []
+    
+    func load() throws {
+        guard let data = UserDefaults.shared.value(forKey: UserDefaults.launchKey) as? Data else {
+            return
         }
-    
-    func load() async throws {
         do {
-            let fileURL = try Self.fileURL()
-            let data = try Data(contentsOf: fileURL)
-            let favouriteLaunches = try JSONDecoder().decode([Launch].self, from: data)
+            let decodedFavourites = try JSONDecoder().decode([Launch].self, from: data)
+            favouriteLaunches = decodedFavourites
+        } catch {
+            throw error
+        }
+    }
+    
+    
+    func save(launch: Launch) throws {
+        
+        favouriteLaunches.append(launch)
+        do {
+            let data = try JSONEncoder().encode(favouriteLaunches)
+            UserDefaults.shared.set(data, forKey: UserDefaults.launchKey)
+        } catch {
+            throw error
+        }
+    }
 
-            DispatchQueue.main.async {
-                self.favouriteLaunches = favouriteLaunches
-                }
-            } catch {
-                throw error
-            }
-      }
     
-    func save(launch: Launch) async throws {
-        Task {
-            let outfile = try Self.fileURL()
-            do {
-                var favouritesArray = try JSONDecoder().decode([Launch].self, from: Data(contentsOf: outfile))
-                favouritesArray.append(launch)
-                let data = try JSONEncoder().encode(favouritesArray)
-                try data.write(to: outfile)
-            } catch {
-                var favouritesArray: [Launch] = []
-                favouritesArray.append(launch)
-                let data = try JSONEncoder().encode(favouritesArray)
-                try data.write(to: outfile)
-            }
+    func delete(launch: Launch) throws {
+        favouriteLaunches.removeAll { $0.id == launch.id }
+        do {
+            let data = try JSONEncoder().encode(favouriteLaunches)
+            UserDefaults.shared.set(data, forKey: UserDefaults.launchKey)
+        } catch {
+            throw error
         }
+        
     }
     
-    func delete(launch: Launch) async throws {
-        Task {
-            let outfile = try Self.fileURL()
-            do {
-                var favouritesArray = try JSONDecoder().decode([Launch].self, from: Data(contentsOf: outfile))
-                favouritesArray.removeAll { $0.id == launch.id }
-                let data = try JSONEncoder().encode(favouritesArray)
-                try data.write(to: outfile)
-            }
-        }
-    }
     
     func checkIfFavourite(launch: Launch) -> Bool {
-        do {
-            let outfile         = try Self.fileURL()
-            let favouritesArray = try JSONDecoder().decode([Launch].self, from: Data(contentsOf: outfile))
-            if favouritesArray.contains(where: { $0.id == launch.id}) {
-                return true
-            } else {
-                return false
-            }
-        } catch {
+        if favouriteLaunches.contains(where: { $0.id == launch.id }) {
+            return true
+        } else {
             return false
         }
     }

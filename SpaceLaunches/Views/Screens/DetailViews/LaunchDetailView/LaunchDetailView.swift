@@ -171,7 +171,6 @@ struct LaunchDetailView: View {
 }
 
 
-
 struct LaunchDetailSection<Content: View>: View {
     
     let name: String
@@ -283,7 +282,6 @@ struct VideoPlayerView: View {
 
 struct FavouriteButton: View {
     
-    @StateObject private var launchStore = LaunchFavouriteStore()
     @State var favourited = false
 
     let launch: Launch
@@ -292,10 +290,10 @@ struct FavouriteButton: View {
         Button {
             Task {
                 if favourited {
-                    try await launchStore.delete(launch: launch)
+                    try LaunchFavouriteStore.shared.delete(launch: launch)
                     favourited = false
                 } else {
-                    try await launchStore.save(launch: launch)
+                    try LaunchFavouriteStore.shared.save(launch: launch)
                     favourited = true
                 }
             }
@@ -318,7 +316,8 @@ struct FavouriteButton: View {
             }
         }
         .onAppear {
-            if launchStore.checkIfFavourite(launch: launch) || favourited {
+            let isFavourited = LaunchFavouriteStore.shared.checkIfFavourite(launch: launch)
+            if isFavourited || favourited {
                 favourited = true
             } else {
                favourited = false
