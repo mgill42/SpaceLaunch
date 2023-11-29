@@ -60,7 +60,7 @@ struct LaunchView: View {
                 }
             }
         }
-        .onChange(of: searchTerm) { newValue in
+        .onChange(of: searchTerm) { oldValue, newValue in
             switch selectedEntityType {
             case .all:
                 allLaunchesViewModel.searchTerm = newValue

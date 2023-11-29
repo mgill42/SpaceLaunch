@@ -35,11 +35,20 @@ class APIService {
         }
     }
     
-    func getDataFromUrl(url: String, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
-        guard let url = URL(string: url) else { return }
-        URLSession.shared.dataTask(with: url) { data, response, error in
-            completion(data, response, error)
-        }.resume()
+ 
+    
+    func getDataFromUrl(url: String) async -> Data {
+        guard let url = URL(string: url) else {
+            return Data()
+        }
+
+        do {
+            // Use async/await with the dataTask
+            let (data, _) = try await URLSession.shared.data(from: url)
+            return data
+        } catch {
+            return Data()
+        }
     }
     
     func fetchLaunches(searchTerm: String?, page: Int, limit: Int, type: LaunchType, completion: @escaping(Result<Launches,APIError>) -> Void) {

@@ -9,53 +9,64 @@ import WidgetKit
 import SwiftUI
 import Kingfisher
 
-struct FavouritesProvider: TimelineProvider {
+struct FavouritesProvider: AppIntentTimelineProvider {
     
     let service = APIService()
     
-    func placeholder(in context: Context) -> LaunchEntry {
-        LaunchEntry(date: Date(), launch: Launch.example(), backgroundImageDate: Data())
+    func placeholder(in context: Context) -> FavLaunchEntry {
+        FavLaunchEntry(date: Date(), launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: false)
     }
-
-    func getSnapshot(in context: Context, completion: @escaping (LaunchEntry) -> ()) {
-        let entry = LaunchEntry(date: Date(), launch: Launch.example(), backgroundImageDate: Data())
-        completion(entry)
+    
+    func snapshot(for configuration: SelectFavouriteLaunch, in context: Context) async -> FavLaunchEntry {
+        FavLaunchEntry(date: Date(), launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: false)
     }
-
-    func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
-        
-        if let data = UserDefaults.shared.value(forKey: UserDefaults.launchKey) as? Data {
-            do {
-                let decodedFavourites = try JSONDecoder().decode([Launch].self, from: data)
-                let firstFav = decodedFavourites.first
-                service.getDataFromUrl(url: firstFav?.image ?? "") { data, response, error in
-                    if let data = data {
-                        let entry = LaunchEntry(date: Date(), launch: firstFav ?? Launch.example(), backgroundImageDate: data)
-                        let timeline = Timeline(entries: [entry], policy: .after(firstFav!.net.convertToDate() ?? Date().addingTimeInterval(21600)))
-                        completion(timeline)
-                    }
+    
+    func timeline(for configuration: SelectFavouriteLaunch, in context: Context) async -> Timeline<FavLaunchEntry> {
+        if let launch = configuration.launch {
+            if let imageURL = launch.image {
+                do {
+                    let data = await service.getDataFromUrl(url: imageURL)
+                    return Timeline(entries: [FavLaunchEntry(date: Date(), launch: launch, backgroundImageDate: data, noFavourites: false)], policy: .never)
                 }
-            } catch {
-                
             }
         }
+        return Timeline(entries: [FavLaunchEntry(date: Date(), launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: true)], policy: .never)
     }
+}
+
+struct FavLaunchEntry: TimelineEntry {
+    let date: Date
+    let launch: LaunchEntity
+    let backgroundImageDate: Data
+    let noFavourites: Bool
 }
 
 struct FavouritesWidgetEntryView : View {
     @Environment(\.widgetFamily) var family
-    var entry: LaunchEntry
+    var entry: FavLaunchEntry
 
     var body: some View {
-        switch family {
-        case .systemSmall:
-            LaunchWidgetSmallView(entry: entry)
-        case .systemMedium:
-            LaunchWidgetMediumView(entry: entry)
-        case .systemLarge:
-            LaunchWidgetLargeView(entry: entry)
-        default:
-            EmptyView()
+        if entry.noFavourites {
+            
+            ZStack {
+                Color.black
+                Text("No Favourites")
+                    .foregroundColor(.white)
+                    .font(.title)
+                    .multilineTextAlignment(.center)
+            }
+ 
+        } else {
+            switch family {
+            case .systemSmall:
+                FavWidgetSmallView(entry: entry)
+            case .systemMedium:
+                FavWidgetMediumView(entry: entry)
+            case .systemLarge:
+                FavWidgetLargeView(entry: entry)
+            default:
+                EmptyView()
+            }
         }
     }
 }
@@ -64,7 +75,11 @@ struct FavouritesWidget: Widget {
     let kind: String = "FavouritesWidget"
 
     var body: some WidgetConfiguration {
-        StaticConfiguration(kind: kind, provider: FavouritesProvider()) { entry in
+        AppIntentConfiguration(
+            kind: kind,
+            intent: SelectFavouriteLaunch.self,
+            provider: FavouritesProvider())
+        { entry in
             if #available(iOS 17.0, *) {
                 FavouritesWidgetEntryView(entry: entry)
                     .containerBackground(.fill.tertiary, for: .widget)
@@ -86,16 +101,156 @@ struct FavouritesWidget: Widget {
 #Preview(as: .systemLarge) {
     FavouritesWidget()
 } timeline: {
-    LaunchEntry(date: .now, launch: Launch.example(), backgroundImageDate: Data())
+    FavLaunchEntry(date: .now, launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: false)
+    FavLaunchEntry(date: .now, launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: true)
 }
 #Preview(as: .systemMedium) {
     FavouritesWidget()
 } timeline: {
-    LaunchEntry(date: .now, launch: Launch.example(), backgroundImageDate: Data())
+    FavLaunchEntry(date: .now, launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: false)
+    FavLaunchEntry(date: .now, launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: true)
 }
-
 #Preview(as: .systemSmall) {
     FavouritesWidget()
 } timeline: {
-    LaunchEntry(date: .now, launch: Launch.example(), backgroundImageDate: Data())
+    FavLaunchEntry(date: .now, launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: false)
+    FavLaunchEntry(date: .now, launch: LaunchEntity.example, backgroundImageDate: Data(), noFavourites: true)
 }
+
+struct FavWidgetSmallView: View {
+    let entry: FavLaunchEntry
+    
+    var body: some View {
+
+        VStack {
+            VStack(alignment: .leading) {
+                Text(entry.launch.name)
+                    .foregroundColor(.white)
+                    .bold()
+                
+                if let launchDate = entry.launch.net.convertToDate() {
+                    Text(launchDate, style: .timer)
+                        .bold()
+                        .foregroundColor(.white)
+                }
+                
+                Spacer()
+                HStack {
+                    Spacer()
+                    Image(systemName: "heart.fill")
+                        .foregroundColor(.orange)
+                }
+            }
+            .padding()
+            Spacer()
+        }
+        .background {
+            Image(uiImage: UIImage(data: entry.backgroundImageDate) ?? UIImage(named: "rocketPlaceholder")!)
+                .resizable()
+                .scaledToFill()
+                .overlay {
+                    LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
+                        .opacity(0.6)
+                }
+            
+        }
+    }
+}
+
+struct FavWidgetMediumView: View {
+    let entry: FavLaunchEntry
+    
+    var body: some View {
+
+        VStack() {
+            VStack(alignment: .leading) {
+                Text(entry.launch.name)
+                    .font(.title2)
+                    .foregroundColor(.white)
+                    .bold()
+                
+                if let launchDate = entry.launch.net.convertToDate() {
+                    Text(launchDate, style: .timer)
+                        .font(.title3)
+                        .bold()
+                        .foregroundColor(.white)
+                    
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.orange)
+                            .font(.title)
+                    }
+                }
+            }
+            .padding()
+            Spacer()
+        }
+        .background {
+            Image(uiImage: UIImage(data: entry.backgroundImageDate) ?? UIImage(named: "rocketPlaceholder")!)
+                .resizable()
+                .scaledToFill()
+                .overlay {
+                    LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
+                        .opacity(0.6)
+                }
+        }
+    }
+}
+
+struct FavWidgetLargeView: View {
+    let entry: FavLaunchEntry
+    
+    var body: some View {
+
+        VStack {
+            HStack {
+                VStack(alignment: .leading, spacing: 4) {
+                    
+                    Text(entry.launch.name)
+                        .font(.title)
+                        .foregroundColor(.white)
+                        .bold()
+                    
+                    if let launchDate = entry.launch.net.convertToDate() {
+                        Text(launchDate, style: .timer)
+                            .foregroundColor(.white)
+                            .font(.title2)
+                            .bold()
+                    }
+                    
+                    Text(entry.launch.launchServiceProvier.name)
+                        .font(.headline)
+                        .foregroundColor(.white)
+                    if let pad = entry.launch.pad {
+                        Text(pad.location.name)
+                            .foregroundColor(.white)
+                    }
+                    
+                    Spacer()
+                    HStack {
+                        Spacer()
+                        Image(systemName: "heart.fill")
+                            .foregroundColor(.orange)
+                            .font(.largeTitle)
+                    }
+          
+                }
+                Spacer()
+            }
+            Spacer()
+            }
+            .padding()
+            .background {
+                Image(uiImage: UIImage(data: entry.backgroundImageDate) ?? UIImage(named: "rocketPlaceholder")!)
+                    .resizable()
+                    .scaledToFill()
+                    .overlay {
+                        LinearGradient(gradient: Gradient(colors: [.black, .clear]), startPoint: .top, endPoint: .bottom)
+                            .opacity(0.6)
+                    }
+            }
+    }
+}
+

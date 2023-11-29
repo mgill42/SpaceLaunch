@@ -48,17 +48,12 @@
 		6E8C9D5C2B017C0600D5BFC6 /* ErrorPlaceholderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D5B2B017C0600D5BFC6 /* ErrorPlaceholderView.swift */; };
 		6E8C9D5E2B06A16D00D5BFC6 /* SavedLaunchesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D5D2B06A16D00D5BFC6 /* SavedLaunchesView.swift */; };
 		6E8C9D612B06AD8200D5BFC6 /* LaunchFavouriteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D602B06AD8200D5BFC6 /* LaunchFavouriteStore.swift */; };
-		6E8C9D8E2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D8D2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition */; };
-		6E8C9D8F2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D8D2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition */; };
 		6E8C9D942B12654E00D5BFC6 /* UserDefaults+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D932B12654E00D5BFC6 /* UserDefaults+Ext.swift */; };
 		6E8C9D952B12654E00D5BFC6 /* UserDefaults+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D932B12654E00D5BFC6 /* UserDefaults+Ext.swift */; };
-		6E8C9DC02B1278A500D5BFC6 /* Intents.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 6E8C9D9B2B1267CB00D5BFC6 /* Intents.framework */; };
-		6E8C9DC32B1278A500D5BFC6 /* IntentHandler.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9DC22B1278A500D5BFC6 /* IntentHandler.swift */; };
-		6E8C9DC72B1278A500D5BFC6 /* SpaceLaunchesIntent.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = 6E8C9DBF2B1278A500D5BFC6 /* SpaceLaunchesIntent.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
-		6E8C9DCC2B12809B00D5BFC6 /* SpaceLaunchIntent.intentdefinition in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D8D2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition */; };
-		6E8C9DCD2B12812E00D5BFC6 /* UserDefaults+Ext.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D932B12654E00D5BFC6 /* UserDefaults+Ext.swift */; };
 		6E8C9DD42B134BEF00D5BFC6 /* LaunchFavouriteStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9D602B06AD8200D5BFC6 /* LaunchFavouriteStore.swift */; };
 		6E8C9DDE2B13587900D5BFC6 /* FavouritesWidget.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9DDA2B13585B00D5BFC6 /* FavouritesWidget.swift */; };
+		6E8C9DF02B167EF100D5BFC6 /* SelectFavouriteLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9DEF2B167EF100D5BFC6 /* SelectFavouriteLaunch.swift */; };
+		6E8C9DF12B167EF100D5BFC6 /* SelectFavouriteLaunch.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6E8C9DEF2B167EF100D5BFC6 /* SelectFavouriteLaunch.swift */; };
 		6ECEF1082ADB231B00356381 /* HighlightLaunchLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1072ADB231B00356381 /* HighlightLaunchLoadingView.swift */; };
 		6ECEF10A2ADB403B00356381 /* EventsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF1092ADB403B00356381 /* EventsViewModel.swift */; };
 		6ECEF10C2ADB43C400356381 /* EventsLoadingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 6ECEF10B2ADB43C400356381 /* EventsLoadingView.swift */; };
@@ -86,13 +81,6 @@
 			remoteGlobalIDString = 6E8C9D052AF2F43500D5BFC6;
 			remoteInfo = SpaceLaunchesWidgetExtension;
 		};
-		6E8C9DC52B1278A500D5BFC6 /* PBXContainerItemProxy */ = {
-			isa = PBXContainerItemProxy;
-			containerPortal = 6EE699302A853AF9008CAAAE /* Project object */;
-			proxyType = 1;
-			remoteGlobalIDString = 6E8C9DBE2B1278A500D5BFC6;
-			remoteInfo = SpaceLaunchesIntent;
-		};
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
@@ -102,7 +90,6 @@
 			dstPath = "";
 			dstSubfolderSpec = 13;
 			files = (
-				6E8C9DC72B1278A500D5BFC6 /* SpaceLaunchesIntent.appex in Embed Foundation Extensions */,
 				6E8C9D162AF2F43600D5BFC6 /* SpaceLaunchesWidgetExtension.appex in Embed Foundation Extensions */,
 			);
 			name = "Embed Foundation Extensions";
@@ -144,18 +131,14 @@
 		6E8C9D5B2B017C0600D5BFC6 /* ErrorPlaceholderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorPlaceholderView.swift; sourceTree = "<group>"; };
 		6E8C9D5D2B06A16D00D5BFC6 /* SavedLaunchesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SavedLaunchesView.swift; sourceTree = "<group>"; };
 		6E8C9D602B06AD8200D5BFC6 /* LaunchFavouriteStore.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LaunchFavouriteStore.swift; sourceTree = "<group>"; };
-		6E8C9D8D2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition */ = {isa = PBXFileReference; lastKnownFileType = file.intentdefinition; path = SpaceLaunchIntent.intentdefinition; sourceTree = "<group>"; };
 		6E8C9D902B1262BB00D5BFC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist; path = Info.plist; sourceTree = "<group>"; };
 		6E8C9D912B12647D00D5BFC6 /* SpaceLaunches.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpaceLaunches.entitlements; sourceTree = "<group>"; };
 		6E8C9D932B12654E00D5BFC6 /* UserDefaults+Ext.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UserDefaults+Ext.swift"; sourceTree = "<group>"; };
 		6E8C9D9B2B1267CB00D5BFC6 /* Intents.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = Intents.framework; path = System/Library/Frameworks/Intents.framework; sourceTree = SDKROOT; };
 		6E8C9DB92B1276BA00D5BFC6 /* SpaceLaunches.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpaceLaunches.entitlements; sourceTree = "<group>"; };
 		6E8C9DBA2B1276C200D5BFC6 /* SpaceLaunchesWidgetExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpaceLaunchesWidgetExtension.entitlements; sourceTree = "<group>"; };
-		6E8C9DBF2B1278A500D5BFC6 /* SpaceLaunchesIntent.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = SpaceLaunchesIntent.appex; sourceTree = BUILT_PRODUCTS_DIR; };
-		6E8C9DC22B1278A500D5BFC6 /* IntentHandler.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntentHandler.swift; sourceTree = "<group>"; };
-		6E8C9DC42B1278A500D5BFC6 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		6E8C9DCB2B12790E00D5BFC6 /* SpaceLaunchesIntent.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = SpaceLaunchesIntent.entitlements; sourceTree = "<group>"; };
 		6E8C9DDA2B13585B00D5BFC6 /* FavouritesWidget.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = FavouritesWidget.swift; sourceTree = "<group>"; };
+		6E8C9DEF2B167EF100D5BFC6 /* SelectFavouriteLaunch.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SelectFavouriteLaunch.swift; sourceTree = "<group>"; };
 		6ECEF1072ADB231B00356381 /* HighlightLaunchLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HighlightLaunchLoadingView.swift; sourceTree = "<group>"; };
 		6ECEF1092ADB403B00356381 /* EventsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsViewModel.swift; sourceTree = "<group>"; };
 		6ECEF10B2ADB43C400356381 /* EventsLoadingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EventsLoadingView.swift; sourceTree = "<group>"; };
@@ -183,14 +166,6 @@
 				6E8C9D232AF30C4500D5BFC6 /* Kingfisher in Frameworks */,
 				6E8C9D0B2AF2F43500D5BFC6 /* SwiftUI.framework in Frameworks */,
 				6E8C9D092AF2F43500D5BFC6 /* WidgetKit.framework in Frameworks */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6E8C9DBC2B1278A500D5BFC6 /* Frameworks */ = {
-			isa = PBXFrameworksBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6E8C9DC02B1278A500D5BFC6 /* Intents.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -303,13 +278,13 @@
 		6E8C9D0C2AF2F43500D5BFC6 /* SpaceLaunchesWidget */ = {
 			isa = PBXGroup;
 			children = (
-				6E8C9D8D2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition */,
+				6E8C9D912B12647D00D5BFC6 /* SpaceLaunches.entitlements */,
 				6E8C9D0D2AF2F43500D5BFC6 /* SpaceLaunchesWidgetBundle.swift */,
 				6E8C9D0F2AF2F43500D5BFC6 /* SpaceLaunchesWidget.swift */,
 				6E8C9DDA2B13585B00D5BFC6 /* FavouritesWidget.swift */,
 				6E8C9D112AF2F43600D5BFC6 /* Assets.xcassets */,
 				6E8C9D132AF2F43600D5BFC6 /* Info.plist */,
-				6E8C9D912B12647D00D5BFC6 /* SpaceLaunches.entitlements */,
+				6E8C9DEF2B167EF100D5BFC6 /* SelectFavouriteLaunch.swift */,
 			);
 			path = SpaceLaunchesWidget;
 			sourceTree = "<group>";
@@ -329,16 +304,6 @@
 				6EE6994C2A869211008CAAAE /* Launch.swift */,
 			);
 			path = Data;
-			sourceTree = "<group>";
-		};
-		6E8C9DC12B1278A500D5BFC6 /* SpaceLaunchesIntent */ = {
-			isa = PBXGroup;
-			children = (
-				6E8C9DCB2B12790E00D5BFC6 /* SpaceLaunchesIntent.entitlements */,
-				6E8C9DC22B1278A500D5BFC6 /* IntentHandler.swift */,
-				6E8C9DC42B1278A500D5BFC6 /* Info.plist */,
-			);
-			path = SpaceLaunchesIntent;
 			sourceTree = "<group>";
 		};
 		6E8C9DD52B134C0900D5BFC6 /* FavouriteLaunches */ = {
@@ -408,7 +373,6 @@
 				6E8C9DBA2B1276C200D5BFC6 /* SpaceLaunchesWidgetExtension.entitlements */,
 				6EE6993A2A853AFA008CAAAE /* SpaceLaunches */,
 				6E8C9D0C2AF2F43500D5BFC6 /* SpaceLaunchesWidget */,
-				6E8C9DC12B1278A500D5BFC6 /* SpaceLaunchesIntent */,
 				6E8C9D072AF2F43500D5BFC6 /* Frameworks */,
 				6EE699392A853AFA008CAAAE /* Products */,
 			);
@@ -419,7 +383,6 @@
 			children = (
 				6EE699382A853AFA008CAAAE /* SpaceLaunches.app */,
 				6E8C9D062AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension.appex */,
-				6E8C9DBF2B1278A500D5BFC6 /* SpaceLaunchesIntent.appex */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -537,23 +500,6 @@
 			productReference = 6E8C9D062AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension.appex */;
 			productType = "com.apple.product-type.app-extension";
 		};
-		6E8C9DBE2B1278A500D5BFC6 /* SpaceLaunchesIntent */ = {
-			isa = PBXNativeTarget;
-			buildConfigurationList = 6E8C9DC82B1278A500D5BFC6 /* Build configuration list for PBXNativeTarget "SpaceLaunchesIntent" */;
-			buildPhases = (
-				6E8C9DBB2B1278A500D5BFC6 /* Sources */,
-				6E8C9DBC2B1278A500D5BFC6 /* Frameworks */,
-				6E8C9DBD2B1278A500D5BFC6 /* Resources */,
-			);
-			buildRules = (
-			);
-			dependencies = (
-			);
-			name = SpaceLaunchesIntent;
-			productName = SpaceLaunchesIntent;
-			productReference = 6E8C9DBF2B1278A500D5BFC6 /* SpaceLaunchesIntent.appex */;
-			productType = "com.apple.product-type.app-extension";
-		};
 		6EE699372A853AF9008CAAAE /* SpaceLaunches */ = {
 			isa = PBXNativeTarget;
 			buildConfigurationList = 6EE699462A853AFA008CAAAE /* Build configuration list for PBXNativeTarget "SpaceLaunches" */;
@@ -567,7 +513,6 @@
 			);
 			dependencies = (
 				6E8C9D152AF2F43600D5BFC6 /* PBXTargetDependency */,
-				6E8C9DC62B1278A500D5BFC6 /* PBXTargetDependency */,
 			);
 			name = SpaceLaunches;
 			packageProductDependencies = (
@@ -589,9 +534,6 @@
 				LastUpgradeCheck = 1500;
 				TargetAttributes = {
 					6E8C9D052AF2F43500D5BFC6 = {
-						CreatedOnToolsVersion = 15.0.1;
-					};
-					6E8C9DBE2B1278A500D5BFC6 = {
 						CreatedOnToolsVersion = 15.0.1;
 					};
 					6EE699372A853AF9008CAAAE = {
@@ -618,7 +560,6 @@
 			targets = (
 				6EE699372A853AF9008CAAAE /* SpaceLaunches */,
 				6E8C9D052AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension */,
-				6E8C9DBE2B1278A500D5BFC6 /* SpaceLaunchesIntent */,
 			);
 		};
 /* End PBXProject section */
@@ -629,13 +570,6 @@
 			buildActionMask = 2147483647;
 			files = (
 				6E8C9D122AF2F43600D5BFC6 /* Assets.xcassets in Resources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6E8C9DBD2B1278A500D5BFC6 /* Resources */ = {
-			isa = PBXResourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -663,21 +597,11 @@
 				6E8C9DD42B134BEF00D5BFC6 /* LaunchFavouriteStore.swift in Sources */,
 				6E8C9D412AF430CF00D5BFC6 /* Launch.swift in Sources */,
 				6E8C9D422AF4363A00D5BFC6 /* APIService.swift in Sources */,
-				6E8C9D8F2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition in Sources */,
 				6E8C9D432AF436D100D5BFC6 /* APIError.swift in Sources */,
 				6E8C9D452AF437B700D5BFC6 /* Event.swift in Sources */,
+				6E8C9DF12B167EF100D5BFC6 /* SelectFavouriteLaunch.swift in Sources */,
 				6E8C9D952B12654E00D5BFC6 /* UserDefaults+Ext.swift in Sources */,
 				6E8C9D102AF2F43500D5BFC6 /* SpaceLaunchesWidget.swift in Sources */,
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-		};
-		6E8C9DBB2B1278A500D5BFC6 /* Sources */ = {
-			isa = PBXSourcesBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-				6E8C9DCC2B12809B00D5BFC6 /* SpaceLaunchIntent.intentdefinition in Sources */,
-				6E8C9DC32B1278A500D5BFC6 /* IntentHandler.swift in Sources */,
-				6E8C9DCD2B12812E00D5BFC6 /* UserDefaults+Ext.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -691,6 +615,7 @@
 				6E8C9D5E2B06A16D00D5BFC6 /* SavedLaunchesView.swift in Sources */,
 				6E8C9D612B06AD8200D5BFC6 /* LaunchFavouriteStore.swift in Sources */,
 				6E8349572AC0DCF100A32285 /* UpcomingLaunchesListView.swift in Sources */,
+				6E8C9DF02B167EF100D5BFC6 /* SelectFavouriteLaunch.swift in Sources */,
 				6E44BBFC2AD5F4A500B2965F /* EventsView.swift in Sources */,
 				6E7662502AE6EDFA007A2AFA /* SettingsView.swift in Sources */,
 				6EE6993E2A853AFA008CAAAE /* LaunchView.swift in Sources */,
@@ -701,7 +626,6 @@
 				6E83495B2AC207A500A32285 /* PreviousLaunchesListView.swift in Sources */,
 				6E44BC012AD8777400B2965F /* View+Ext.swift in Sources */,
 				6E44BC052ADAFC0A00B2965F /* LaunchLoadingView.swift in Sources */,
-				6E8C9D8E2B12626C00D5BFC6 /* SpaceLaunchIntent.intentdefinition in Sources */,
 				6E8349692AC3661C00A32285 /* HomeViewModel.swift in Sources */,
 				6E8349652AC22C5D00A32285 /* HomeView.swift in Sources */,
 				6EE6994B2A85620A008CAAAE /* Event.swift in Sources */,
@@ -737,11 +661,6 @@
 			isa = PBXTargetDependency;
 			target = 6E8C9D052AF2F43500D5BFC6 /* SpaceLaunchesWidgetExtension */;
 			targetProxy = 6E8C9D142AF2F43600D5BFC6 /* PBXContainerItemProxy */;
-		};
-		6E8C9DC62B1278A500D5BFC6 /* PBXTargetDependency */ = {
-			isa = PBXTargetDependency;
-			target = 6E8C9DBE2B1278A500D5BFC6 /* SpaceLaunchesIntent */;
-			targetProxy = 6E8C9DC52B1278A500D5BFC6 /* PBXContainerItemProxy */;
 		};
 /* End PBXTargetDependency section */
 
@@ -817,65 +736,6 @@
 			};
 			name = Release;
 		};
-		6E8C9DC92B1278A500D5BFC6 /* Debug */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = SpaceLaunchesIntent/SpaceLaunchesIntent.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 98F3VL89VL;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SpaceLaunchesIntent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SpaceLaunchesIntent;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.gill.mahaveer.SpaceLaunches.SpaceLaunchesIntent;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_ACTIVE_COMPILATION_CONDITIONS = "DEBUG $(inherited)";
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Debug;
-		};
-		6E8C9DCA2B1278A500D5BFC6 /* Release */ = {
-			isa = XCBuildConfiguration;
-			buildSettings = {
-				CODE_SIGN_ENTITLEMENTS = SpaceLaunchesIntent/SpaceLaunchesIntent.entitlements;
-				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 1;
-				DEVELOPMENT_TEAM = 98F3VL89VL;
-				GCC_C_LANGUAGE_STANDARD = gnu17;
-				GENERATE_INFOPLIST_FILE = YES;
-				INFOPLIST_FILE = SpaceLaunchesIntent/Info.plist;
-				INFOPLIST_KEY_CFBundleDisplayName = SpaceLaunchesIntent;
-				INFOPLIST_KEY_NSHumanReadableCopyright = "";
-				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
-				LD_RUNPATH_SEARCH_PATHS = (
-					"$(inherited)",
-					"@executable_path/Frameworks",
-					"@executable_path/../../Frameworks",
-				);
-				LOCALIZATION_PREFERS_STRING_CATALOGS = YES;
-				MARKETING_VERSION = 1.0;
-				PRODUCT_BUNDLE_IDENTIFIER = me.gill.mahaveer.SpaceLaunches.SpaceLaunchesIntent;
-				PRODUCT_NAME = "$(TARGET_NAME)";
-				SKIP_INSTALL = YES;
-				SWIFT_EMIT_LOC_STRINGS = YES;
-				SWIFT_VERSION = 5.0;
-				TARGETED_DEVICE_FAMILY = "1,2";
-			};
-			name = Release;
-		};
 		6EE699442A853AFA008CAAAE /* Debug */ = {
 			isa = XCBuildConfiguration;
 			buildSettings = {
@@ -928,7 +788,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -984,7 +844,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 16.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 17.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1078,15 +938,6 @@
 			buildConfigurations = (
 				6E8C9D182AF2F43600D5BFC6 /* Debug */,
 				6E8C9D192AF2F43600D5BFC6 /* Release */,
-			);
-			defaultConfigurationIsVisible = 0;
-			defaultConfigurationName = Release;
-		};
-		6E8C9DC82B1278A500D5BFC6 /* Build configuration list for PBXNativeTarget "SpaceLaunchesIntent" */ = {
-			isa = XCConfigurationList;
-			buildConfigurations = (
-				6E8C9DC92B1278A500D5BFC6 /* Debug */,
-				6E8C9DCA2B1278A500D5BFC6 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;

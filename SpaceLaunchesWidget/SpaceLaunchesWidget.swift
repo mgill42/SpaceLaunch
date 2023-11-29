@@ -23,15 +23,15 @@ struct Provider: TimelineProvider {
     }
 
     func getTimeline(in context: Context, completion: @escaping (Timeline<Entry>) -> ()) {
+        
         service.fetchHighlightLaunch { result in
             switch result {
             case .success(let success):
-                service.getDataFromUrl(url: success.image ?? "") { data, response, error in
-                    if let data = data {
-                        let entry = LaunchEntry(date: Date(), launch: success, backgroundImageDate: data)
-                        let timeline = Timeline(entries: [entry], policy: .after(success.net.convertToDate() ?? Date().addingTimeInterval(21600)))
-                        completion(timeline)
-                    }
+                Task {
+                    let data = await service.getDataFromUrl(url: success.image ?? "")
+                    let entry = LaunchEntry(date: Date(), launch: success, backgroundImageDate: data)
+                    let timeline = Timeline(entries: [entry], policy: .after(success.net.convertToDate() ?? Date().addingTimeInterval(21600)))
+                    completion(timeline)
                 }
             case .failure(_):
                 print("failed")
@@ -215,7 +215,5 @@ struct LaunchWidgetLargeView: View {
                             .opacity(0.6)
                     }
             }
-        
-       
     }
 }
