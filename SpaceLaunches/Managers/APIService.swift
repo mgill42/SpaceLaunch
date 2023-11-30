@@ -51,6 +51,11 @@ class APIService {
         }
     }
     
+    func fetchNews(searchTerm: String?, page: Int, limit: Int, completion: @escaping(Result<Articles, APIError>) -> Void) {
+        let url = createNewsURL(for: searchTerm, page: page, limit: limit)
+        fetch(type: Articles.self, url: url, completion: completion)
+    }
+    
     func fetchLaunches(searchTerm: String?, page: Int, limit: Int, type: LaunchType, completion: @escaping(Result<Launches,APIError>) -> Void) {
         let url = createLaunchURL(for: searchTerm, type: type, page: page, limit: limit)
         fetch(type: Launches.self, url: url,completion: completion)
@@ -87,6 +92,26 @@ class APIService {
                 }
             }
         }.resume()
+    }
+    
+    func createNewsURL(for searchTerm: String?, page: Int?, limit: Int?) -> URL? {
+        var baseURL = "https://api.spaceflightnewsapi.net/v4/articles/"
+        
+        var queryItems = [URLQueryItem]()
+        
+        if let searchTerm = searchTerm {
+            queryItems.append(URLQueryItem(name: "search", value: searchTerm))
+        }
+        
+        if let page = page, let limit = limit {
+            let offset = page * limit
+            queryItems.append(URLQueryItem(name: "limit", value: String(limit)))
+            queryItems.append(URLQueryItem(name: "offset", value: String(offset)))
+        }
+        
+        var components = URLComponents(string: baseURL)
+        components?.queryItems = queryItems
+        return components?.url
     }
 
     func createLaunchURL(for searchTerm: String?, type: LaunchType, page: Int?, limit: Int?) -> URL? {
