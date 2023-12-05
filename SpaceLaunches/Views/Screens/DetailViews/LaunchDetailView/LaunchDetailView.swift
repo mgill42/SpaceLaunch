@@ -13,6 +13,9 @@ struct LaunchDetailView: View {
         
     @State private var region = MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2))
     
+    @State private var cameraPosition = MapCameraPosition.region(MKCoordinateRegion(center: CLLocationCoordinate2D(latitude: 0, longitude: 0), span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)))
+    
+    
     let launch: Launch
     
     @State var missionMore = false
@@ -115,22 +118,7 @@ struct LaunchDetailView: View {
                             .font(.title2)
                             .bold()
                         if let pad = launch.pad {
-                                Map(coordinateRegion: $region, annotationItems: [pad.launchLocation]) { location in
-                                    MapMarker(coordinate: location.coordinate)
-                                }
-                                    .frame(maxWidth: geo.size.width)
-                                    .frame(height: 300)
-                                    .clipShape(RoundedRectangle(cornerRadius: 25.0))
-                                    .padding(.top)
-                                    .onAppear {
-                                        region.center.latitude = pad.latitudeDeg
-                                        region.center.longitude = pad.longitudeDeg
-                                    }
-                                Text(pad.location.name)
-                                    .font(.footnote)
-                                    .foregroundColor(.gray)
-                                    .frame(maxWidth: .infinity)
-                            
+                            LaunchMapView(cameraPosition: $cameraPosition, geo: geo, pad: pad)
                         }
                     }
                     
@@ -153,6 +141,13 @@ struct LaunchDetailView: View {
                                                 .resizable()
                                                 .scaledToFit()
                                                 .clipShape(RoundedRectangle(cornerRadius: 25.0))
+                                                .overlay {
+                                                    Image(systemName: "play.fill")
+                                                        .font(.system(size: 60))
+                                                        .foregroundColor(.white)
+                                                        .offset(y: 10)
+                                                        .opacity(0.5)
+                                                }
                                         } else {
                                             VideoPlayerView(vidUrl: vid)
                                         }
@@ -238,7 +233,6 @@ struct VideoPlayerView: View {
     
     var body: some View {
         
-        
         VStack {
             if let featureImage = vidUrl.feature_image {
                 if let url = URL(string: featureImage) {
@@ -322,6 +316,34 @@ struct FavouriteButton: View {
             } else {
                favourited = false
             }
+        }
+    }
+}
+
+struct LaunchMapView: View {
+    
+    @Binding var cameraPosition: MapCameraPosition
+    let geo: GeometryProxy
+    let pad: Pad
+    
+    var body: some View {
+        VStack {
+            Map(position: $cameraPosition) {
+                Marker(pad.location.name, coordinate: pad.launchLocation.coordinate)
+            }
+            .frame(maxWidth: geo.size.width)
+            .frame(height: 300)
+            .clipShape(RoundedRectangle(cornerRadius: 25.0))
+            .padding(.top)
+            .onAppear {
+                let position = MapCameraPosition.region(MKCoordinateRegion(center: pad.launchLocation.coordinate, span: MKCoordinateSpan(latitudeDelta: 0.2, longitudeDelta: 0.2)))
+                cameraPosition = position
+                
+            }
+            Text(pad.location.name)
+                .font(.footnote)
+                .foregroundColor(.gray)
+                .frame(maxWidth: .infinity)
         }
     }
 }

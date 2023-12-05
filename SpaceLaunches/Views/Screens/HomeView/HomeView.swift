@@ -30,7 +30,7 @@ struct HomeView: View {
                         if let highlightedLaunch = viewModel.highLightedLaunch {
                             HighlightLaunchView(launch: highlightedLaunch)
                                 .padding(.top, 30)
-                                .onChange(of: scenePhase) { newPhase in
+                                .onChange(of: scenePhase) { oldPhase, newPhase in
                                     if newPhase == .active {
                                         viewModel.checkStaleLaunch()
                                     }

@@ -111,7 +111,7 @@ class NotificationService {
                 let trigger      = request.trigger
                 let identifier   = request.identifier
                 
-                let notificationInfo = "Identifier: \(identifier)\nTitle: \(content.title)\nBody: \(content.body)\nTrigger: \(String(describing: trigger))"
+                print("Identifier: \(identifier)\nTitle: \(content.title)\nBody: \(content.body)\nTrigger: \(String(describing: trigger))")
             }
         }
     }

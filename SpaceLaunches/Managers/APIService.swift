@@ -95,7 +95,7 @@ class APIService {
     }
     
     func createNewsURL(for searchTerm: String?, page: Int?, limit: Int?) -> URL? {
-        var baseURL = "https://api.spaceflightnewsapi.net/v4/articles/"
+        let baseURL = "https://api.spaceflightnewsapi.net/v4/articles/"
         
         var queryItems = [URLQueryItem]()
         

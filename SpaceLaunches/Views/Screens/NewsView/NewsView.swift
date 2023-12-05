@@ -16,7 +16,7 @@ struct NewsView: View {
             GeometryReader { geo in
                 List {
                     ForEach(viewModel.news) { article in
-                        Text(article.title)
+                        ArticleCell(article: article)
                     }
                     
                     switch viewModel.state {
